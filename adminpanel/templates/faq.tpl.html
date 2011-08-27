@@ -1,0 +1,235 @@
+{literal}
+<script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$("#faq").tooltip();
+$("[valcheck='true']").click(function()
+	{
+			var oEditor 		= FCKeditorAPI.GetInstance('question') ;
+			var jsArticleBody 	= oEditor.GetXHTML(true) ;
+			var len				=	jsArticleBody.length;
+			var errcount		=	0;
+			 if(len==0)
+				{
+					errcount++;	
+					$("#questionerror").html("<span class='val_error_alert'>&nbsp;please enter a question</span>");
+					
+				}
+			var oEditor 		= FCKeditorAPI.GetInstance('answer') ;
+			var jsArticleBody 	= oEditor.GetXHTML(true) ;
+			var len				=	jsArticleBody.length;
+			 if(len==0)
+				{
+					errcount++;
+					$("#answererror").html("<span class='val_error_alert'>&nbsp;please enter an answer</span>");
+					
+				}	
+			if(errcount!=0)
+				{
+					return false;
+				}
+	});
+	
+	});
+</script>
+{/literal}
+{assign var="actionReturn" value=$obj->actionReturn}
+<form action="" name="fromName" method="post" enctype="multipart/form-data" >
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+<tr>
+	<td class="pageHead"><span id="faq"><strong> Manage FAQ </strong></span></td>
+</tr>
+{if ($obj->currentAction	==	"Addform")	||	($obj->currentAction	==	"Editform")}
+
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+				<th colspan="2">Manage FAQ</th>
+			</tr>
+			<tr>
+				<td>FAQ Group</td>
+				<td>{$actionReturn.faq_combo}</td>
+			</tr>
+			<tr>
+				<td>Question</td>
+				<td><!--{$obj->get_fck("question",$actionReturn.data.question)}-->
+				
+				<textarea id="questionId" name="question" rows="5" cols="50"/>{$actionReturn.data.question}</textarea>
+				</td>
+			</tr>
+			<tr><td></td><td id="questionerror"></td></tr>
+			<tr>
+				<td>Answer</td>
+				<td>
+				
+				<textarea id="answerId" name="answer" rows="5" cols="50"/>{$actionReturn.data.answer}</textarea>
+				
+				<!--{$obj->get_fck("answer",$actionReturn.data.answer)}	-->
+				
+				</td>
+			</tr>
+			<tr><td></td> <td id="answererror"></td></tr>
+			{if $obj->currentAction	==	"Editform"}
+			<tr>
+				<td >Sort Order</td>
+				<td >
+				<input name="txtpreference" type="text" valtype="checkNumber-Please enter a number" id="preferenceId" size="10" value="{$actionReturn.data.preference}"
+				class="textBox" maxlength="40">
+				</td>
+			</tr>
+			{/if}
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+				{if $obj->currentAction	==	"Editform"}
+					{if $obj->permissionCheck("Edit")  }
+					<input type="submit" class="butsubmit" valcheck="true" name="actionvar" value="Update" id="saveDataId" />
+					{/if}
+				{else}
+					{ if $obj->permissionCheck("Add")}
+					<input type="submit" class="butsubmit" valcheck="true" name="actionvar" value="Save" id="saveDataId" />
+					{/if}
+				{/if}
+					<input type="submit" valcheck="faq" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>	
+{/if}
+
+
+
+<tr>
+	{if $obj->currentAction	==	"Listing"}
+	
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td  align="right">&nbsp;</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td>  <strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow} </strong> 
+							of <strong>{$actionReturn.spage->totcnt} </strong>  </td>
+							<td>FAQ Group:</td>
+							<td>
+								{$actionReturn.searchdata.searchCombo}
+							</td>
+							<td>
+							<input type="text" name="keyword" maxlength="25" id="id_keyword" value="{$actionReturn.searchdata.keyword}" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Search" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Reset" />
+							</td>
+							<td>
+							{if $obj->permissionCheck("Add")}
+							<input name="actionvar" type="submit" class="butsubmit" value="Add New" />
+							{/if}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			{ if $obj->permissionCheck("View")}
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							<th  {if $obj->permissionCheck("Delete")} width="70" {/if}>
+								{if $obj->permissionCheck("Delete")}
+								<input type="checkbox" name="checkall" id="id_check_all" >
+								{/if}
+							</th>
+							<th><a href="{$obj->getLink('Search','',false)}&sortField=fg.group&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Faq Group{$obj->getSortImage('fg.group',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}</a></th>
+							<th><a href="{$obj->getLink('Search','',false)}&sortField=f.question&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Question{$obj->getSortImage('f.question',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a></th>
+							<th><a href="{$obj->getLink('Search','',false)}&sortField=f.answer&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Answer{$obj->getSortImage('f.answer',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a></th>
+								<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=f.preference&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Order
+{$obj->getSortImage('f.preference',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+								</th>
+							<th>Action </th>
+						</tr>
+					
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							<td>
+								{if $obj->permissionCheck("Delete")}
+								<input type="checkbox" name="checkone[]" value="{$data.id}" >
+								{/if}
+							</td>
+							<td>{$data.group}</td>
+							<td>{$obj->getLimitedText($data.question,80)|strip_tags}</td>
+							<td>{$obj->getLimitedText($data.answer,80)|strip_tags}</td>
+							<td>{$data.preference}</td>
+							<td>
+							{if $obj->permissionCheck("Status")}
+					<a href="{$obj->getLink('Stauschange','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+					{/if}
+							{if $data.status == 1} 
+							<img src="images/active.gif" border="0" title="Click here to inactivate">
+							 {else} 							 
+							 <img src="images/inactive.gif" border="0" title="Click here to activate">
+							 {/if}
+					{if $obj->permissionCheck("Status")}
+					 </a> 
+					{/if}	
+							
+							{ if $obj->permissionCheck("Edit")}
+							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/edit.gif" border="0" title="Click here to edit">							
+							</a> 
+							{/if}							
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td>
+						{if $obj->permissionCheck("Delete")}
+						<input class="butsubmit" value="Delete" type="submit" name="actionvar" id="id_btn_delete">
+						{/if} 
+						</td>
+						<td colspan="5">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			{/if}
+		{/if}
+		
+		</table>
+	</td>
+	{/if}
+	
+</tr>
+</table>
+</form>
+
+{include_php file="footer.php"}

@@ -1,0 +1,235 @@
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#question").tooltip();
+});
+</script>
+{/literal}
+{assign var="actionReturn" value=$obj->actionReturn}
+<form action="" name="fromName" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+<tr>
+	<td class="pageHead"><span id="question"><strong>{if ($obj->currentAction	==	"Editform")}Edit{/if}{if ($obj->currentAction	==	"Addform")}Add{/if} Questionaire </strong></span></td>
+</tr>
+{if ($obj->currentAction	==	"Editform")}
+{if $obj->permissionCheck("Edit")}
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+			
+				<th colspan="2">Questionaire</th>
+			</tr>
+			<tr>
+				<td width="140">Question</td>
+				<td><TEXTAREA  name="question" valtype="emptyCheck-Please enter a question"  class="validateText" COLS=40 ROWS=6>{$actionReturn.data.question}</TEXTAREA></td>
+			</tr>
+			<input type="hidden" name="id" value="{$actionReturn.data.id}"/>
+			<tr><td>Answer</td></tr>
+			{foreach from=$actionReturn.data2 item=data3 name=i }
+			<tr><td></td><td><TEXTAREA valtype="emptyCheck-Please enter an answer" name="{$data3.id}" class="validateText" COLS=40 ROWS=3>{$data3.options}</TEXTAREA></td></tr>
+			{/foreach}
+			{if $obj->currentAction	==	"Editform"}
+			<tr>
+				<td >Choice</td>
+				<td >
+				<select name="choice">						
+					<option value="1" {if $actionReturn.data.choice==1 } Selected {/if}>Single choice</option>
+					<option value="2" {if $actionReturn.data.choice==2 } Selected {/if}>Multiple choice</option>
+				</select>
+				
+				</td>
+			</tr>
+			{/if}
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+				{if $obj->currentAction	==	"Editform"}
+					{if $obj->permissionCheck("Edit")}
+					<input type="submit" class="butsubmit" valcheck="true"  name="actionvar" value="Update" id="saveDataId" />
+				{/if} {/if}
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+			{/if}	
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>	
+{/if}
+
+<!--this is the ad ne form-->
+{if ($obj->currentAction	==	"Addform")}
+{if $obj->permissionCheck("Add")}
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+			
+				<th colspan="2">Questionaire</th>
+			</tr>
+			<tr>
+				<td width="100px">Question</td>
+				<td><TEXTAREA valtype="emptyCheck-Please enter a question" name="question" class="validateText"  COLS=40 ROWS=6>{$actionReturn.data.question}</TEXTAREA></td>
+			</tr>
+			<tr><td>Answer</td></tr>
+			
+			<tr><td></td><td><TEXTAREA  valtype="emptyCheck-Please enter an answer" name="ans1" class="validateText" COLS=40 ROWS=3></TEXTAREA></td></tr>
+			<tr><td></td><td><TEXTAREA  valtype="emptyCheck-Please enter an answer" name="ans2"  class="validateText" COLS=40 ROWS=3></TEXTAREA></td></tr>
+			<tr><td></td><td><TEXTAREA valtype="emptyCheck-Please enter an answer" name="ans3"  class="validateText" COLS=40 ROWS=3></TEXTAREA></td></tr>
+			<tr><td></td><td><TEXTAREA valtype="emptyCheck-Please enter an answer" name="ans4"  COLS=40 ROWS=3></TEXTAREA></td></tr>
+			
+			<tr>
+				<td >Choice</td>
+				<td >
+				<select name="choice">	
+				<option value="1">Single Choice</option>
+				<option value="2">Multiple Choice</option>
+				</select>
+				
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+				{if $obj->currentAction	==	"Addform"}
+					
+					<input type="submit" valcheck="true"  class="butsubmit"  name="actionvar" value="Save" id="saveDataId" />
+				{/if}
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>	
+{/if}
+{/if}
+<!--this is the ad ne form-->
+
+<tr>
+	{if $obj->currentAction	==	"Listing"}
+	
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td  align="right">&nbsp;</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td>Viewing  <strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow} </strong> 
+							of <strong>{$actionReturn.spage->totcnt} </strong>  </td>
+							
+							<td>
+							<input type="text" name="keyword" maxlength="25" id="id_keyword" value="{$actionReturn.searchdata.keyword}" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Search" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Reset" />
+							</td>
+							<td>
+							{if $obj->permissionCheck("Add")}
+							<input name="actionvar" type="submit" class="butsubmit" value="Add New" />
+							{/if}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							
+							<th>No</th>
+							<th><a href="{$obj->getLink('Search','',false)}&sortField=question&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Question{$obj->getSortImage('question',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a></th>
+							<th>Answer</th>
+								<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=choice&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Choice
+{$obj->getSortImage('choice',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+								</th>
+							
+							<th>Action </th>
+						</tr>
+					
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							
+							<td>{$actionReturn.spage->startingRow+$smarty.foreach.i.index}</td>
+							<td>{$data.question}</td>
+							<td>
+								{foreach from=$data.answers item=data1 }
+								{$obj->getLimitedText($data1.options,50)} <br />
+								{/foreach}
+							</td>
+							<td>{if $data.choice == 1} Single{else} Multiple{/if}</td>
+							<td>
+							{if $obj->permissionCheck("Status")}
+					<a href="{$obj->getLink('Statuschange','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+				
+							{if $data.status == 1} 
+							<img src="images/active.gif" border="0" title="Click here to inactivate">
+							 {else} 							 
+							 <img src="images/inactive.gif" border="0" title="Click here to activate">
+							 {/if}
+					
+					 </a> 
+					{/if}
+							
+							{if $obj->permissionCheck("Edit")}
+							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/edit.gif" border="0" title="Click here to edit">							
+							</a> 
+								{/if}				
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td>
+						
+						
+						 
+						</td>
+						<td colspan="5">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			{/if}
+		
+		
+		</table>
+	</td>
+	{/if}
+	
+</tr>
+</table>
+</form>
+
+{include_php file="footer.php"}

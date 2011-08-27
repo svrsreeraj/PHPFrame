@@ -1,0 +1,186 @@
+{assign var="actionReturn" value=$obj->actionReturn}
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+$("#contactus").tooltip();
+});
+</script>
+{/literal}
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+<form action="" name="fromName" method="post" enctype="multipart/form-data">
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+<tr>
+	<td class="pageHead"><span id="contactus"><strong> Contact Us  </strong></span></td>
+</tr>
+
+{if ($obj->currentAction	==	"Editform")}
+{if $obj->permissionCheck("Reply")}
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+				<th colspan="2">Reply Message</th>
+			</tr>
+			{if $actionReturn.data.name}
+			<tr>
+				<td>Name </td>
+				<td>{$actionReturn.data.name}</td>
+			</tr>
+			{/if}
+			{if $actionReturn.data.email}
+			<tr>
+				<td>Email </td>
+				<td>{$actionReturn.data.email}</td>
+			</tr>
+			{/if}
+			{if $actionReturn.data.phone}
+			<tr>
+				<td>Phone</td>
+				<td>{$actionReturn.data.phone}</td>
+			</tr>
+			{/if}
+			{if $actionReturn.data.subject}
+			
+			<tr>
+				<td>Subject</td>
+				<td>{$actionReturn.data.subject}</td>
+			</tr>
+
+			{/if}
+			{if $actionReturn.data.message}
+			<tr>
+				<td>Message</td>
+				<td>{$actionReturn.data.message}</td>
+			</tr>
+			{/if}
+			
+			<tr>
+				<td>Reply message</td>
+				<td><textarea  name="reply_message" id="reply_messageId" >{$actionReturn.data.reply_message}</textarea></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>					
+					<input type="submit" class="butsubmit"  name="actionvar" value="Send" id="saveDataId" />								
+				
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+		</form>
+	</td>
+</tr>	
+{/if}
+{/if}
+
+
+{if $obj->permissionCheck("View")}
+<tr>
+	{if $obj->currentAction	==	"Listing"}
+	<td>
+	<form action="" name="fromName" method="post" enctype="multipart/form-data">
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td  align="right">&nbsp;</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td><strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow}  </strong> of <strong>{$actionReturn.spage->totcnt} </strong> </td>							
+							<td>Search
+							<input type="text" name="keyword" maxlength="25" id="id_keyword" value="{$actionReturn.searchdata.keyword}" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Search" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Reset" />
+							</td>
+							
+						</tr>
+					</table>
+					</form>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+				<form action="" name="fromName" method="post" enctype="multipart/form-data">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							<th>No</th>
+							<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=name&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Name
+								{$obj->getSortImage('name',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>
+							<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=email&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Email
+								{$obj->getSortImage('email',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>
+							<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=subject&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Subject
+								{$obj->getSortImage('subject',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>
+							<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=reply_message&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Reply
+								{$obj->getSortImage('reply_message',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>
+							<th>Action </th>
+
+						</tr>
+					{foreach from=$actionReturn.data item=data  name=i}
+						<tr>
+							<td>{$actionReturn.spage->startingRow+$smarty.foreach.i.index}</td>
+							<td>{$data.name}</td>
+							<td>{$data.email}</td>
+							<td>{$obj->getLimitedText($data.subject,30)}</td>
+							<td>{if $data.reply_message !=""}{$obj->getLimitedText($data.reply_message,30)}{/if}{if $data.reply_message ==""}<b>Not replied  yet<b>{/if}</td>
+							
+							
+							<td>
+							{if $obj->permissionCheck("Reply")}
+							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							 <img src="images/reply_icon.gif" border="0" title="Click here to send reply"> 
+							</a>   
+							{/if}
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td colspan="6">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		{/if}
+		
+		</table>
+	</td>
+	{/if}
+</tr>
+{/if}
+
+</table>
+</form>
+
+{include_php file="footer.php"}

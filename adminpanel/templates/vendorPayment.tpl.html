@@ -1,0 +1,261 @@
+{literal}
+<script language="javascript" type="text/javascript">
+
+function displaypayment(cid,changeId)
+	{
+		$.ajax({
+			   type	: "GET",
+			   url	: "vendorPayment.php",			 
+			   data	: "actionvar=Getcombodeal&dealid="+cid,
+			   dataType: "html",
+			   success: function(msg){
+				   $("#"+changeId).html(msg);
+				}
+			 });
+	}
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+$("#vendorpay").tooltip();
+
+});
+</script>
+{/literal}                  
+
+{assign var="actionReturn" value=$obj->actionReturn}
+<form action="" name="fromName" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+<tr>
+	<td class="pageHead"><span id="vendorpay"><strong>Vendor Payments </strong></span></td>
+</tr>
+
+{if ($obj->currentAction	==	"Addform")	|| ($obj->currentAction	==	"Fetch")}
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td align="center">
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+				<th colspan="3">Payment Details</th>
+			</tr>
+			
+			{if ($obj->currentAction	==	"Addform")}
+			<tr>
+				<td width="100">Vendor ID</td>
+				<td>{$actionReturn.combo}
+				<input type="text" class="nummberOnly" name="vendor" value="{$actionReturn.data.vendor}" id="vendorId" valtype="emptyCheck-Please enter vendor Id" onchange="getcombo(this.value,'dealDiv');" />
+				
+				<input name="actionvar" type="submit" class="butsubmit" value="Fetch" /></td>
+			</tr>
+			{/if}
+			{if ($obj->currentAction	==	"Fetch")}
+			{if $actionReturn.vdata}
+			<tr>
+				<td  width="100">Vendor Name</td>
+				<td >
+				{$obj->getdbsinglevalue_cond('vod_vendor',$obj->getConcat('business_name'),$obj->getConcat('id=',$actionReturn.vdata.0.vendor_id))}
+				</td>
+			</tr>
+			
+			<tr>
+				<td>Deals</td>
+				<td>{$actionReturn.dcombo}</td>
+			</tr>			
+			{/if}
+			{/if}
+			<tr><td  colspan="2">
+				<div id="paymentdtails"> 
+					
+				<div align="center">{if ($obj->currentAction	==	"Addform")}<input name="actionvar" type="submit" class="butsubmit" value="Cancel" />{else}<input name="actionvar" type="submit" class="butsubmit" value="Back" /> {/if}</div>	
+					
+				</div><td>
+			</tr>	
+		</table>
+	</td>
+</tr>	
+{/if}
+
+
+<tr>
+	{if $obj->currentAction	==	"Listing"}
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td  align="right">&nbsp;</td>
+			</tr>
+		<!--	<tr>
+				<td>
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td>Viewing  - <strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow}  </strong> of <strong>{$actionReturn.spage->totcnt} </strong></td>
+							<td>Keyword</td>	
+							<td>
+							<input type="text" name="keyword" maxlength="25" id="id_keyword" value="{$actionReturn.searchdata.keyword}" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Search" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Reset" />
+							</td>
+							<td>
+							{if $obj->permissionCheck("Add")}
+							<input name="actionvar" type="submit" class="butsubmit" value="Add New" />
+							{/if}
+							</td>							
+							<td>
+								<a href="javascript:;" id="id_search_link">
+									<img src="images/search.png" border="0" width="16" height="16" />
+								</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<div id="id_search_block" class="cls_search_block">
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+							<tr>
+							<td>Vendor</td>
+							<td>
+								{$actionReturn.searchdata.searchCombo}
+							</td>
+							<td>Deals:</td>
+							<td>							
+							<div id="dealDiv">
+							{$actionReturn.searchdata.searchCombo1}
+							</div>
+							</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>-->
+			{*if $actionReturn.consol*}
+			<!--<tr><td>
+			<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+				<tr><td width="110">Total Commission:</td><td><strong>$ {*$actionReturn.consol.total*}</strong></td><td width="110">Paid Commission:</td><td><strong>$ {*$actionReturn.consol.paid*}</strong></td><td width="110">Balance to Pay:</td><td><strong>$ {*$actionReturn.consol.balance*}</strong></td></tr>
+			</table>
+			</td></tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>-->
+			{*/if*}
+			<tr>
+				<td>
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td><strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow}  </strong> of <strong>{$actionReturn.spage->totcnt} </strong></td>
+							<td>Vendor ID/Email</td>
+							<td>
+								<input type="text" name="vendor" value="{$actionReturn.searchdata.vendor}" id="vendorId"  />
+							</td>							
+							<td>
+							<input type="text" name="keyword" maxlength="25" id="id_keyword" value="{$actionReturn.searchdata.keyword}" size="13"/>
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Search" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Reset" />
+							</td>
+							<td>
+							{if $obj->permissionCheck("Add")}
+							<input name="actionvar" type="submit" class="butsubmit" value="Add New" />
+							{/if}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			{ if $obj->permissionCheck("View")}
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							<th>No</th>
+							<th>
+							<a href="{$obj->getLink('Search','',false)}&sortField=business_name&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Vendor
+							{$obj->getSortImage('business_name',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a>
+							</th>
+							
+							<th>														
+							<a href="{$obj->getLink('Search','',false)}&sortField=total&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Total Commission
+							{$obj->getSortImage('total',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a>							
+							</th>
+							
+							<th>	
+							<a href="{$obj->getLink('Search','',false)}&sortField=used&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Paid Commission
+							{$obj->getSortImage('used',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a>
+							</th>
+							
+							<th>	
+							<a href="{$obj->getLink('Search','',false)}&sortField=balance&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Balance to Pay
+							{$obj->getSortImage('balance',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a> 
+							</th>
+							
+							<th colspan="2">Action 	</th>
+						</tr>
+					
+					{foreach from=$actionReturn.data item=data name=i }
+						<tr>	
+							<td>{$actionReturn.spage->startingRow+$smarty.foreach.i.index}</td>
+							<td>{$data.business_name} </td>
+							<td><a class="helpText"  onmouseover="return escape('{$data.totDet}')">${$data.total}</a></td>
+							<td><a  class="helpText" onmouseover="return escape('{$data.payDet}')">${$data.used}</a></td>
+							<td><a  class="helpText" onmouseover="return escape('{$data.balDet}')">${$data.balance}</a></td>
+							<td>
+							{if $obj->permissionCheck("View")}
+							<a href="{$obj->getLink('Listing','vendorPaymentDetail.php',true,$obj->getConcat('vid=',$data.vendor_id))}" class="Second_link">
+							<img src="images/view.gif" border="0" title="Click here to view payment details of {$obj->getdbsinglevalue_cond('vod_vendor','business_name',$obj->getConcat('id=',$data.vendor_id))} ">
+							</a>  
+							{/if}							
+							</td>
+							<td>
+							{if $data.balance >0}
+							<a href="{$obj->getLink('Commisionpay','',true)}&id={$data.vendor_id}" class="Second_link"  title="Click here to make balance payment">
+								Pay </a>
+							{else} <span title="Sorry! No balance to pay "> ---
+							{/if}
+							</td>
+						
+						</tr>
+					{/foreach}
+					<tr>
+						<td colspan="7">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		{/if}
+		{/if}
+		</table>
+	</td>
+	{/if}
+</tr>
+</table>
+</form>
+{literal}
+<script type="text/javascript" src="js/tooltip.js"></script>		
+{/literal}
+{include_php file="footer.php"}

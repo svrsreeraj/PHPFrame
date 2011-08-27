@@ -1,0 +1,569 @@
+{assign var="actionReturn" value=$obj->actionReturn}
+{literal}
+<script type="text/javascript" src="js/highslide/highslide.js"></script>
+<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
+<link type="text/css" href="js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
+	<script type="text/javascript" src="js/jquery-1.4.3.min.js"></script>
+	<script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="js/ui/ui/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="js/ui/ui/jquery.ui.mouse.js"></script>
+	<script type="text/javascript" src="js/ui/ui/jquery.ui.draggable.js"></script>
+	<script type="text/javascript" src="js/ui/ui/jquery.ui.sortable.js"></script>
+	<link type="text/css" href="../demos.css" rel="stylesheet" />
+	<style type="text/css">
+	.demo ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 5px; }
+	.demo li { margin: 2px; float:left; padding: 2px; width: 370px; }
+	</style>
+	<script type="text/javascript">
+	function display(id,status)
+		{
+			jConfirm('Are you sure you want to Change  Delivery Status?', 'Confirmation Dialog', 
+			function(stat) 
+				{
+					if(stat==true)	
+						{
+							window.location="ecomOrderDetails.php?actionvar=Update&id="+id+"&deliver_status="+status;
+						}
+						else
+						{
+							return false;
+						}	
+				});
+		}
+		</script>
+	<script type="text/javascript">
+	$(function() {
+		$("#sortable").sortable({
+			revert: true,
+			handle: 'th'
+		});
+		$("ul, li").disableSelection();
+	});
+	</script>
+<script type="text/javascript">
+function getcombo(cid,changeId)
+	{
+		$.ajax({
+			   type	: "GET",
+			   url	: "dealsList.php",
+			   data	: "actionvar=Getcombo&id="+cid,
+			   dataType: "html",
+			   success: function(msg){
+				   $("#"+changeId).html(msg);
+				}
+			 });
+	}
+$(document).ready(function() {
+	$("#txt_join_from").datepicker();
+	$("#txt_join_from").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		defaultDate:'2010-11-24',
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+
+	$("#txt_join_to").datepicker();
+	$("#txt_join_to").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		defaultDate:'2010-11-24',
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+	
+	$("#activation_dateId").datepicker();
+		$("#activation_dateId").datepicker('option',
+		{
+			showAnim:'show',
+			dateFormat:'yy-mm-dd',
+			changeMonth: true,
+			changeYear: true,
+			//minDate: -20, 
+			//maxDate: '+1M +10D',
+			showOtherMonths: true, 
+			selectOtherMonths: true,
+			defaultDate:'2010-11-24',
+			//yearRange:'c-50:c+10',
+			autoSize:false
+		});
+});
+</script>
+<link type="text/css" href="js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.datepicker.js"></script>
+{/literal}
+<form action="" name="fromName" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+<tr>
+	<td class="pageHead"><strong>Ecommerce order Details </strong></td>
+</tr>
+{if ($obj->currentAction	==	"Viewform")}{$obj->print_r($actionReturn.dataArr)}
+{if $actionReturn.data}
+<!--{$obj->print_r($actionReturn.data)}-->
+<tr>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			
+			<tbody>
+				<tr>
+					<td width="50%">
+						<div class="boxList" >
+					
+				{if $actionReturn.data.id}
+					
+								<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">					
+										<tr>
+											<th colspan="2" ><div align="left">Order Details</div></th>
+										</tr>
+									
+										<tr>
+											<td width="175" >Order Id</td>
+											<td>{ $actionReturn.data.id}</td>
+										</tr>
+									{if $actionReturn.data.order_date}
+										<tr>
+											<td width="175" >Order Date</td>
+											<td>{$actionReturn.data.order_date}</td>
+										</tr>
+									{/if}
+										<tr>
+									{if $actionReturn.data.apps_id}
+											<td width="175" >Application</td>
+											<td>{if $actionReturn.data.apps_id=='1'}Web{/if} {if $actionReturn.data.apps_id=='2'}iphone {/if} {if $actionReturn.data.apps_id=='3'}Android {/if} </td>
+										</tr>
+									{/if}
+							
+								</table>
+						</div>
+					</td>
+				{/if}
+					
+					<td width="50%">
+						<div class="boxList" >
+				{if $actionReturn.data.products}
+							<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+								<tr>
+									<th colspan="7" ><div align="left">Ordered Products</div></th>
+								</tr>
+								<tr>
+									<td width="100">Product</td><td width="100">Quantity</td><td width="100">Unit Price</td><td width="175">Total Price</td>
+								</tr>
+					{foreach from=$actionReturn.data.products item=dataProduct name=i}
+						
+					{if $dataProduct.product}
+								<tr>
+									<td width="100">{$dataProduct.product}</td>	<td>{$dataProduct.quanity}</td><td>${$dataProduct.unit_price}</td><td width="175">${$dataProduct.prod_price}</td>
+								</tr>
+					{/if}	
+						
+					{/foreach}	
+							</table>	
+						</div>
+					</td>			
+				</tr>		
+						
+				<tr>	
+					<td width="50%">
+						<div class="boxList" >
+				{/if}
+					{if $actionReturn.data.ship_fname}
+							<table width="340" border="0" height="250" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+								<tr>
+									<th colspan="2" ><div align="left">Shipping Details</div></th>
+								</tr>
+								<tr>
+						{if $actionReturn.data.ship_fname}
+								<tr>
+									<td width="175">Name</td> 
+									<td>{$actionReturn.data.ship_fname} {$actionReturn.data.ship_lname}</td>
+								</tr>
+						{/if}
+								</tr>
+						{if $actionReturn.data.ship_addr1}
+								<tr>
+									<td>Shipping Address 1</td>
+									<td>{$actionReturn.data.ship_addr1}</td>
+								</tr>
+								<tr>
+									<td>Shipping Address 2</td>
+									<td>{$actionReturn.data.ship_addr2}</td>
+								</tr>
+						{/if}
+						{if $actionReturn.data.ship_phone}
+								<tr>
+									<td>Phone number</td>
+									<td>{$actionReturn.data.ship_phone}</td>
+								</tr>
+						{/if}
+					{if $actionReturn.data.ship_zip}
+								<tr>
+									<td>Zip code</td>
+									<td>{$actionReturn.data.ship_zip}</td>
+								</tr>
+						{/if}
+					{if $actionReturn.data.ship_state}
+								<tr>
+									<td>State</td>
+									<td>{$actionReturn.data.ship_state}</td>
+								</tr>
+						{/if}
+							{if $actionReturn.data.ship_country}
+								<tr>
+									<td>Country</td>
+									<td>{$actionReturn.data.ship_country}</td>
+								</tr>
+						{/if}	
+							</table>
+					{/if}
+						</div>
+					</td>
+					
+					<td width="50%">
+						<div class="boxList" >
+					
+				{if {$actionReturn.data.bill_fname}
+				
+					<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+					<tr>
+							<th colspan="2" ><div align="left">Billing Details</div></th>
+						</tr>
+						{if {$actionReturn.data.bill_fname}
+						<tr>
+							<td width="175">Billing Name</td>
+							<td>{$actionReturn.data.bill_fname}&nbsp;{$actionReturn.data.bill_lname}</td>
+						</tr>
+						{/if}
+							{if {$actionReturn.data.bill_addr1}
+						<tr>
+							<td width="175">Billing Address1</td>
+							<td>{$actionReturn.data.bill_addr1}</td>
+						</tr>
+						{/if}
+						{if {$actionReturn.data.bill_addr2}
+						<tr>
+							<td width="175">Billing Address2</td>
+							<td>{$actionReturn.data.bill_addr2}</td>
+						</tr>
+						{/if}
+						{if {$actionReturn.data.bill_phone}
+						<tr>
+							<td width="175">Billing Phone number</td>
+							<td>{$actionReturn.data.bill_phone}</td>
+						</tr>
+						{/if}
+							{if {$actionReturn.data.bill_phone}
+						<tr>
+							<td width="175">Phone number</td>
+							<td>{$actionReturn.data.bill_phone}</td>
+						</tr>
+						{/if}
+						{if {$actionReturn.data.bill_zip}
+						<tr>
+							<td width="175">Zip code</td>
+							<td>{$actionReturn.data.bill_zip}</td>
+						</tr>
+						{/if}
+							{if {$actionReturn.data.bill_state}
+						<tr>
+							<td width="175"> State</td>
+							<td>{$actionReturn.data.bill_state}</td>
+						</tr>
+						{/if}
+						{if {$actionReturn.data.bill_state}
+						<tr>
+							<td width="175"> Country</td>
+							<td>{$actionReturn.data.bill_country}</td>
+						</tr>
+						{/if}
+					</table>
+			
+				{/if}
+					</div >
+				</td>
+				</tr>
+				<tr>
+					<td width="50%">
+						<div class="boxList" >
+							<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+								<tr>
+									<th colspan="2" ><div align="left">Payment Details</div></th>
+								</tr>
+						{if $actionReturn.data.total_amount}
+								<tr>
+									<td width="175">Total Amount </td>
+									<td>${$actionReturn.data.total_amount}</td>
+								</tr>
+						{/if}
+						{if $actionReturn.data.ship_amount}
+								<tr>
+									<td>Shipping Charges </td>
+									<td>${$actionReturn.data.ship_amount}</td>
+								</tr>
+						{/if}
+						{if $actionReturn.data.ship_amount}
+								<tr>
+									<td>Discount </td>
+									<td>${$actionReturn.data.discount_amount}</td>
+								</tr>
+						{/if}
+						{if $actionReturn.data.ship_amount}
+								<tr>
+									<td><b>Grand Total</b></td>
+									<td><b>${$actionReturn.data.grand_total}</b></td>
+								</tr>
+						{/if}
+							</table>
+						</div>
+					</td>
+					<td width="50%">
+						<div class="boxList" >
+							<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+								<tr>
+									<th colspan="2" ><div align="left">Payment Method Details</div></th>
+								</tr>
+						{if $actionReturn.data.pay_opton==2}
+								<tr>
+									<td>Payment Method</td>
+									<td>Both Site credit and Payment gateway</td></tr>
+								<tr>
+									<td>Site Credit Amount</td><td>${$actionReturn.data.paid_sitecredit}</td>
+								</tr>
+								<tr>
+									<td>Card  Amount</td><td>${$actionReturn.data.paid_cardamount}</td>
+								</tr>
+						{/if}
+						{if $actionReturn.data.pay_opton==1}
+						<tr>
+							<td>Payment Method</td>
+							<td>Payment gateway</td>
+							<tr><td>Card  Amount</td><td>{$actionReturn.data.paid_cardamount}</td></tr>
+						</tr>
+						{/if}
+							{if $actionReturn.data.pay_opton==0}
+						<tr>
+							<td>Payment Method</td>
+							<td>Site Credit Only</td>
+						</tr>
+						<tr>
+							<td>Site Credit Amount</td><td>{$actionReturn.data.paid_sitecredit}</td>
+						</tr>
+						<tr>
+							<td>Card  Amount</td><td>{$actionReturn.data.paid_cardamount}</td>
+						</tr>	
+					{/if}
+					
+							</table>
+						</div>
+					</td>
+				<tr>
+					<td width="50%">
+						<div class="boxList" >
+							<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+							<tr>
+								<th colspan="7"><div align="left">Payment Status Details</div></th>
+							</tr>
+							<tr>
+								<td colspan="7">Payment Status</td>
+							</tr>
+						{if $actionReturn.data.paid_status==1}
+						<td colspan="7">Paid<a href="{$obj->getLink('Stauschange','',true,$obj->getConcat('id=',$actionReturn.data.id.id))}" class="Second_link">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/active.gif" border="0" title="Click here to inactivate"></a></td>
+</tr>
+						{else}
+						<td colspan="4">Not Paid<a href="{$obj->getLink('Stauschange','',true,$obj->getConcat('id=',$actionReturn.data.id.id))}" class="Second_link">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/inactive.gif" border="0" title="Click here to activate"></a></td>
+					{/if}
+					{if $actionReturn.data.paid_date}
+					<tr><td colspan="3">Paid Date</td>
+						<td colspan="4">{$actionReturn.data.paid_date}</td></tr>
+					{/if}
+					<tr><td>Delivery  Status</td>
+
+						
+						<td>Processing</td><td><input type="radio" name="deliver_status" id="deliver_status" value="1" {if $actionReturn.data.deliver_status==1} checked="checked" {/if} onclick="display({$actionReturn.data.id},{1});"/></td>
+
+						<td>Shipped</td><td><input type="radio" name="deliver_status" id="deliver_status" value="2"   {if $actionReturn.data.deliver_status==2} checked="checked" {/if} onclick="display({$actionReturn.data.id},{2});"/></td>
+					
+						<td>Pending</td><td><input type="radio" name="deliver_status" id="deliver_status" value="0"  {if $actionReturn.data.deliver_status==0} checked="checked" {/if} onclick="display({$actionReturn.data.id},{0});" /></td>
+					</tr>
+					<tr>
+						{if $actionReturn.data.deliver_date}
+						<tr>
+							<td colspan="3">Delivery  Date</td>
+							<td colspan="4"> {$actionReturn.data.deliver_date}</td>
+						</tr>
+						{/if}	
+					</tr>						
+					</table>
+				
+					</div>
+					
+				</td>
+				</tr>
+								
+				<tr>
+				<td>&nbsp;</td>
+				<td>
+					<input type="submit" class="butsubmit"  name="actionvar" value="Back" id="cancelId" />
+				</td>
+			</tr>
+		</tbody>
+		</table>
+	</td>
+</tr>
+
+{/if}	
+{/if}
+<tr>
+	{if $obj->currentAction	==	"Transall"}
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td>
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td><strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow}  </strong> of <strong>{$actionReturn.spage->totcnt} </strong></td>
+							<td>Keyword</td>	
+							<td>
+							<input type="text" name="keyword" maxlength="25" id="id_keyword" value="{$actionReturn.searchdata.keyword}" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Search" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Reset" />
+							</td>
+							<td>
+								<a href="{$obj->getLink('getcsv','',true)}&csv=csv" class="Second_link">
+								Export to CSV </a>
+							</td>
+							<td>
+								<a href="javascript:;" id="id_search_link">
+									<img src="images/search.png" border="0" width="16" height="16" />
+								</a>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<div id="id_search_block" class="cls_search_block">
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+							<tr>
+							<td>
+							Posted From
+							&nbsp;
+							<input type="text" value="" name="txt_join_from" id="txt_join_from" readonly="" />
+							</td>
+							<td>
+							Posted To
+							&nbsp;
+							<input type="text" value="" name="txt_join_to" id="txt_join_to" readonly=""/>
+							</td>
+							<td>
+							Status
+							&nbsp;
+							<select name="sel_status">
+								<option value="1">Active</option>
+								<option value="1">Inactive</option>
+							</select>
+							</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							<!--<th width="70"><input type="checkbox" name="checkall" id="id_check_all" ></th>-->
+							<th>No</th>
+							<th><a href="{$obj->getLink('search','','false')}&sortField=eo.id&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Order Id
+							{$obj->getSortImage('eo.id',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							<th><a href="{$obj->getLink('search','','false')}&sortField=eo.order_date&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Order Date
+							{$obj->getSortImage('eo.order_date',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}				
+							</a></th>
+							<th><a href="{$obj->getLink('search','','false')}&sortField=vc.fname&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Customer Name
+							{$obj->getSortImage('vc.fname',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							<th><a href="{$obj->getLink('search','','false')}&sortField=eo.total_amount&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Amount
+							{$obj->getSortImage('eo.total_amount',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>							
+							<th>Action </th>
+
+						</tr>
+				
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+						
+							<!--<td><input type="checkbox" name="checkone" id="id_chk_checkone" ></td>-->
+							<td>{$actionReturn.spage->startingRow+$smarty.foreach.i.index}</td>
+							<td><a onmouseover="return escape('{$data.product}')">{$data.id}</a></td>
+							<td>{$data.order_date}</td>
+							<td>{$data.fname}&nbsp;{$data.lname}</td>
+							<td>{$data.total_amount }</td>
+							
+							<td>
+							{if $obj->permissionCheck("View")}
+							<a href="{$obj->getLink('viewform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/view.gif" border="0" title="Click here to view"> </a>
+							{/if}
+							
+											
+							
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td><!--<input class="butsubmit" value="Delete" type="submit" name="actionvar" id="id_btn_delete">--> </td>
+						<td colspan="6">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		{/if}
+		
+		</table>
+	</td>
+	{/if}
+</tr>
+</table>
+{literal}
+<script type="text/javascript" src="js/tooltip.js"></script>		
+{/literal}
+{include_php file="footer.php"}

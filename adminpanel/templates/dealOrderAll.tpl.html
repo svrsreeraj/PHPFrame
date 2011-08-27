@@ -1,0 +1,925 @@
+{assign var="actionReturn" value=$obj->actionReturn}
+
+{literal}
+<script type="text/javascript">
+function getsubcat(cid,changeId)
+	{
+		$("#"+changeId).html("Loading...");
+		$.ajax({
+			   type	: "GET",
+			   url	: "dealOrderAll.php",
+			   data	: "actionvar=Getsubcatcombo&cid="+cid,
+			   dataType: "html",
+			   success: function(msg){
+				   $("#"+changeId).html(msg);
+				}
+			 });
+	}
+$(document).ready(function() {
+	$("#dealorder").tooltip();
+	$("#txt_order_from").datepicker();
+	$("#txt_order_from").datepicker('option',
+	{
+		showAnim:'show',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+
+	$("#txt_order_to").datepicker();
+	$("#txt_order_to").datepicker('option',
+	{
+		showAnim:'show',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+
+});
+</script>
+
+<link type="text/css" href="js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.datepicker.js"></script>
+
+{/literal}
+
+<form action="" name="fromName" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td align="left"  class="pageHead"><span id="dealorder"><strong> Deal Orders {if $obj->currentAction	==	"Transall"}All{/if}{if $obj->currentAction	==	"Transyearly"}Yearly{/if}{if $obj->currentAction	==	"Transdaily"}Daily{/if}{if $obj->currentAction	==	"Transmonthly"}Monthly{/if}{if $obj->currentAction	==	"Transcoupon"}Coupon Sharing{/if} </strong></span></td>
+				<td align="right" class="pageHead" style="text-align:right">
+				{if $obj->currentAction	==	"Transcoupon" || $obj->currentAction	==	"Transview" || $obj->currentAction	==	"Transcomplete"}
+				{else}
+					<strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow}  </strong> of <strong>{$actionReturn.spage->totcnt} </strong>
+				{/if}
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+	
+	{if $obj->currentAction	==	"Transall"}
+	<tr>
+		<td>
+			<table cellpadding="0" cellspacing="0" border="0" width="100%">
+				{include file='dealOrderSearch.tpl'}
+				{if $actionReturn.data}
+				<tr>
+					<td align="center" valign="middle">
+						<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+							<tr align="center" valign="middle">							
+								<th width="70"><input type="checkbox" name="checkall" id="id_check_all" ></th>
+								<th><a href="{$obj->getLink('Transallsearch','','false')}&sortField=o.id&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Order Id
+								{$obj->getSortImage('o.id',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a></th>
+								<th><a href="{$obj->getLink('Transallsearch','','false')}&sortField=o.orderDate&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Order Date
+								{$obj->getSortImage('o.orderDate',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a></th>
+								<th><a href="{$obj->getLink('Transallsearch','','false')}&sortField=d.name&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Deal Name
+								{$obj->getSortImage('d.name',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}				
+								</a></th>
+								<th><a href="{$obj->getLink('Transallsearch','','false')}&sortField=o.total_amount&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Amount
+								{$obj->getSortImage('o.total_amount',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a></th>
+								<th><a href="{$obj->getLink('Transallsearch','','false')}&sortField=cu.fname&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Customer Name
+								{$obj->getSortImage('cu.fname',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+								 </a></th>
+								 
+								 <th><a href="{$obj->getLink('Transallsearch','','false')}&sortField=o.quantity&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								<span title="Redeemed Coupons/Total Coupons">Coupons</span>					
+								{$obj->getSortImage('o.quantity',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+								 </a></th>
+								 							
+								<th><a href="{$obj->getLink('Transallsearch','','false')}&sortField=o.paid_status&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Paid
+								{$obj->getSortImage('o.paid_status',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+								 </a></th>							
+								<th><a href="{$obj->getLink('Transallsearch','','false')}&sortField=o.redeem_status&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Redeemed
+								{$obj->getSortImage('o.redeem_status',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+								 </a></th>							
+	
+								<th>
+								Actions
+								</th>							
+							</tr>
+							
+						{foreach from=$actionReturn.data item=data name=i}
+							<tr>
+								<td width="70"><input type="checkbox" name="checkone[]" value="{$data.id}" id="id_chk_checkone" ></td>
+								<td>{$data.id}</td>
+								<td>{$obj->displayDate($data.orderDate)}</td>
+								<td><a class="helpText" onmouseover="return escape('{$data.dealPopUp}')">{$data.dealname}</a></td>
+								<td><a class="helpText" onmouseover="return escape('{$data.amountPopUp}')">${$data.total_amount}</a></td>
+								<td>{$data.customerfname} {$data.customerlname}</td>
+								<td>{$data.used_coupons}/{$data.quantity}</td>
+								<td>
+									{if $data.paid_status == $smarty.const.GLB_DEAL_PAID}
+										<img border="0" title="Paid" src="images/active.gif">
+									{else}
+										<img border="0" title="Not Paid" src="images/inactive.gif">
+									{/if}
+								</td>
+								<td>
+									{if $data.redeem_status == $smarty.const.GLB_COUPON_REDEEMED}
+										<img border="0" title="Redeemed" src="images/active.gif">
+									{else}
+										<img border="0" title="Not Redeemed" src="images/inactive.gif">
+									{/if}
+								</td>
+								<td>
+									<a href="{$obj->getLink('Transview','','false')}&id={$data.id}">
+										<img border="0" title="Click here to view" src="images/view.gif">
+									</a>
+								</td>
+							</tr>
+						{/foreach}
+						<tr>
+							<td colspan="2">
+							<input class="butsubmit cls_btn_hide" msg="Are you sure you want to change these records to paid?" value="Paid" type="submit" name="actionvar"> 
+							<input class="butsubmit cls_btn_hide" msg="Are you sure you want to change these records to not paid?" value="Not Paid" type="submit" name="actionvar"> 
+							</td>
+							<td colspan="8">{$actionReturn.spage->s_get_links()}</td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+			{/if}
+			
+			</table>
+		</td>
+	</tr>
+	{/if}
+	
+	{if $obj->currentAction	==	"Transdaily"}
+	<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			{include file='dealOrderSearch.tpl'}
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+						
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=o.orderDate&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Order Date
+							{$obj->getSortImage('o.orderDate',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=tot_orders&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Orders
+							{$obj->getSortImage('tot_orders',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=tot_deals&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Deals
+							{$obj->getSortImage('tot_deals',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}				
+							</a></th>					
+							
+							
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=tot_total_amount&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Total Amount
+							{$obj->getSortImage('tot_total_amount',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>	
+							 						
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=tot_customer_id&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Customers
+							{$obj->getSortImage('tot_customer_id',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>	
+							 						
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=tot_paid&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Paid
+							{$obj->getSortImage('tot_paid',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>		
+							 <th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=tot_quantity&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Coupons
+							{$obj->getSortImage('tot_quantity',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>					
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=totredeemed&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Redeemed
+							{$obj->getSortImage('totredeemed',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>
+							 					
+							<th>Action </th>
+
+						</tr>
+						
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							<td>{$obj->displayDate($data.orderDate)}</td>
+							<td>{$data.tot_orders}</a></td>
+							<td>{$data.tot_deals}</a></td>							
+							<td>${$data.tot_total_amount}</a></td>
+							<td>{$data.tot_customer_id}</a></td>
+							<td>{$data.tot_paid}</a></td>
+							<td>{$data.tot_quantity}</a></td>
+							<td>{$data.totredeemed}</a></td>
+							
+							<td>
+							{if $obj->permissionCheck("View")}
+							<a href="{$obj->getLink('Gotransall','',true)}&datesearch={$obj->displayDbDate($data.orderDate)}" class="Second_link" title="Click here to view all details">
+							<img height="20" width="20" border="0" src="images/inner_details.png"> 
+							</a>
+							{/if}
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td colspan="9">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		{/if}
+		
+		</table>
+	</td>
+</tr>
+	{/if}
+
+	{if $obj->currentAction	==	"Transmonthly"}
+	<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			{include file='dealOrderSearch.tpl'}
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=o.orderDate&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Order Date
+							{$obj->getSortImage('o.orderDate',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=tot_orders&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Orders
+							{$obj->getSortImage('tot_orders',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=tot_deals&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Deals
+							{$obj->getSortImage('tot_deals',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}				
+							</a></th>
+							
+							
+							
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=tot_total_amount&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Total Amount
+							{$obj->getSortImage('tot_total_amount',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>	
+							 						
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=tot_customer_id&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Customers
+							{$obj->getSortImage('tot_customer_id',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>	
+							 						
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=tot_paid&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Paid
+							{$obj->getSortImage('tot_paid',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>		
+							
+							 <th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=tot_quantity&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Coupons
+							{$obj->getSortImage('tot_quantity',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							 
+							 					
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=totredeemed&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Redeemed
+							{$obj->getSortImage('totredeemed',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>
+							 					
+							<th>Action </th>
+
+						</tr>
+						
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							<td>{$data.dealyear} {$data.dealmonth}</td>
+							<td>{$data.tot_orders}</a></td>
+							<td>{$data.tot_deals}</a></td>
+							
+							<td>${$data.tot_total_amount}</a></td>
+							<td>{$data.tot_customer_id}</a></td>
+							<td>{$data.tot_paid}</a></td>
+							<td>{$data.tot_quantity}</a></td>
+							<td>{$data.totredeemed}</a></td>
+							
+							<td>
+							{if $obj->permissionCheck("View")}
+							<a href="{$obj->getLink('Gotransdaily','',true)}&datesearch={$obj->displayDbDate($data.orderDate)}" class="Second_link" title="Click here to view daily wise details">
+							<img height="20" width="20" border="0" src="images/inner_details.png"> 
+							</a>
+							{/if}
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td colspan="9">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		{/if}
+		
+		</table>
+	</td>
+</tr>
+	{/if}
+
+	{if $obj->currentAction	==	"Transyearly"}
+	<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			{include file='dealOrderSearch.tpl'}
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=o.orderDate&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Year
+							{$obj->getSortImage('o.orderDate',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=tot_orders&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Orders
+							{$obj->getSortImage('tot_orders',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=tot_deals&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Deals
+							{$obj->getSortImage('tot_deals',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}				
+							</a></th>						
+							
+							
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=tot_total_amount&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Total Amount
+							{$obj->getSortImage('tot_total_amount',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>	
+							 						
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=tot_customer_id&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Customers
+							{$obj->getSortImage('tot_customer_id',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>	
+							 						
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=tot_paid&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Paid
+							{$obj->getSortImage('tot_paid',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>		
+							
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=tot_quantity&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Coupons
+							{$obj->getSortImage('tot_quantity',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							 					
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=totredeemed&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							#Redeemed
+							{$obj->getSortImage('totredeemed',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>
+							 					
+							<th>Action </th>
+
+						</tr>
+						
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							<td>{$data.dealyear}</td>
+							<td>{$data.tot_orders}</a></td>
+							<td>{$data.tot_deals}</a></td>							
+							<td>${$data.tot_total_amount}</a></td>
+							<td>{$data.tot_customer_id}</a></td>
+							<td>{$data.tot_paid}</a></td>
+							<td>{$data.tot_quantity}</a></td>
+							<td>{$data.totredeemed}</a></td>
+							
+							<td>
+							{if $obj->permissionCheck("View")}
+							<a href="{$obj->getLink('Gotransmonthly','',true)}&datesearch={$obj->displayDbDate($data.orderDate)}" class="Second_link" title="Click here to view monthly wise details">
+							<img height="20" width="20" border="0" src="images/inner_details.png"> 
+							</a>
+							{/if}
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td colspan="9">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		{/if}
+		
+		</table>
+	</td>
+</tr>
+	{/if}
+{if $obj->currentAction	==	"Transcomplete"}
+	<tr>
+	<td>
+		<table  width="100%"  cellpadding="0" cellspacing="0" border="0">
+			{include file='dealOrderSearch.tpl'}
+								<tbody>
+									<tr>
+										<td width="50%" height="100"valign="top">
+											<div class="boxList"  >
+												<div>
+													<table width="674" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">		
+														<th colspan="4" ><div align="center">{if $actionReturn.data.0.tot_orders == 0}No Records Found{else}Consolidated&nbsp; Report</div></th>
+														<tr>
+															<td width="125">Total Orders</td>
+															<td width="238"><b>{$actionReturn.data.0.tot_orders}</b></td>
+															<td width="98">Total Paid</td>
+															<td width="214"><b>{$actionReturn.data.0.tot_paid}</b></td>
+														</tr>
+														<tr>															
+															<td>Total Coupons(Qty)</td>
+															<td><b>{$actionReturn.data.0.tot_quantity}</b></td>
+															<td>Total Redeemed</td>
+															<td><b>{$actionReturn.data.0.totredeemed}</b></td>
+														</tr>
+														<tr>
+															<td>Total Sales Agents</td>
+															<td><b>{$actionReturn.data.0.tot_salesagents}</b></td>
+															<td>Total Vendors</td>
+															<td><b>{$actionReturn.data.0.tot_vendors}</b></td>
+														</tr>
+														<tr>
+															<td>Total Customers</td>
+															<td><b>{$actionReturn.data.0.tot_customers}</b></td>
+															<td>Gift Orders</td>
+															<td><b>{$actionReturn.data.0.tot_giftorder}</b></td>
+														</tr>
+														<tr>
+															<td colspan="3"></td>
+															<td><a class="view-more" title="Click here to view yearly report" target="_blank" href="{$obj->getLink('Gotoyearlyreport','',true)}">
+															view more
+                            								</a></td>
+														</tr>
+														<tr><td colspan="4"></td></tr>
+												  </table>
+										
+												</div>
+											</div>
+											</td>
+											</tr>
+											<tr>
+											<td>
+											<div class="boxList"  >
+												<div>
+													<table width="674" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">		
+														<th colspan="4" ><div align="center">Payment&nbsp; Details</div></th>
+														<tr>
+															<td width="125">Vendor Commission</td>
+															<td width="238"><b>${$actionReturn.data.0.tot_vendor_commsn}</b></td>
+															<td>Site Commision</td>
+															<td><b>${$actionReturn.data.0.tot_site_commsn}</b></td>
+														</tr>
+														<tr>
+															<td width="98">Sales Commission</td>
+															<td width="214"><b>${$actionReturn.data.0.tot_sales_commsn}</b></td>
+															<td>Total Amount</td>
+															<td><b>${$actionReturn.data.0.total_amount}</b></td>
+														</tr>
+														<tr>
+															<td>Total Site Credit</td>
+															<td><b>${$actionReturn.data.0.tot_sitecredit}</b></td>
+															<td>Total Card Amount</td>
+															<td><b>${$actionReturn.data.0.tot_cardamount}</b></td>
+														</tr>
+														{/if}
+														<tr><td colspan="4"></td></tr>
+												  </table>
+										
+												</div>
+											</div>
+									  </td>
+									</tr>
+								</tbody>
+						</table>
+	</td>
+	</tr>
+{/if}
+
+{if $obj->currentAction	==	"Transcoupon"}
+	<tr>
+	<td>
+		<table  width="100%"  cellpadding="0" cellspacing="0" border="0">
+								<tbody>
+									<tr>
+										<td width="50%" height="100"valign="middle">
+											<div class="boxList"  >
+					<div>
+					<table width="817" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+					<tr>{if $actionReturn.data}
+					<th colspan="2"><div align="left">Coupon Code : &nbsp;{$actionReturn.coupon_code}</div></th>
+					<th width="221"><div align="left">First Owner :&nbsp;{assign var="cuobj" value=$obj->getCustomerPersonalDetails($actionReturn.firstOwner)}
+						{$cuobj.fname} {$cuobj.lname}</div></th>
+					<th width="282" colspan="2"><div align="left">Current Owner:&nbsp;{assign var="cuobj" value=$obj->getCustomerPersonalDetails($actionReturn.currentOwner)}
+						{if $cuobj}{$cuobj.fname} {$cuobj.lname}{else}Not a Customer Yet{/if}</div></th>
+					</tr>
+					<tr>
+					<td>#</td>
+					<td><b>Sent From</b></td>
+					<td><b>Sent To</b></td>
+					<td><b>Sent To Email</b></td>
+					<td><b>Sent Date</b></td>
+					</tr>
+					{foreach from=$actionReturn.data item=data name=i}
+					<tr>
+					<td>{$smarty.foreach.i.index+1}</td>
+					<td>{assign var="cuobj" value=$obj->getCustomerPersonalDetails($data.sent_from)}
+						{$cuobj.fname} {$cuobj.lname}</td>
+					<td>{assign var="cuobj" value=$obj->getCustomerPersonalDetails($data.sent_to)}
+						{if $cuobj}{$cuobj.fname} {$cuobj.lname}{else}Not a Customer Yet{/if}</td>
+					<td>{$data.sent_toemail}</td>
+					<td>{$obj->displayDate($data.sent_date)}</td>
+					</tr>
+					{/foreach}
+					{else}	
+					<td>No Record Found</td>
+					</tr>
+					{/if}
+					</table>
+					</div>
+										</div>
+									  </td>
+									</tr>
+								</tbody>
+						</table>
+	</td>
+	</tr>
+{/if}
+	
+	{if $obj->currentAction	==	"Transview"}
+	<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+				<td width="50%" valign="top">
+					<div class="boxList">
+					<div>
+					<table width="340"  border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">		
+						<th colspan="2" ><div align="left">Order Details</div> </th>
+						<tr>
+							<td width="175">Order Id</td>
+							<td>{$actionReturn.data.id}</td>
+						</tr>
+						<tr>
+							<td>Ordered Date</td>
+							<td>{$obj->displayTime($actionReturn.data.orderDate)}</td>
+						</tr>
+						<tr>
+							<td>Ordered IP</td>
+							<td>{$actionReturn.data.ip}</td>
+						</tr>
+						<tr>
+							<td>Paid</td>
+							<td>
+								{if $actionReturn.data.paid_status == $smarty.const.GLB_DEAL_PAID}
+									<img border="0" title="Paid" src="images/active.gif">
+								{else}
+									<img border="0" title="Not Paid" src="images/inactive.gif">
+								{/if}
+							</td>
+						</tr>
+						
+						{if $actionReturn.data.paid_status == $smarty.const.GLB_DEAL_PAID}
+						<tr>
+							<td>Paid date</td>
+							<td>{$obj->displayTime($actionReturn.data.paid_date)}</td>
+						</tr>
+						
+						<tr>
+							<td>Quantity</td>
+							<td>{$actionReturn.data.quantity}</td>
+						</tr>
+						<tr>
+							<td>Unit Price</td>
+							<td>${$actionReturn.data.unit_price}</td>
+						</tr>
+						{if $actionReturn.data.paid_sitecredit > 0}
+						<tr>
+							<td>Site credit Amount</td>
+							<td>${$actionReturn.data.paid_sitecredit}</td>
+						</tr>
+						{/if}
+						{if $actionReturn.data.paid_cardamount > 0}
+						<tr>
+							<td>Card Amount</td>
+							<td>${$actionReturn.data.paid_cardamount}</td>
+						</tr>
+						{/if}
+						{/if}
+						<tr>
+							<td>Total Amount</td>
+							<td>${$actionReturn.data.total_amount}</td>
+						</tr>
+						<tr>
+							<td>Admin unit commision</td>
+							<td>${$actionReturn.data.site_commision}({$actionReturn.data.site_commision}%)</td>
+						</tr>
+								<td>Application Interface</td>
+								<td>{$actionReturn.data.apps}</td>
+						</tr>
+						<tr>
+							<td>Gift Order</td>
+							<td>
+								{if $actionReturn.data.gift_order == $smarty.const.GLB_DEAL_TYPE_GIFT}
+									<img border="0" title="Gift Order" src="images/active.gif">
+								{else}
+									<img border="0" title="Not a Gift Order" src="images/inactive.gif">
+								{/if}
+							</td>
+						</tr>
+
+					</table>
+		
+				</div>
+			
+					<div>
+					<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">		
+					<th colspan="2" ><div align="left">Billing details</div></th>
+						{if $actionReturn.data.billing_fname}
+						<tr>
+							<td width="175">Name</td>
+							<td>{$actionReturn.data.billing_fname} {$actionReturn.data.billing_lname}</td>
+						</tr>
+						{/if}
+						{if $actionReturn.data.billing_address}
+						<tr>
+							<td>Address</td>
+							<td>{$actionReturn.data.billing_address}</td>
+						</tr>	
+						{/if}
+						{if $actionReturn.data.billing_city}					
+						<tr>
+							<td>City</td>
+							<td>{$actionReturn.data.billing_city}</td>
+						</tr>
+						{/if}
+						{if $actionReturn.data.country}
+						<tr>
+							<td>Country</td>
+							<td>{$actionReturn.data.country}</td>
+						</tr>
+						{/if}
+						{if $actionReturn.data.state}
+						<tr>
+							<td>State</td>
+							<td>{$actionReturn.data.state}</td>
+						</tr>
+						{/if}
+						{if $actionReturn.data.billing_zip}
+						<tr>
+							<td>Zip</td>
+							<td>{$actionReturn.data.billing_zip}</td>
+						</tr>
+						{/if}
+					</table>
+					
+					</div>
+					
+					
+					<div>
+					<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">		
+					<th colspan="2" ><div align="left">Coupon details</div></th>
+					<tr>
+					<td width="175">Coupon Code</td>
+					<td>
+					{$actionReturn.data.coupon_code}
+					</td>
+					</tr>
+					<tr>
+					<td>Coupon Status</td>
+					<td>
+					{if $actionReturn.data.coupon_status==$smarty.const.GLB_COUPON_INACTIVE}
+					Inactive					
+					{elseif $actionReturn.data.coupon_status==$smarty.const.GLB_COUPON_ACTIVE}
+					Active					
+					{elseif $actionReturn.data.coupon_status==$smarty.const.GLB_COUPON_EXPIRED}
+					Expired
+					{/if}
+					</td>
+					</tr>
+					<tr>
+					<td>Total Coupons </td>
+					<td>				
+					{$actionReturn.data.quantity}
+					</td>
+					</tr>
+					<tr>
+					<td>Total Redeemed </td>
+					<td>				
+					{$actionReturn.data.used_coupons}
+					</td>
+					</tr>
+					<tr>
+					<td>Total Not Redeemed </td>
+					<td>				
+					{$actionReturn.data.balance_coupons}
+					</td>
+					</tr>
+					<tr>
+					<td>Complete Redeemed </td>
+					<td>
+					{if $actionReturn.data.redeem_status == $smarty.const.GLB_COUPON_REDEEMED}
+					<img border="0" title="Redeemed" src="images/active.gif">
+					{else}
+					<img border="0" title="Not Redeemed" src="images/inactive.gif">
+					{/if}
+					</td>
+					</tr>
+					{if $actionReturn.data.redeem_status == $smarty.const.GLB_COUPON_REDEEMED}
+					<tr>
+					<td>Redeemed Date</td>
+					<td>{$obj->displayTime($actionReturn.data.redeem_date)}</td>
+					</tr>
+					{/if}
+					</table>
+					</div>
+					
+					
+					{if $actionReturn.data.customer_id != $actionReturn.data.last_owner}
+					<div>
+						<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">		
+						<th colspan="2" ><div align="left">Coupon Sharing</div></th>
+						<tr>
+						<td width="175">Deal Purchased By</td>
+						<td>
+						{assign var="cuobj" value=$obj->getCustomerPersonalDetails($actionReturn.data.customer_id)}
+						{$cuobj.fname} {$cuobj.lname}
+						</td>
+						</tr>
+						<tr>
+						<td>Last Owner</td>
+						<td>
+						{assign var="cuobj" value=$obj->getCustomerPersonalDetails($actionReturn.data.last_owner)}
+						{$cuobj.fname} {$cuobj.lname}
+						</td>
+						</tr>
+						<tr>
+						<td>Current Owner</td>
+						<td>
+						{assign var="cuobj" value=$obj->getCustomerPersonalDetails($actionReturn.data.current_owner)}
+						{$cuobj.fname} {$cuobj.lname}
+						</td>
+						</tr>
+						<tr>
+						<td></td>
+						<td><a class="view-more" target="_blank" href="{$obj->getLink('Transcoupon','',true)}">view more</a></td>
+						</tr>
+						</table>
+						</div>
+				{/if}		
+					</div>
+					
+					</td>	
+					<td width="50%" valign="top">
+						<div class="boxList" >
+							<div>
+									<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+										<tr>
+											<th colspan="2" ><div align="left">Deals Details</div></th>
+										</tr>
+										<tr>
+											<td width="175">Deal Name</td>
+											<td>{$actionReturn.data.dealname}</td>
+										</tr>
+										<tr>
+											<td>Cost Value</td>
+											<td>${$actionReturn.data.cost}</td>
+										</tr>
+										<tr>
+											<td>Save Value</td>
+											<td>${math equation="x-y" x=$actionReturn.data.cost  y=$actionReturn.data.deal_price}</td>
+										</tr>
+										<tr>
+											<td>Deal Value</td>
+											<td>${$actionReturn.data.deal_price}</td>
+										</tr>
+										<tr>
+											<td>Offer Rate</td>
+											<td>${$actionReturn.data.offer_rate}%</td>
+										</tr>
+										<tr>
+											<td></td>
+											<td>
+											<a href="{$obj->getLink('Viewdealdetails','dealOrderAll.php',true,$obj->getConcat('id=',$actionReturn.data.deal_id))}" class="view-more" target="window_name" >view more</a>
+                          					</td>
+										</tr>
+									</table>
+							</div>
+					
+							<div>
+								<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">		
+									<th colspan="2" ><div align="left">Vendor details</div></th>
+									<tr>
+										<td width="175">Vendor Id</td>
+										<td>{$actionReturn.data.vendor_id}</td>
+									</tr>
+									<tr>
+										<td>Vendor Name: </td>
+										<td>{$actionReturn.data.vendorname}</td>
+									</tr>
+									<tr>
+										<td>Deal Commision</td>
+										<td>{$actionReturn.data.vendor_commision}({$actionReturn.data.vendor_comm_rate}%)</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td align="right"><a target="_blank" class="view-more" href="{$obj->getLink('Linktovendordetails','',true)}&vendor_id={$actionReturn.data.vendor_id}">
+										view more
+										</a></td>
+									</tr>
+								</table>
+					
+							</div>
+							
+							<div>
+								<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">		
+									<th colspan="2" ><div align="left">Customer details</div></th>
+									<tr>
+										<td width="175">Customer Id</td>
+										<td>{$actionReturn.data.customer_id}</td>
+									</tr>
+									<tr>
+										<td>Customer Name</td>
+										<td>{$actionReturn.data.customerfname} {$actionReturn.data.customerlname}</td>
+									</tr>
+									<tr>
+										<td>Customer Email</td>
+										<td>{$actionReturn.data.customeremail}</td>
+									</tr>
+									<tr>
+									<td></td>
+									<td><a target="_blank" class="view-more" href="{$obj->getLink('Linktocustomerdetails','',true)}&customer_id={$actionReturn.data.customer_id}">view more</a></td>
+									</tr>
+								</table>
+					
+							</div>
+							{if $actionReturn.data.s_agent_fname!=""}
+							<div>
+							<table width="340" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">		
+								<th colspan="2" ><div align="left">Sales Agent Details</div></th>
+								<tr>
+									<td width="175">Sales Agent id</td>
+									<td>{$actionReturn.data.saleagent_id}</td>
+								</tr>
+								<tr>
+									<td>Sales Agent Name: </td>
+									<td>{$actionReturn.data.s_agent_fname}{$actionReturn.data.s_agent_lname}</td>
+								</tr>
+								<tr>
+									<td>Deal Commision</td>
+									<td>${$actionReturn.data.sales_commision}({$actionReturn.data.sales_comm_rate}%)</td>
+								</tr>
+								<tr>
+									<td></td>
+									<td><a target="_blank" class="view-more" href="{$obj->getLink('Linktodealdetails','',true)}&sales_agent={$actionReturn.data.saleagent_id}">view more</a></td>
+								</tr>
+							</table>
+						</div>
+							{/if}
+						</div>
+					</td>
+				</tr>
+			</tbody>
+	</table>
+	</td>
+	</tr>
+	{/if}
+</table>
+{literal}
+<script type="text/javascript" src="js/tooltip.js"></script>		
+{/literal}
+{include_php file="footer.php"}

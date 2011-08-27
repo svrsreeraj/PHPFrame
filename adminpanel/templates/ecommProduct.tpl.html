@@ -1,0 +1,242 @@
+{literal}
+<script type="text/javascript" src="js/highslide/highslide.js"></script>
+<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
+<script type="text/javascript">
+$(document).ready(function(){
+$("#ecom").tooltip();
+});
+</script>
+{/literal}
+{assign var="actionReturn" value=$obj->actionReturn}
+<form action="" name="fromName" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+<tr>
+	<td class="pageHead"><span id="ecom"><strong>{if ($obj->currentAction	==	"Addform")}Add {/if}{if ($obj->currentAction	==	"Editform")}Edit {/if}Ecommerce Products </strong></span></td>
+</tr>
+{if ($obj->currentAction	==	"Addform")	||	($obj->currentAction	==	"Editform")}
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+			
+
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+				<th colspan="2">Manage Ecommerce Products</th>
+			</tr>
+			{if $actionReturn.combo}
+			<tr>
+				<td>Select Category</td>
+				<td>{$actionReturn.combo}</td>
+			</tr>
+			{/if}
+			
+			<tr>
+				<td width="150">Product </td>
+				<td><input type="text" valtype="emptyCheck-Please enter a product name" name="product" value="{$actionReturn.data.product}" id="productId" class="validateText" /></td>
+			</tr>
+		
+			<tr>
+				<td width="150">Description </td>
+				<td><textarea  name="description" id="descriptionId" valtype="emptyCheck-Please enter a product description" cols="50" rows="5">{$actionReturn.data.description}</textarea>
+				</td>
+			</tr>
+		
+			<tr>
+				<td>Price in Points</td>
+				<td><input type="text"  name="price_points" valtype="emptyCheck-Please enter a price|checkNumber-Please enter a valid price" value="{$actionReturn.data.price_points}" id="price_pointsId" class="nummberOnly"  maxlength="10" /></td>
+			</tr>
+	
+			
+			<tr>
+				<td>Total Quantity</td>
+				<td><input type="text" valtype="emptyCheck-Please enter a quantity|checkNumber-Please enter a valid quantiy" name="total_quantity" value="{$actionReturn.data.total_quantity}" id="total_quantityId" class="nummberOnly"  maxlength="10"/></td>
+			</tr>
+			
+			<tr>
+				<td>Image</td>
+				<td><input type="file"  name="fileImage" value="{$actionReturn.data.image}" id="fileImageId" />
+				{if $actionReturn.data.image}
+				<a  href="../images/ecomProducts/{$actionReturn.data.image}" class="highslide" onclick="return hs.expand(this)">
+				<img src="../images/ecomProducts/thumb/{$actionReturn.data.image}" width="25" height="25" border="0"/>
+				</a>
+				{/if}
+				</td></tr>
+				
+		
+			
+			<tr>
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+				{if $obj->currentAction	==	"Editform"}
+					{if $obj->permissionCheck("Edit")}
+					<input type="submit" class="butsubmit" valcheck="true"  name="actionvar" value="Update" id="saveDataId" />
+					{/if}
+				{else}
+					{if $obj->permissionCheck("Add")}
+					<input type="submit" class="butsubmit" valcheck="true" name="actionvar" value="Save" id="saveDataId" />
+					{/if}
+				{/if}
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+		
+	</td>
+</tr>	
+
+{/if}
+
+{if $obj->permissionCheck("View")}
+
+<tr>
+	{if $obj->currentAction	==	"Listing"}
+	<td id="testidhere">
+		<table cellpadding="0" cellspacing="0" border="0" width="100%" >
+			<tr>
+				<td  align="right">&nbsp;</td>
+			</tr>
+			
+			<tr>
+				<td>
+			
+
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td>Viewing  - <strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow}  </strong> of <strong>{$actionReturn.spage->totcnt} </strong> </td>
+							
+							<td>
+								{$actionReturn.searchdata.searchCombo}
+							</td>
+							<td>
+							Keyword&nbsp;
+							<input type="text" name="keyword" maxlength="25" id="id_keyword" value="{$actionReturn.searchdata.keyword}" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Search" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Reset" />
+							</td>
+							<td>
+							{if $obj->permissionCheck("Add")}
+							<input name="actionvar" type="submit" class="butsubmit" value="Add New" />
+							{/if}
+							</td>
+						</tr>
+					</table>
+					
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			{if $obj->permissionCheck("View")}
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					
+
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							<th>No</th>
+							<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=pd.product&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Product
+								{$obj->getSortImage('pd.product',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>							
+							<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=p.category&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Category
+								{$obj->getSortImage('p.category',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>
+							<th>Image </th>
+							<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=pd.sold_quantity&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Sold
+								{$obj->getSortImage('pd.sold_quantity',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>/
+								<a href="{$obj->getLink('Search','',false)}&sortField=pd.total_quantity&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Total Qty
+								{$obj->getSortImage('pd.total_quantity',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>
+							<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=pd.price_points&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Price Points
+								{$obj->getSortImage('pd.price_points',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>
+							
+							<th>Action </th>
+
+						</tr>
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							<td>{$actionReturn.spage->startingRow+$smarty.foreach.i.index}</td>
+							<td>{$data.product}</td>
+							<td>{$data.category}</td>
+							<td>
+							{if $data.image}
+							<a  href="../images/ecomProducts/{$data.image}" class="highslide" onclick="return hs.expand(this)">
+							<img src="../images/ecomProducts/thumb/{$data.image}" width="17" height="17" border="0"/>
+							</a><div class="highslide-caption">{$data.product}</div>
+							{else} ---
+							{/if}
+							</td>
+							<td>{$data.sold_quantity}/{$data.total_quantity}</td>
+							<td>{$data.price_points}</td>
+							
+							<td>
+							{if $obj->permissionCheck("Status")}
+							<a href="{$obj->getLink('Stauschange','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							{/if}
+							{if $data.status == 1} 
+							<img src="images/active.gif" border="0" title="Click here to inactivate">
+							 {else} 							 
+							 <img src="images/inactive.gif" border="0" title="Click here to activate">
+							 {/if}
+					{if $obj->permissionCheck("Status")}
+					 </a> 
+					{/if}	 
+							{if $obj->permissionCheck("Edit")}
+							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/edit.gif" border="0" title="Click here to edit">
+							</a> 							
+							{/if}
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td colspan="6">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		{/if}
+		{/if}
+		</table>
+	</td>
+	{/if}
+</tr>
+{/if}
+</table>
+</form>
+{literal}
+<script language="javascript" type="text/javascript">
+hs.htmlExpand(document.getElementById("testidhere"), { outlineType: 'rounded-white', wrapperClassName: 'draggable-header',
+	headingText: 'Full HTML content' } )
+</script>
+{/literal}
+
+{include_php file="footer.php"}

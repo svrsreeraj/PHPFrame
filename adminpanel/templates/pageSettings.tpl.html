@@ -1,0 +1,263 @@
+{assign var="actionReturn" value=$obj->actionReturn}
+{literal}
+<script type="text/javascript">
+	$(document).ready(function(){
+	$("#pagesetting").tooltip();
+});
+</script>
+{/literal}
+
+<form action="" name="fromName" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+
+
+<tr>
+	<td class="pageHead"><span id="pagesetting"><strong>Page Settings </strong></span></td>
+</tr>
+
+{if ($obj->currentAction	==	"Editform") ||  ($obj->currentAction	==	"Addform")}
+
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+				<th colspan="2">Edit Pages</th>
+			</tr>
+			<tr>
+				<td width="150">Select Menu</td>
+				<td>{$actionReturn.combo}</td>
+			</tr>
+			<tr>
+				<td>Page Name</td>
+				<td><input type="text"  name="page" valtype="emptyCheck-Please enter a page name" value="{$actionReturn.data.page}" id="pageId"  size="60" /></td>
+			</tr>			
+			<tr>
+				<td>Page Title</td>
+				<td><input type="text"  name="pagetitle" valtype="emptyCheck-Please enter  a page title" value="{$actionReturn.data.pagetitle}" id="pagetitleId" size="60" class="validateText"/></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td align="left">
+				
+				<textarea name="description" cols="45" rows="3" 
+				id="descriptionId" valtype="emptyCheck-Please enter a description" >{$actionReturn.data.description}</textarea>
+				</td>
+			</tr>
+			{if $obj->currentAction	==	"Addform"}		
+			{if $actionReturn.actionArr}
+			<tr>
+				<td>Page Options</td>
+				<td align="left">
+				{section name=i loop=$actionReturn.actionArr}
+				<input type="checkbox" name="actions[]" id="add" value="{$actionReturn.actionArr[i].id}" />
+				{$actionReturn.actionArr[i].action}   
+				{/section}
+				</td>
+			</tr>			
+			{/if}
+			{/if}
+			
+			{if $obj->currentAction	==	"Editform"}			
+			<tr>
+				<td >Sort Order</td>
+				<td >
+				<input name="txtpreference" type="text" valtype="checkNumber-Please enter a number" id="preferenceId" size="10" value="{$actionReturn.data.preference}" 
+				class="nummberOnly"  maxlength="10">
+				</td>
+			</tr>
+			
+			{if $actionReturn.actions}
+			<tr>
+				<td>Page Options Remaining</td>
+				<td align="left">
+				{section name=i loop=$actionReturn.actions}
+				<input type="checkbox" name="actions[]" id="edit" value="{$actionReturn.actions[i].id}" />
+				{$actionReturn.actions[i].action}  
+				{/section}
+				</td>
+			</tr>
+			{/if}
+			{if $actionReturn.actionSel} 
+			<tr>
+				<td>Page Options Selected</td>
+				<td align="left">
+				
+				{section name=j loop=$actionReturn.actionSel}
+				
+					
+					{$actionReturn.actionSel[j].action}  {if !$smarty.section.j.last},{/if}
+
+				{/section}
+				</td>
+			</tr> 
+			{/if}
+			{/if}	
+			
+				
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+				{if $obj->currentAction	==	"Editform"}					
+						<input type="submit" valcheck="true" class="butsubmit"  name="actionvar" value="Update" id="saveDataId" />					
+				{else}					
+						<input type="submit" valcheck="true" class="butsubmit"  name="actionvar" value="Save" id="saveDataId" />				
+				{/if}	
+				<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>	
+{/if}
+
+
+
+
+<tr>
+		{if $obj->currentAction	==	"Listing"}
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td  align="right">&nbsp;</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td>  <strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow}  </strong> of <strong>{$actionReturn.spage->totcnt} </strong></td>
+							<td>Menus:</td>
+							<td>
+								{$actionReturn.searchdata.searchCombo}
+							</td>
+							<td>
+							<input type="text" name="keyword" maxlength="25" id="id_keyword" value="{$actionReturn.searchdata.keyword}" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Search" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Reset" />
+							</td>
+							<td>
+							{if $obj->permissionCheck("Add")}
+							<input name="actionvar" type="submit" class="butsubmit" value="Add New" />
+							{/if}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			
+			
+			{if $obj->permissionCheck("view")}
+			{if $actionReturn.data} 
+					<tr>
+						<td align="center" valign="middle">
+							<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+								<tr align="center" valign="middle">							
+									<th>No</th>									
+									<th>
+									<a href="{$obj->getLink('Search','',false)}&sortField=p.pagetitle&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Title
+{$obj->getSortImage('p.pagetitle',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+									</th>
+									<th>
+									<a href="{$obj->getLink('Search','',false)}&sortField=p.page&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Page
+{$obj->getSortImage('p.page',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+									</th>							
+									<th>
+									<a href="{$obj->getLink('Search','',false)}&sortField=m.menutitle&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Menu
+{$obj->getSortImage('m.menutitle',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+								</th>
+									<th>
+							<a href="{$obj->getLink('Search','',false)}&sortField=p.preference&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Order
+{$obj->getSortImage('preference',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>
+							<th>Enable</th>
+							<th>							
+							Action 							
+							</th>
+							
+								</tr>
+						{foreach from=$actionReturn.data item=data  name=i}
+							<tr>
+								<td>{$actionReturn.spage->startingRow+$smarty.foreach.i.index}</td>									
+								<td>{$data.pagetitle}</td>
+								<td>{$data.page}</td>
+								<td>{$data.menutitle}</td>
+								<td>{$data.preference}</td>
+							
+							<td>							
+							{if $obj->permissionCheck("Status")}
+<a href="{$obj->getLink('Enablechange','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+{/if}
+							{if $data.penable == 1} 
+							<img src="images/active.gif" border="0" title="Click here to disable the menu">
+							 {else} 							 
+							 <img src="images/inactive.gif" border="0" title="Click here to enable the menu">
+							 {/if}
+							{if $obj->permissionCheck("Status")}
+							 </a> 
+							{/if}					
+							
+							</td>
+							
+							<td>
+					{if $obj->permissionCheck("Status")}
+					<a href="{$obj->getLink('Stauschange','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+					{/if}
+							{if $data.status == 1} 
+							<img src="images/active.gif" border="0" title="Click here to inactivate">
+							 {else} 							 
+							 <img src="images/inactive.gif" border="0" title="Click here to activate">
+							 {/if}
+					{if $obj->permissionCheck("Status")}
+					 </a> 
+					{/if}	 
+							{if $obj->permissionCheck("Edit")}
+							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/edit.gif" border="0" title="Click here to edit">
+							
+							</a>  
+							{/if}
+											
+							
+							</td>
+								</tr>
+							{/foreach}
+							<tr>
+							<td colspan="7">{$actionReturn.spage->s_get_links()}</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+			{/if}
+			{/if}
+		</table>
+	</td>
+	{/if}
+</tr>
+
+</table>
+</form>
+{include_php file="footer.php"}

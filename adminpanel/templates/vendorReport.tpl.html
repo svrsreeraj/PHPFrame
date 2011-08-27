@@ -1,0 +1,346 @@
+{assign var="actionReturn" value=$obj->actionReturn}
+{literal}
+<script type="text/javascript">
+function getStates(cid,selId,changeId)
+	{
+		$("#"+changeId).html("Loading...");
+		$.ajax({
+			   type	: "GET",
+			   url	: "vendorReport.php",
+			   data	: "actionvar=Getstatecombo&cid="+cid+"&sid="+selId,
+			   dataType: "html",
+			   success: function(msg){
+				   $("#"+changeId).html(msg);
+				}
+			 });
+	}
+$(document).ready(function() {
+$("#vendorReport").tooltip();
+	$("#txt_join_from").datepicker();
+	$("#txt_join_from").datepicker('option',
+	{
+		showAnim:'show',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+
+	$("#txt_join_to").datepicker();
+	$("#txt_join_to").datepicker('option',
+	{
+		showAnim:'show',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+
+});
+</script>
+
+<link type="text/css" href="js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.datepicker.js"></script>
+
+{/literal}
+
+<form action="" name="fromName" method="POST" enctype="multipart/form-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+
+<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td align="left"  class="pageHead"><span id="vendorReport"><strong>Vendor Report  {$obj->currentAction}</strong></span></td>
+				<td align="right" class="pageHead" style="text-align:right">
+				{if $obj->currentAction	==	"Transview"}
+				{else}
+					<strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow}  </strong> of <strong>{$actionReturn.spage->totcnt} </strong>
+				{/if}
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+
+	{if $obj->currentAction	==	"Daily"}
+	<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			{include file='vendorReportSearch.tpl'}
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=day&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Date
+							{$obj->getSortImage('day',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=total&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Total Vendor
+							{$obj->getSortImage('total',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=activevendor&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Active Vendor
+							{$obj->getSortImage('activevendor',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=emailactive&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Email update
+							{$obj->getSortImage('emailactive',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>	
+							<th><a href="{$obj->getLink('Transdailysearch','','false')}&sortField=smsactive&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Sms update
+							{$obj->getSortImage('smsactive',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>	
+							 					
+							
+							 					
+							<th>Action </th>
+
+						</tr>
+						
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							<td>{$data.day}</td>
+							<td>{$data.total}</td>
+							<td>{$data.activevendor}</td>
+							<td>{$data.emailactive}</td>
+							<td>{$data.smsactive}</td>
+							<td>
+							{if $obj->permissionCheck("View")}
+							<a href="{$obj->getLink('goToDeal','',true)}&datesearch={$data.search}" class="Second_link">
+
+							<img height="20" width="20" border="0" src="images/inner_details.png"> 
+							</a>
+							{/if}
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td colspan="10">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		{/if}
+		
+		</table>
+	</td>
+</tr>
+
+	{/if}
+	
+	{if $obj->currentAction	==	"Monthly"}
+	{if $obj->permissionCheck("View")}
+	<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			{include file='vendorReportSearch.tpl'}
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">	
+											
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=month&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Date
+							{$obj->getSortImage('month',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=total&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Total Vendor
+							{$obj->getSortImage('total',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=activevendor&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Active Vendor
+							{$obj->getSortImage('activevendor',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=emailactive&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Email update
+							{$obj->getSortImage('emailactive',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>	
+							<th><a href="{$obj->getLink('Transmonthlysearch','','false')}&sortField=smsactive&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Sms update
+							{$obj->getSortImage('smsactive',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>			
+							 					
+							
+							 					
+							<th>Action </th>
+
+						</tr>
+						
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							<td>{$data.month }</td>
+							<td>{$data.total}</td>
+							<td>{$data.activevendor}</td>
+							<td>{$data.emailactive}</td>
+							<td>{$data.smsactive}</td>
+							<td>
+							{if $obj->permissionCheck("View")}
+							<a href="{$obj->getLink('Gotransdaily','',true)}&datesearch={$data.tosearch}" class="Second_link" title="Click here to view daily wise details">
+
+							<img height="20" width="20" border="0" src="images/inner_details.png"> 
+							</a>
+							{/if}
+							</td>
+						</tr>
+					{/foreach}
+					
+				</table>
+				</td>
+			</tr>
+		{/if}
+		{/if}
+		</table>
+	</td>
+</tr>
+	{/if}
+	{if $obj->currentAction	==	"Yearly"}
+	{if $obj->permissionCheck("View")}
+	<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			{include file='vendorReportSearch.tpl'}
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=year&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Year
+							{$obj->getSortImage('year',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=total&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Total Vendor
+							{$obj->getSortImage('total',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=activevendor&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Active Vendor
+							{$obj->getSortImage('activevendor',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=emailactive&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Email update
+							{$obj->getSortImage('emailactive',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>	
+							 						
+							<th><a href="{$obj->getLink('Transyearlysearch','','false')}&sortField=smsactive&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Sms update
+							{$obj->getSortImage('smsactive',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>		
+					
+							<th>Action </th>
+
+						</tr>
+						
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							<td>{$data.year}</td>
+							<td>{$data.total}</td>
+							<td>{$data.activevendor}</td>
+							<td>{$data.emailactive}</td>
+							<td>{$data.smsactive}</td>
+							<td>
+							{if $obj->permissionCheck("View")}
+							<a href="{$obj->getLink('Gotransmonthly','',true)}&datesearch={$data.year}" class="Second_link" title="Click here to view monthly wise details">
+
+							<img height="20" width="20" border="0" src="images/inner_details.png"> 
+							</a>
+							{/if}
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td colspan="10">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		{/if}
+		
+		</table>
+	</td>
+</tr>
+	{/if}
+	{/if}
+	
+{if $obj->currentAction	==	"Consolidated"}
+{if $obj->permissionCheck("View")}
+	<tr>
+	<td>{$obj->$actionReturn.data}
+		<table  width="100%"  cellpadding="0" cellspacing="0" border="0">
+			{include file='vendorReportSearch.tpl'}
+								<tbody>
+									<tr>
+										<td width="50%" height="100"valign="top">
+											<div class="boxList"  >
+												<div>
+													<table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">		
+														<th colspan="4" ><div align="center">{if $actionReturn.data.0.ttotal == 0}No Records Found{else}Consolidated&nbsp; Report</div></th>{/if}
+														<tr>
+															<td width="125">Total Vendors</td>
+															<td width="238"><b>{$actionReturn.data.0.ttotal}</b></td>
+															<td width="150">Total Active Vendors</td>
+															<td width="214"><b>{$actionReturn.data.0.tactivetotal}</b></td>
+														</tr>
+														<tr>
+															<td>Total Email Update:</td>
+															<td><b>{$actionReturn.data.0.temailactive}</b></td>
+															<td>Total SMS Update:</td>
+															<td><b>{$actionReturn.data.0.tsmsactive}</b></td>
+														</tr>
+														
+														<tr>
+														<td colspan="3"></td>
+														<td><a class="view-more" title="Click here to view yearly report" target="_blank" href="{$obj->getLink('Gotoyearlyreport','',true)}">
+														view more
+                            							</a></td>
+														</tr>
+														<tr><td colspan="4"></td></tr>
+												  </table>
+										
+												</div>
+											</div>
+											</td>
+											</tr>
+											<tr>
+											<td>
+											<div class="boxList"  >
+												<div>
+													
+										
+												</div>
+											</div>
+											
+									  </td>
+										
+									</tr>
+								</tbody>
+						</table>
+	</td>
+	</tr>
+{/if}
+{/if}
+
+</table>
+{literal}
+<script type="text/javascript" src="js/tooltip.js"></script>		
+{/literal}
+{include_php file="footer.php"}

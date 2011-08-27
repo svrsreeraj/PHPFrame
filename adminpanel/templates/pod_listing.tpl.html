@@ -1,0 +1,711 @@
+{assign var="actionReturn" value=$obj->actionReturn}
+
+{literal}
+<script type="text/javascript" src="js/highslide/highslide.js"></script>
+<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
+<link type="text/css" href="js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.mouse.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.draggable.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.sortable.js"></script>
+
+<script type="text/javascript">
+function getStates(cid,changeId)
+	{
+		$("#"+changeId).html("Loading...");
+		$.ajax({
+			   type	: "GET",
+			   url	: "pod_listing.php",
+			   data	: "actionvar=Getstatecombo&cid="+cid,
+			   dataType: "html",
+			   success: function(msg){
+				 $("#"+changeId).html(msg); 	
+				}
+			 });
+	}
+	function display(id,status)
+		{
+			jConfirm('Are you sure you want to change Coupon Status?', 'Confirmation Dialog', 
+			function(stat) 
+				{
+					if(stat==true)	
+						{
+							window.location="pod_listing.php?actionvar=Statuschange&id="+id+"&status="+status;
+						}
+					else
+						{
+							return false;
+						}	
+				});
+		}
+$(document).ready(function() {
+	$("#dealid").tooltip();
+	$("#couponname").tooltip();
+	$("#couponcaption").tooltip();
+	$("#vendor").tooltip();
+	$("#activationdate").tooltip();
+	$("#coupondays").tooltip();
+	$("#dateadded").tooltip();
+	$("#image").tooltip();
+	$("#couponexpirydays").tooltip();
+	$("#description").tooltip();
+	$("#highlights").tooltip();
+	$("#rules").tooltip();
+	$("#category").tooltip();
+	$("#subcategory").tooltip();
+	$("#caption").tooltip();
+	$("#interestedcategories").tooltip();
+	$("#totalsitepoint").tooltip();
+	$("#balancesitepoint").tooltip();
+		
+	$("#txt_join_from").datepicker();
+	$("#txt_join_from").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		defaultDate:'2010-11-24',
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+
+	$("#txt_join_to").datepicker();
+	$("#txt_join_to").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+	$("#ActivationDate").datepicker();
+	$("#ActivationDate").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+	$("#expirydate").datepicker();
+	$("#expirydate").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+	$("#addeddate").datepicker();
+	$("#addeddate").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+	$("#couponexpirydate").datepicker();
+	$("#couponexpirydate").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+
+});
+</script>
+
+<link type="text/css" href="js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.datepicker.js"></script>
+
+{/literal}
+
+<!--<form action="" name="fromName" method="post" enctype="multipart/form-data">-->
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+<tr>
+	<td class="pageHead"><span id="customerdetails"><strong>Coupon{if ($obj->currentAction	==	"Listing")}Listing{/if}{if ($obj->currentAction	==	"Addnew")} Add New{/if}{if ($obj->currentAction	==	"Editform")} Edit  {$actionReturn.data.fname}{/if} </strong></span></td>
+</tr>
+{if ($obj->currentAction	==	"Addnew")}
+	
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<form action="" name="formName" method="post" enctype="multipart/form-data">
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+				<th colspan="2">Add Coupon </th>
+			</tr>
+			<tr>
+			<tr>
+				<td><span id="dealid">Deal Id </span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter the a deal id"  name="vod_deal_id" value="{$actionReturn.data.vod_deal_id }" id="vod_deal_id" readonly=""  /></td>
+			</tr>
+			<tr>
+				<td width="150"><span id="couponname">Coupon name: </span></td>
+				<td><input type="text"  name="name" valtype="emptyCheck-Please enter the name "  value="{$actionReturn.data.name}"   size="60"/></td>
+			</tr>
+			
+				<td><span id="couponcaption">Coupon caption </span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter the coupon caption"  name="caption" value="{$actionReturn.data.caption }" id="lanmeId"  size="60"/></td>
+			</tr>
+			<tr>
+				<td><span id="activationdate">Activation Date</span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter the Activation Date"   name="activation_date" value="{$actionReturn.data.activation_date }" id="ActivationDate" readonly=""  /></td>
+			</tr>
+			<tr>
+				<td><span id="coupondays">Coupon Days</span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter Coupon Days|checkNumber-Please enter a valid number"   name="coupon_days" value="{$actionReturn.data.coupon_days}" id="coupon_days" class="nummberOnly"  /></td>
+			</tr>
+			<tr>
+				<td><span id="couponexpirydays">Coupon Expiry Date</span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter Coupon Days"   name="coupon_expiry_date" value="{$actionReturn.data.coupon_expiry_date}" id="couponexpirydate"  readonly="" /></td>
+			</tr>		
+			<!--<tr><tr>
+				<td>Sub category </td>
+				<td>{$actionReturn.subcat}</td>
+			</tr>
+			<tr>
+				<td>Coupon Price </td>
+				<td><input type="text" valtype="emptyCheck-Please enter the coupon price"   name="coupon_price" value="{$actionReturn.data.coupon_price}"  /></td>
+			</tr>
+			<tr>
+				<td>Cost  </td>
+				<td><input type="text" valtype="emptyCheck-Please enter the cost"   value="{$actionReturn.data.cost}" id="cost" name="cost"  /></td>
+			
+			
+			
+			<tr>
+				<td>Image</td>
+					<td>
+					<input type="file"  name="fileImage" value="{$actionReturn.data.image}" id="fileImageId" />&nbsp;
+					{if $actionReturn.data.image}
+						<a  href="..images/picondeals/thumb{$actionReturn.data.image}" class="highslide" onclick="return hs.expand(this)">
+						<img src="../images/picondeals/thumb/{$actionReturn.data.image}" width="25" height="25" ; />
+						</a>{/if}
+						</td>
+				</tr>
+			<tr>
+				<td>Description</td>
+				<td><textarea  name="description" id="descriptionId" valtype="emptyCheck-Please enter a coupon description"  cols="54" rows="5">{$actionReturn.data.description}</textarea></td>
+			</tr>
+			<tr>
+				<td>Highlights</td>
+				<td><textarea  name="highlights" id="descriptionId" valtype="emptyCheck-Please enter coupon Highlights"  cols="54" rows="5">{$actionReturn.data.highlights}</textarea></td>
+			</tr>
+			<tr>
+				<td>Rules</td>
+				<td><textarea  name="rules" id="rules" valtype="emptyCheck-Please enter the rules"  cols="54" rows="5">{$actionReturn.data.highlights}</textarea></td>
+			</tr>	</tr>-->		
+			<td>&nbsp;</td>
+				<td>
+				{if $obj->currentAction	==	"Addnew"}
+					{if $obj->permissionCheck("Add")}
+					<input type="submit" class="butsubmit" valcheck="true"  name="actionvar" value="Save" id="saveDataId" />
+					{/if}
+				{/if}
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+		</form>
+	</td>
+</tr>
+
+	
+	
+{/if}
+{if ($obj->currentAction	==	"Editform")}
+
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>{if $actionReturn.data}
+		<form action="" name="formName" method="post" enctype="multipart/form-data">	
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+				<th colspan="2">Edit Coupon </th>
+			</tr>
+			<tr>
+			<tr>
+				<td><span id="dealid">Deal Id </span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter the a deal id"  name="vod_deal_id" value="{$actionReturn.data.vod_deal_id }" id="vod_deal_id" readonly=""  /></td>
+			</tr>
+			<tr>
+				<td width="150"><span id="couponname">Coupon name: </span></td>
+				<td><input type="text"  name="name" valtype="emptyCheck-Please enter the name "  value="{$actionReturn.data.name}"  size="60"/></td>
+			</tr>
+			<tr>
+				<td><span id="couponcaption">Coupon caption </span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter the caption"  name="caption" value="{$actionReturn.data.caption }" id="lanmeId"  size="60"/></td>
+			</tr>
+			<tr>
+				<td><span id="vendor">Vendor</span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter the vendor name"   name="vendor" value="{$actionReturn.data.business_name}" id="vendorname" readonly="" /></td>
+			</tr>
+			<tr>
+				<td><span id="activationdate">Activation Date</span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter the Activation Date"   name="activation_date" value="{$actionReturn.data.activation_date }" id="ActivationDate" readonly=""  /></td>
+			</tr>
+		<!--	<tr>
+				<td>Coupon Price </td>
+				<td><input type="text" valtype="emptyCheck-Please enter the cupon price"   name="coupon_price" value="{$actionReturn.data.coupon_price}"  /></td>
+			</tr>
+			<tr>
+				<td>Cost  </td>
+				<td><input type="text" valtype="emptyCheck-Please enter the cost"   value="{$actionReturn.data.cost}" id="cost" name="cost"  /></td>
+			</tr>
+			
+			<tr>
+				<td>Activation Date</td>
+				<td><input type="text" valtype="emptyCheck-Please enter the Activation Date"   name="activation_date" value="{$actionReturn.data.activation_date }" id="ActivationDate" readonly=""  /></td>
+			</tr>
+			<tr>
+				<td>Print Count  </td>
+				<td><input type="text" valtype="emptyCheck-Please enter the print count"    value="{$actionReturn.data.print_count }" name="print_count" id="Activation Date"  /></td>
+			</tr>
+			<tr>
+				<td><span id="dateadded">Date added </span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter the Email address"   name="date_added" value="{$actionReturn.data.date_added}" id="addeddate" readonly="" /></td>
+			</tr>
+			
+			-->
+			<tr>
+				<td><span id="coupondays">Coupon Days </span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter the coupon days|checkNumber-Please enter a valid number" name="coupon_days" value="{$actionReturn.data.coupon_days}" id="coupondays"  /></td>
+			</tr>
+			<tr>
+				<td><span id="couponexpirydays">Coupon Expiry Date </span></td>
+				<td><input type="text" valtype="emptyCheck-Please enter the coupon expiry date"   name="coupon_expiry_date" value="{$actionReturn.data.coupon_expiry_date}" id="couponexpirydate" readonly=""  /></td>
+			</tr>
+			
+			<tr>
+				<td><span id="image">Image</span></td>
+					<td>
+					<input type="file"  name="fileImage" value="{$actionReturn.data.image}" id="fileImageId" />&nbsp;
+					{if $actionReturn.data.image}
+						<a  href="	../images/picondeals/{$actionReturn.data.image}" class="highslide" onclick="return hs.expand(this)">
+						<img src="../images/picondeals/thumb/{$actionReturn.data.image}" width="25" height="25" ; />
+						</a>{/if}
+						</td>
+				</tr>
+			<tr>
+				<td><span id="description">Description</span></td>
+				<td><textarea  name="description" id="descriptionId" valtype="emptyCheck-Please enter a coupon description"  cols="50" rows="5">{$actionReturn.data.description}</textarea></td>
+			</tr>
+			<tr>
+				<td><span id="highlights">Highlights</span></td>
+				<td><textarea  name="highlights" id="descriptionId" valtype="emptyCheck-Please enter a coupon highlights"  cols="50" rows="5">{$actionReturn.data.highlights}</textarea></td>
+			</tr>
+			<tr>
+				<td><span id="rules">Rules</span></td>
+				<td><textarea  name="rules" id="rules" valtype="emptyCheck-Please enter a coupon rules"  cols="50" rows="5">{$actionReturn.data.rules}</textarea></td>
+			</tr>		
+						
+			<td>&nbsp;</td>
+				<td>
+				{if $obj->currentAction	==	"Editform"}
+					{if $obj->permissionCheck("Edit")}
+					<input type="submit" class="butsubmit" valcheck="true"  name="actionvar" value="Update" id="saveDataId" />
+					{/if}
+				{/if}
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+		</form>
+	</td>
+	{/if}
+	{if !$actionReturn.data}
+	<span style="color:red;">invalid id</span>
+	{/if}
+</tr>
+{/if}	
+
+
+{if ($obj->currentAction	==	"Viewform")}
+
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<form action="" name="formName" method="post" enctype="multipart/form-data">	
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+		<tr ><td colspan="2" > <div align="center"><strong>{$actionReturn.data.caption}</strong></div></td></tr>
+		{if $actionReturn.data}
+		<tr>
+		<td width="50%">
+			<div class="boxList">
+				
+					<div>
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+						
+						<tr>
+							<th colspan="3" >Coupon details</th>
+						</tr>
+							{if $actionReturn.data.business_name}
+							<tr>
+								<td><span id="vendor">Vendor</span></td>
+								<td >{$actionReturn.data.business_name} </td>
+								
+							</tr>
+							{/if}
+								
+							{if $actionReturn.data.name}
+							<tr>
+								<td><span id="couponname">Coupon name</span></td>
+								<td >{$actionReturn.data.name}</td>
+								
+							</tr>
+							{/if}
+							{if $actionReturn.data.category}
+							<tr>
+								<td><span id="category">Category</span></td>
+								<td>{$actionReturn.data.category}</td>
+								
+							</tr>
+							
+							{/if}
+							{if $actionReturn.data.subcategory_id}
+							<tr>
+								<td><span id="subcategory">Sub category</span></td>
+								<td>{$actionReturn.data.subcategory}</td>
+							</tr>
+							{/if}
+							
+							{if $actionReturn.data.activation_date}
+							<tr>
+								<td><span id="activationdate">Activation date</span></td>
+								<td colspan="2">{$obj->displayDate($actionReturn.data.activation_date)}</td>
+							</tr>
+							<tr>
+								<td><span id="activationdate">Coupon Expiry date</span></td>
+								<td colspan="2">{$obj->displayDate($actionReturn.data.coupon_expiry_date)}</td>
+							</tr>
+							{/if}
+							<!--{if $actionReturn.data.cost}
+							<tr>
+								<td>Coupon Cost</td>
+								<td colspan="2" >{$actionReturn.data.cost}</td>
+							</tr>
+							{/if}
+							{if $actionReturn.data.coupon_price}
+							<tr>
+								<td>Coupon Price</td>
+								<td colspan="2" >{$actionReturn.data.coupon_price}</td>
+							</tr>
+							{/if}
+							{if $actionReturn.data.offer_rate}
+							<tr>
+								<td>Offer Rate</td>
+								<td colspan="2" >{$actionReturn.data.offer_rate}</td>
+							</tr>
+							{/if}-->
+		
+							
+							{if $actionReturn.state}
+							<tr>
+								<td><span id="state">State</span></td>
+								<td colspan="2" >{$actionReturn.state}</td>
+							</tr>
+							{/if}
+							
+							
+							{if $actionReturn.data.zip}
+							<tr>
+								<td><span id="zip">Zip</span></td>
+								<td colspan="2" >{$actionReturn.data.zip}</td>
+							</tr>
+							{/if}
+							
+							{if $actionReturn.data.catData}
+							<tr>
+								<td><span id="interestedcategories">Interested Categories </span></td>
+								<td>
+									{foreach from=$actionReturn.data.catData item=cdata name=i}
+										{$cdata.category} - {$cdata.subcatlist} 
+										<br />
+									{/foreach}
+								</td>
+							</tr>
+							{/if}
+						</table>
+					</div>
+				
+							
+				
+					<div>
+						{if $actionReturn.data.highlights}
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+						<tr>
+							<th  colspan="3"><span id="highlights">Highlights</span></th>
+						</tr>
+						
+						<tr>							
+							<td colspan="3">
+							{$actionReturn.data.highlights}
+							</td>
+						 </tr>
+						
+						</table>
+						{/if}
+					</div>
+					
+					
+				</div>
+			</td>
+			<td>
+				<div class="boxList">
+					<div>
+						
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+						<tr>
+							<th  colspan="3">Coupon details</th>
+							</tr>
+						<tr>
+							<td><span id="totalsitepoint">Total print Count:</span></td>
+							<td colspan="2">{$actionReturn.data.print_count}</td>
+						 </tr>
+						<tr>
+							<td><span id="balancesitepoint">Hit Count</span></td>
+							<td colspan="2">{$actionReturn.data.hit_count}</td>
+						 </tr>
+						
+						</table>
+						
+					</div>
+					<div>
+						{if $actionReturn.data.description}
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+						<tr>
+							<th  colspan="3"><span id="description">Description</span></th>
+						</tr>
+							<tr>							
+								<td colspan="3">
+									<p >
+									{if $actionReturn.data.image}
+									<a  href="{$smarty.const.ROOT_URL}images/picondeals/{$actionReturn.data.image}" class="highslide" onclick="return hs.expand(this)">
+									<img src="{$smarty.const.ROOT_URL}images/picondeals/thumb/{$actionReturn.data.image}" width="100" height="125" style="float:right;"/>
+									</a>{/if}{$obj->nl2br($actionReturn.data.description)} 
+									</p>
+									<!--{$actionReturn.data.description}-->
+								</td>
+							 </tr>							
+						</table>
+						{/if}
+						
+						</div>
+					
+<div>
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+					<tr>
+							<th colspan="3" ><div align="left">Coupon Status Details</div></th>
+						</tr>					
+						
+						{if $actionReturn.data.status_updateby <>0}	
+						<tr>
+							<td width="150">Coupon Status Updated By  </td>
+							<td colspan="2">						
+							{$obj->getdbsinglevalue_cond('vod_admin_users',$obj->getConcat('concat(','fname',',\' \',','lname',')'),$obj->getConcat('id=',$actionReturn.data.status_updateby))}
+</td>
+						</tr>
+						{/if}
+						{if $actionReturn.data.status_updatedate <> 0}	
+						<tr>
+							<td>Coupon Status Updated Date  </td>
+							<td colspan="2" >{$obj->displayTime($actionReturn.data.status_updatedate)}</td>
+						</tr>
+						{/if}						
+						<tr>
+							<td>Coupon Status </td>
+							<td >
+								{if $actionReturn.data.status==0} Under Review								
+							{elseif $actionReturn.data.status==1} Approved & in Queue
+							{elseif $actionReturn.data.status==2} Running
+							{elseif $actionReturn.data.status==3} Rejected
+							{elseif $actionReturn.data.status==4} Expired
+							{/if}</td>
+							<td>
+								{if $actionReturn.data.status==0} 				
+								   <strong> <a href="#" onclick="display({$actionReturn.data.couponid},{1});" style="color:#669933"> Accept </a> |  <a  href="#"  onclick="display({$actionReturn.data.id},{3});" style="color:#FF3300"> Reject </a></strong>
+<!--								 <img src="images/active.gif" border="0" title="Click here to accept" onclick="display({$actionReturn.data.id},{1});">  <img src="images/inactive.gif" border="0" title="Click here to reject" onclick="display({$actionReturn.data.id},{2});">
+-->								
+								{/if}							
+							</td>
+						</tr>	
+						<tr>
+						<td>Deal Block Status</td>
+						<td>{if $actionReturn.data.block_status == 0} Not Blocked
+						{else}Blocked{/if}</td>
+						</tr>					
+					</table>
+				</div>					
+					
+			</div>
+		</td>
+		</tr>
+		
+		<tr>
+		<td></td>
+			<td >
+				<input type="submit" class="butsubmit"  name="actionvar" value="Back" id="cancelId" />
+			</td>
+		</tr>
+		{/if}
+		{if !$actionReturn.data}
+			<span style="color:red;">invalid id</span>
+		{/if}
+		</table>
+		</form>
+	</td>
+	
+</tr>
+
+{/if}	
+
+<tr>
+	{if $obj->currentAction	==	"Listing"}
+	<td>
+		<form action="" name="formName" method="post" enctype="multipart/form-data">	
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			{include file='pod_listing.tpl'}
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							<th>No</th>
+							<th colspan="2"><a href="{$obj->getLink('search','','false')}&sortField=fullname&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Vendor
+							{$obj->getSortImage('fullname',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}				
+							</a></th>
+							<th><a href="{$obj->getLink('search','','false')}&sortField=email&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Coupons
+							{$obj->getSortImage('email',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+							</a></th>
+							
+							<th>days</a></th>	
+                            
+							 <th><a href="{$obj->getLink('search','','false')}&sortField=date_added&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Activation Date
+							{$obj->getSortImage('date_added',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)} 
+							 </a></th>
+							 <th>Status</th>		
+							<th>Blocked </th>							 
+							<th>Action </th>
+						</tr>
+						{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							<td>{$actionReturn.spage->startingRow+$smarty.foreach.i.index}</td>
+							<td colspan="2">{$data.business_name}</td>
+							<td>{$data.caption}</td>
+							
+                            <td>{$data.coupon_days}</td>
+                            
+                            <td>{$obj->displayDate($data.activation_date)}</td>
+							 <td>
+							 
+							 {if $data.status==0} Under Review								
+							{elseif $data.status==1} Approved & in Queue
+							{elseif $data.status==2} Running
+							{elseif $data.status==3} Rejected
+							{elseif $data.status==4} Expired
+							{/if}
+							 
+							 </td>
+							<td>
+							{if $obj->permissionCheck("Status")}
+							<a href="{$obj->getLink('Blockstatuschange','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							{/if}
+									{if $data.block_status == 1} 
+									<img src="images/active.gif" border="0" title="Click here to unblock this coupon" alt="Blocked Coupon">
+									 {else} 							 
+									 <img src="images/inactive.gif" border="0" title="Click here to block this coupon" alt="Visible Coupon">
+									 {/if}
+							{if $obj->permissionCheck("Status")}
+							 </a> 
+							{/if}
+							</td>
+							<td>
+							{if $obj->permissionCheck("View")}
+							<a href="{$obj->getLink('viewform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/view.gif" border="0" title="Click here to view"> </a>
+							{/if}
+							{if $obj->permissionCheck("Edit")}
+							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/edit.gif" border="0" title="Click here to edit"></a> 
+							{/if}
+							{if $obj->permissionCheck("Delete")}
+							<a href="{$obj->getLink('deleteform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/delete.gif" border="0" title="Click here to delete"> </a>
+							{/if}
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td></td>
+						<td colspan="10">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		{/if}
+		
+		</table>
+		</form>
+	</td>
+	
+	{/if}
+</tr>
+</table>
+{include_php file="footer.php"}
