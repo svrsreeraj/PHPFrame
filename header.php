@@ -4,30 +4,6 @@ Created by 		:Sreeraj
 Created on 		:2010-12-20
 Purpose			:Header area
 ****************************************************************************************/
-$objCls = new customer();
-global	$cls_site;
-
-$userSess 	=	end($objCls->get_user_data());
-if(function_exists("curl_init"))
-	{
-		require_once 'libs/facebook/src/facebook.php';
-		$facebook 	= new Facebook(array( 'appId'  => GLB_FACEBOOK_APPID, 'secret' => GLB_FACEBOOK_SECRET, 'cookie' => true));
-		$F_session 	= $facebook->getSession();
-		if($F_session)
-			{
-				$jsdata	=	json_encode($F_session);
-				if(!$userSess)
-					{
-						if($cls_site->getPageName()	!=	"signIn.php")
-							{
-								header("location:".ROOT_HTTP_URL."login/");
-								exit;			
-							}
-					}
-			}
-		$jsdata	=	json_encode($F_session);
-	}
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -39,7 +15,7 @@ if(function_exists("curl_init"))
 
 <link rel="SHORTCUT ICON" href="<?php echo ROOT_URL;?>images/favicon.ico">
 <link href="<?php echo ROOT_URL;?>style.css" rel="stylesheet" type="text/css" />
-<title><?php echo GLB_CUSTOMER_HEADER_TITLE;?> <?php echo _HEAD_TITLE;?></title>
+<title><?php echo _HEAD_TITLE;?></title>
 
 </head>
 <body>
