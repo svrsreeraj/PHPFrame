@@ -5,3 +5,8 @@ This is a simple frame for PHP
 
 PHP Version - 5.3+
 
+
+
+//Constants
+
+WHERE_AM_I - to define where the program runs. possible values are local and online
