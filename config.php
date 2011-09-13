@@ -4,37 +4,27 @@ Done On :06-09-2011
 @Author	:Sreeraj VR
 Purpose	:Initial variables
 **************************************************************************************/
+$userHost	=	trim(CONST_SITE_ADDRESS);
+$userAbs	=	trim(CONST_SITE_ABSOLUTE_PATH);
+$userHost	=	str_replace("http://","", $userHost);
+$userHost	=	str_replace("https//","", $userHost);
+if($pos = strpos($userHost, "/"))	$userHost	=	substr($userHost,0,$pos);
 
-$localHost	=	$localHostFromUser	=	trim("http://192.168.0.8/PHPFrame");
-$onlineHost	=	$onlineHostFromUser	=	trim("http://www.phpframe.info");
+//Finding actual host
+$userHostFromUser	=	strrev($userHost);
+if($userHostFromUser{0}	!=	"/")	$userHostFromUser	=	strrev($userHostFromUser)."/";
+else 								$userHostFromUser	=	strrev($userHostFromUser);
 
-$localHost	=	str_replace("http://","", $localHost);
-$localHost	=	str_replace("https//","", $localHost);
-if($pos = strpos($localHost, "/"))	$localHost	=	substr($localHost,0,$pos);
+//finding actul absolute path
+$userAbsFromUser	=	strrev($userAbs);
+if($userAbsFromUser{0}	!=	"/")	$userAbsFromUser	=	strrev($userAbsFromUser)."/";
+else 								$userAbsFromUser	=	strrev($userAbsFromUser);
 
-$onlineHost	=	str_replace("http://","", $onlineHost);
-$onlineHost	=	str_replace("https//","", $onlineHost);
-if($pos = strpos($onlineHost, "/"))	$onlineHost	=	substr($onlineHost,0,$pos);
+echo $userAbsFromUser;exit;
 
-$localHostFromUser	=	strrev($localHostFromUser);
-if($localHostFromUser{0}	!=	"/")	$localHostFromUser	=	strrev($localHostFromUser)."/";
-else 									$localHostFromUser	=	strrev($localHostFromUser);
-
-$onlineHostFromUser	=	strrev($onlineHostFromUser);
-if($onlineHostFromUser{0}	!=	"/")	$onlineHostFromUser	=	strrev($onlineHostFromUser)."/";
-else 									$onlineHostFromUser	=	strrev($onlineHostFromUser);
-
-
-if($_SERVER["HTTP_HOST"]	==	$localHost)	
-	{
-		define('WHERE_AM_I',"local");
-		$rootURL		=	$localHostFromUser;
-		$host			=	"http://192.168.0.8";
-		$absPath		=	$_SERVER["DOCUMENT_ROOT"]."/PHPFrame/";
-		$rootURLhttps	=	"http://192.168.0.8/PHPFrame/";	
-		$httpsHost		=	"http://192.168.0.8";
-	}	
-elseif($_SERVER["HTTP_HOST"]	==	$onlineHost)		
+if(constant("CONST_LOCAL_OR_ONLINE")	==	"local")	define('WHERE_AM_I',"local");
+	
+if($_SERVER["HTTP_HOST"]	==	$onlineHost)		
 	{
 		define('WHERE_AM_I',"online");
 		$rootURL		=	"";

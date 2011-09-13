@@ -1,0 +1,81 @@
+{assign var="actionReturn" value=$obj->actionReturn}
+
+<form action="" name="formName" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellspacing="3" cellpadding="3">
+  <tr>
+  	<td align="center">
+    	<table width="70%" border="0" cellspacing="4" cellpadding="4">
+    		<tr><td colspan="2"><strong>Database Details</strong></td></tr>
+    		<tr>
+    			<td width="40%">Host</td>
+    			<td><input type="text" name="const_db_host" id="id_txt_db_host" value="{get_conf_const const='const_db_host'}"></td>
+    		</tr>
+    		<tr>
+    			<td>UserName</td>
+    			<td><input type="text" name="const_db_username" id="id_txt_db_username" value="{get_conf_const const='const_db_username'}"></td>
+    		</tr>
+    		<tr>
+    			<td>Password</td>
+    			<td><input type="text" name="const_db_password" id="id_txt_db_password" value="{get_conf_const const='const_db_password'}"></td>
+    		</tr>
+    		<tr>
+    			<td>DataBase Name</td>
+    			<td><input type="text" name="const_db_name" id="id_txt_db_name" value="{get_conf_const const='const_db_name'}"></td>
+    		</tr>
+    	</table>
+    </td>
+  </tr>
+   <tr>
+  	<td align="center">
+    	<table width="70%" border="0" cellspacing="4" cellpadding="4">
+    		<tr><td colspan="2"><strong>Domain And File Paths</strong></td></tr>
+    		<tr>
+    			<td width="40%">Site Address</td>
+    			<td><input type="text" name="const_site_address" id="id_txt_site_address" value="{get_conf_const const='const_site_address'}"></td>
+    		</tr>
+    		<tr>
+    			<td>Absolutre site path</td>
+    			<td><input type="text" name="const_site_absolute_path" id="id_txt_absolute_path" value="{get_conf_const const='const_site_absolute_path'}"></td>
+    		</tr>
+    		
+    	</table>
+    </td>
+  </tr>
+  <tr>
+  	<td align="center">
+    	<table width="70%" border="0" cellspacing="4" cellpadding="4">
+    		<tr><td colspan="2"><strong>TimeZones</strong></td></tr>
+    		<tr>
+    			<td width="40%">PHP TimeZone</td>
+    			<td><input type="text" name="const_time_zone_php" id="id_txt_time_zone_php" value="{get_conf_const const='const_time_zone_php'}"></td>
+    		</tr>
+    		<tr>
+    			<td>Mysql TimeZone (GMT)</td>
+    			<td><input type="text" name="const_time_zone_mysql" id="id_txt_time_zone_mysql" value="{get_conf_const const='const_time_zone_mysql'}"></td>
+    		</tr>
+    		
+    	</table>
+    </td>
+  </tr>
+  <tr>
+  	<td align="center">
+    	<table width="70%" border="0" cellspacing="4" cellpadding="4">
+    		<tr><td colspan="2"><strong>Miscellaneous</strong></td></tr>
+    		<tr>
+    			<td width="40%">Local Or Online</td>
+    			<td><input type="text" name="const_local_or_online" id="id_txt_local_or_online" value="{get_conf_const const='const_local_or_online'}"></td>
+    		</tr>
+    		
+    		
+    	</table>
+    </td>
+  </tr>
+  <tr>
+  	<td align="center"><input type="submit" value="Submit" name="actionvar"></td>
+  </tr>
+  
+</table>
+</form>
+      
+
+{call_footer}

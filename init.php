@@ -4,26 +4,28 @@ Created By 	:	Sreeraj
 Created On	:	25-10-2010
 Purpose		:	Initial functions
 ****************************************************************************************/
-//activating zip compression
 ob_start();
 session_set_cookie_params(10*60*60);
 ini_set('session.gc_maxlifetime', '36000');
 session_start();
 
-if($_SERVER['HTTP_HOST']=="192.168.0.8") //local
-	{
-		$projectPath	=	$_SERVER["DOCUMENT_ROOT"]."/PHPFrame/";
-		$runningPath	=	$_SERVER["DOCUMENT_ROOT"]."/PHPFrame/";
-	}
-else
-	{
-		$projectPath	=	$_SERVER["DOCUMENT_ROOT"]."/";
-		$runningPath	=	$_SERVER["DOCUMENT_ROOT"]."/";
-	}
+
 //error handling
 set_error_handler("customError");//setting error handler
 error_reporting(~E_NOTICE); 
 
+require_once	("config.inc.php");
+require_once	($projectPath.'config.php');								err_status("Config Included");exit;
+require_once	($projectPath.'includes/db.php');							err_status("Db connected");
+require_once	($projectPath.'libs/smarty-3.0.7/libs/Smarty.class.php');	err_status("Smarty Class Included");
+require_once	($projectPath.'library/dbclass.php');						err_status("Db Class dbclass.php Included");
+require_once	($projectPath.'library/siteclass.php');						err_status("site Class siteclass.php Included");
+require_once	($projectPath.'library/modelclass.php');					err_status("Model Class modelclass.php Included");
+require_once 	($projectPath.'includes/includedfiles.php');				err_status("includedfiles.php included");
+require_once 	($projectPath.'includes/database_rules.php');				err_status("database_rules.php included");
+require_once 	($projectPath.'preLoader.php');								err_status("PreLoader.php included");
+require_once	($projectPath.'libs/googleshortner/urlshortner.php');		err_status("URL Shortner Included");
+require_once	($projectPath.'includes/smarty.plugin.php');				err_status("Smarty Plugin Included");
 
 
 
@@ -51,17 +53,6 @@ if (get_magic_quotes_gpc())
 	}
 
 //including necessary files
-require_once	($projectPath.'config.php');								err_status("Config Included");
-require_once	($projectPath.'includes/db.php');							err_status("Db connected");
-require_once	($projectPath.'libs/smarty-3.0.7/libs/Smarty.class.php');	err_status("Smarty Class Included");
-require_once	($projectPath.'library/dbclass.php');						err_status("Db Class dbclass.php Included");
-require_once	($projectPath.'library/siteclass.php');						err_status("site Class siteclass.php Included");
-require_once	($projectPath.'library/modelclass.php');					err_status("Model Class modelclass.php Included");
-require_once 	($projectPath.'includes/includedfiles.php');				err_status("includedfiles.php included");
-require_once 	($projectPath.'includes/database_rules.php');				err_status("database_rules.php included");
-require_once 	($projectPath.'preLoader.php');								err_status("PreLoader.php included");
-require_once	($projectPath.'libs/googleshortner/urlshortner.php');		err_status("URL Shortner Included");
-require_once	($projectPath.'includes/smarty.plugin.php');				err_status("Smarty Plugin Included");
 
 //smarty object creation
 $smarty		= 	new Smarty;	err_status("Smarty class object 'smarty' created");

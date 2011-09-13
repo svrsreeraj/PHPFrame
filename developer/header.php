@@ -63,7 +63,7 @@ Purpose			:Header area
 			 background-position:left top; background-repeat:repeat-y; padding-top:2px;">
 			
 			
-			Left Menu
+		<a href = "config.php">Config</a>
 			
 			
 
