@@ -4,38 +4,38 @@
 <table width="100%" border="0" cellspacing="3" cellpadding="3">
   <tr>
   	<td align="center">
-    	<table width="70%" border="0" cellspacing="4" cellpadding="4">
+    	<table width="90%" border="0" cellspacing="4" cellpadding="4">
     		<tr><td colspan="2"><strong>Database Details</strong></td></tr>
     		<tr>
     			<td width="40%">Host</td>
-    			<td><input type="text" name="const_db_host" id="id_txt_db_host" value="{get_conf_const const='const_db_host'}"></td>
+    			<td><input type="text" name="const_db_host" id="id_txt_db_host" value="{get_conf_const const='const_db_host' returnVar='tempVal'}{$tempVal}"></td>
     		</tr>
     		<tr>
     			<td>UserName</td>
-    			<td><input type="text" name="const_db_username" id="id_txt_db_username" value="{get_conf_const const='const_db_username'}"></td>
+    			<td><input type="text" name="const_db_username" id="id_txt_db_username" value="{get_conf_const const='const_db_username' returnVar='tempVal'}{$tempVal}"></td>
     		</tr>
     		<tr>
     			<td>Password</td>
-    			<td><input type="text" name="const_db_password" id="id_txt_db_password" value="{get_conf_const const='const_db_password'}"></td>
+    			<td><input type="text" name="const_db_password" id="id_txt_db_password" value="{get_conf_const const='const_db_password' returnVar='tempVal'}{$tempVal}"></td>
     		</tr>
     		<tr>
     			<td>DataBase Name</td>
-    			<td><input type="text" name="const_db_name" id="id_txt_db_name" value="{get_conf_const const='const_db_name'}"></td>
+    			<td><input type="text" name="const_db_name" id="id_txt_db_name" value="{get_conf_const const='const_db_name' returnVar='tempVal'}{$tempVal}"></td>
     		</tr>
     	</table>
     </td>
   </tr>
    <tr>
   	<td align="center">
-    	<table width="70%" border="0" cellspacing="4" cellpadding="4">
+    	<table width="90%" border="0" cellspacing="4" cellpadding="4">
     		<tr><td colspan="2"><strong>Domain And File Paths</strong></td></tr>
     		<tr>
     			<td width="40%">Site Address</td>
-    			<td><input type="text" name="const_site_address" id="id_txt_site_address" value="{get_conf_const const='const_site_address'}"></td>
+    			<td><input type="text" name="const_site_address" id="id_txt_site_address" value="{get_conf_const const='const_site_address' returnVar='tempVal'}{$tempVal}"></td>
     		</tr>
     		<tr>
     			<td>Absolutre site path</td>
-    			<td><input type="text" name="const_site_absolute_path" id="id_txt_absolute_path" value="{get_conf_const const='const_site_absolute_path'}"></td>
+    			<td><input type="text" name="const_site_absolute_path" id="id_txt_absolute_path" value="{get_conf_const const='const_site_absolute_path' returnVar='tempVal'}{$tempVal}"></td>
     		</tr>
     		
     	</table>
@@ -43,15 +43,54 @@
   </tr>
   <tr>
   	<td align="center">
-    	<table width="70%" border="0" cellspacing="4" cellpadding="4">
+    	<table width="90%" border="0" cellspacing="4" cellpadding="4">
     		<tr><td colspan="2"><strong>TimeZones</strong></td></tr>
     		<tr>
     			<td width="40%">PHP TimeZone</td>
-    			<td><input type="text" name="const_time_zone_php" id="id_txt_time_zone_php" value="{get_conf_const const='const_time_zone_php'}"></td>
+    			<td><input type="text" name="const_time_zone_php" id="id_txt_time_zone_php" value="{get_conf_const const='const_time_zone_php' returnVar='tempVal'}{$tempVal}"></td>
     		</tr>
     		<tr>
     			<td>Mysql TimeZone (GMT)</td>
-    			<td><input type="text" name="const_time_zone_mysql" id="id_txt_time_zone_mysql" value="{get_conf_const const='const_time_zone_mysql'}"></td>
+    			<td>
+    	{get_conf_const const='const_time_zone_mysql' returnVar='tempVal'}
+    <select name="const_time_zone_mysql" id="id_txt_time_zone_mysql">
+      <option value="">Select</option>
+      <option {if $tempVal == "-12:00"} selected="selected" {/if} value="-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
+      <option {if $tempVal == "-11:00"} selected="selected" {/if} value="-11:00">(GMT -11:00) Midway Island, Samoa</option>
+      <option {if $tempVal == "-10:00"} selected="selected" {/if} value="-10:00">(GMT -10:00) Hawaii</option>
+      <option {if $tempVal == "-9:00"} selected="selected" {/if} value="-9:00">(GMT -9:00) Alaska</option>
+      <option {if $tempVal == "-8:00"} selected="selected" {/if} value="-8:00">(GMT -8:00) Pacific Time (US &amp; Canada)</option>
+      <option {if $tempVal == "-7:00"} selected="selected" {/if}value="-7:00">(GMT -7:00) Mountain Time (US &amp; Canada)</option>
+      <option {if $tempVal == "-6:00"} selected="selected" {/if}value="-6:00">(GMT -6:00) Central Time (US &amp; Canada), Mexico City</option>
+      <option {if $tempVal == "-5:00"} selected="selected" {/if}value="-5:00">(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima</option>
+      <option {if $tempVal == "-4:00"} selected="selected" {/if}value="-4:00">(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz</option>
+      <option {if $tempVal == "-3:30"} selected="selected" {/if}value="-3:30">(GMT -3:30) Newfoundland</option>
+      <option {if $tempVal == "-3:00"} selected="selected" {/if}value="-3:00">(GMT -3:00) Brazil, Buenos Aires, Georgetown</option>
+      <option {if $tempVal == "-2:00"} selected="selected" {/if}value="-2:00">(GMT -2:00) Mid-Atlantic</option>
+      <option {if $tempVal == "-1:00"} selected="selected" {/if}value="-1:00">(GMT -1:00 hour) Azores, Cape Verde Islands</option>
+      <option {if $tempVal == "0:00"} selected="selected" {/if}value="0:00">(GMT) Western Europe Time, London, Lisbon, Casablanca</option>
+      <option {if $tempVal == "1:00"} selected="selected" {/if}value="1:00">(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris</option>
+      <option {if $tempVal == "2:00"} selected="selected" {/if}value="2:00">(GMT +2:00) Kaliningrad, South Africa</option>
+      <option {if $tempVal == "3:00"} selected="selected" {/if}value="3:00">(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg</option>
+      <option {if $tempVal == "3:30"} selected="selected" {/if}value="3:30">(GMT +3:30) Tehran</option>
+      <option {if $tempVal == "4:00"} selected="selected" {/if}value="4:00">(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi</option>
+      <option {if $tempVal == "4:30"} selected="selected" {/if}value="4:30">(GMT +4:30) Kabul</option>
+      <option {if $tempVal == "5:00"} selected="selected" {/if}value="5:00">(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent</option>
+      <option {if $tempVal == "5:30"} selected="selected" {/if}value="5:30">(GMT +5:30) Bombay, Calcutta, Madras, New Delhi</option>
+      <option {if $tempVal == "5:45"} selected="selected" {/if}value="5:45">(GMT +5:45) Kathmandu</option>
+      <option {if $tempVal == "6:00"} selected="selected" {/if}value="6:00">(GMT +6:00) Almaty, Dhaka, Colombo</option>
+      <option {if $tempVal == "7:00"} selected="selected" {/if}value="7:00">(GMT +7:00) Bangkok, Hanoi, Jakarta</option>
+      <option {if $tempVal == "8:00"} selected="selected" {/if}value="8:00">(GMT +8:00) Beijing, Perth, Singapore, Hong Kong</option>
+      <option {if $tempVal == "9:00"} selected="selected" {/if}value="9:00">(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk</option>
+      <option {if $tempVal == "9:30"} selected="selected" {/if}value="9:30">(GMT +9:30) Adelaide, Darwin</option>
+      <option {if $tempVal == "10:00"} selected="selected" {/if}value="10:00">(GMT +10:00) Eastern Australia, Guam, Vladivostok</option>
+      <option {if $tempVal == "11:00"} selected="selected" {/if}value="11:00">(GMT +11:00) Magadan, Solomon Islands, New Caledonia</option>
+      <option {if $tempVal == "12:00"} selected="selected" {/if}value="12:00">(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka</option>
+</select>
+    				
+    		
+    		
+    		</td>
     		</tr>
     		
     	</table>
@@ -59,11 +98,20 @@
   </tr>
   <tr>
   	<td align="center">
-    	<table width="70%" border="0" cellspacing="4" cellpadding="4">
+    	<table width="90%" border="0" cellspacing="4" cellpadding="4">
     		<tr><td colspan="2"><strong>Miscellaneous</strong></td></tr>
     		<tr>
     			<td width="40%">Local Or Online</td>
-    			<td><input type="text" name="const_local_or_online" id="id_txt_local_or_online" value="{get_conf_const const='const_local_or_online'}"></td>
+    			<td>
+    				{get_conf_const const='const_local_or_online' returnVar='tempVal'}
+    				<select name="const_local_or_online" id="id_txt_local_or_online">
+    					<option value="local">Select</option>
+    					<option {if $tempVal == "local"} selected="selected" {/if} value="local">local</option>
+    					<option {if $tempVal == "online"} selected="selected" {/if} value="online">online</option>
+    				</select>
+    				
+    				
+    			</td>
     		</tr>
     		
     		

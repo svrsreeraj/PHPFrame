@@ -8,24 +8,25 @@ ob_start();
 session_set_cookie_params(10*60*60);
 ini_set('session.gc_maxlifetime', '36000');
 session_start();
-
-
-//error handling
+ini_set("magic_quotes_gpc", "Off");
+error_reporting(~E_NOTICE); //error handling
 set_error_handler("customError");//setting error handler
-error_reporting(~E_NOTICE); 
 
-require_once	("config.inc.php");
-require_once	($projectPath.'config.php');								err_status("Config Included");exit;
-require_once	($projectPath.'includes/db.php');							err_status("Db connected");
-require_once	($projectPath.'libs/smarty-3.0.7/libs/Smarty.class.php');	err_status("Smarty Class Included");
-require_once	($projectPath.'library/dbclass.php');						err_status("Db Class dbclass.php Included");
-require_once	($projectPath.'library/siteclass.php');						err_status("site Class siteclass.php Included");
-require_once	($projectPath.'library/modelclass.php');					err_status("Model Class modelclass.php Included");
-require_once 	($projectPath.'includes/includedfiles.php');				err_status("includedfiles.php included");
-require_once 	($projectPath.'includes/database_rules.php');				err_status("database_rules.php included");
-require_once 	($projectPath.'preLoader.php');								err_status("PreLoader.php included");
-require_once	($projectPath.'libs/googleshortner/urlshortner.php');		err_status("URL Shortner Included");
-require_once	($projectPath.'includes/smarty.plugin.php');				err_status("Smarty Plugin Included");
+//including necessary files
+if(is_file("config.inc.php"))	require_once("config.inc.php");
+else 							exit("Config.inc.php not found");
+
+require_once	(CONST_SITE_ABSOLUTE_PATH.'config.php');								err_status("Config Included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'includes/db.php');							err_status("Db connected");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'libs/smarty-3.0.7/libs/Smarty.class.php');	err_status("Smarty Class Included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'library/dbclass.php');						err_status("Db Class dbclass.php Included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'library/siteclass.php');						err_status("site Class siteclass.php Included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'library/modelclass.php');					err_status("Model Class modelclass.php Included");
+require_once 	(CONST_SITE_ABSOLUTE_PATH.'includes/includedfiles.php');				err_status("includedfiles.php included");
+require_once 	(CONST_SITE_ABSOLUTE_PATH.'includes/database_rules.php');				err_status("database_rules.php included");
+require_once 	(CONST_SITE_ABSOLUTE_PATH.'preLoader.php');								err_status("PreLoader.php included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'libs/googleshortner/urlshortner.php');		err_status("URL Shortner Included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'includes/smarty.plugin.php');				err_status("Smarty Plugin Included");
 
 
 
@@ -52,7 +53,7 @@ if (get_magic_quotes_gpc())
 	    unset($process);
 	}
 
-//including necessary files
+
 
 //smarty object creation
 $smarty		= 	new Smarty;	err_status("Smarty class object 'smarty' created");
@@ -60,24 +61,12 @@ $smarty->compile_check	= 	true;
 
 //dbclasss and siteclass
 $cls_db		=	new sdbclass;err_status("Db class object 'cls_db' created");
-$cls_site	=	new siteclass("voteondeal.com","sess_customer","cls_db","vod_customer");err_status("site class object 'cls_site' created");
+$cls_site	=	new siteclass(constant("CONST_SITE_ADDRESS"),"sess_customer","cls_db","");err_status("site class object 'cls_site' created");
 
 //time zone settings
-if(WHERE_AM_I	==	"online")
-	{
-		//time zaone settings for php and mysql
-		date_default_timezone_set('Pacific/Honolulu');//setting time zone
-		mysql_query("SET time_zone = '-10:00'");//MY SQL	
-	}
-else
-	{
-		//time zaone settings for php and mysql
-		date_default_timezone_set('Asia/Calcutta');//setting time zone
-		mysql_query("SET time_zone = '+5:30'");//MY SQL
-	}
-
-
-
+if(constant("CONST_TIME_ZONE_PHP"))		date_default_timezone_set(constant("CONST_TIME_ZONE_PHP"));//setting time zone
+if(constant("CONST_TIME_ZONE_MYSQL"))	mysql_query("SET time_zone = '".constant("CONST_TIME_ZONE_PHP")."'");//MY SQL	
+	
 //setting error status
 if($_REQUEST['debug']	==	"1") $_SESSION['debug']	=	"1";
 if($_REQUEST['debug']	==	"0") $_SESSION['debug']	=	"0";
@@ -91,19 +80,18 @@ if(WHERE_AM_I	==	"online")
 		if($_REQUEST["showme"]	!=	"")	$_SESSION["showme"]	=	"1";
 		if(!$_SESSION["showme"])
 			{
-				//header("location:http://192.168.0.8/voteondeal/underConstruction/");
-				//header("location:http://www.voteondeals.com/underConstruction/");exit;
+				//header("location:http://www.example.com/underConstruction/");exit;
 			}
 	}
 function header_view($title="")
 	{
-		if(!$title)	$title	=	"voteondeals.com";
+		if(!$title)	$title	=	constant("CONST_SITE_ADDRESS");
 		define("_HEAD_TITLE",$title);
 		include("header.php");
 	}
 function headerDynamic($title="")
 	{
-		if(!$title)	$title	=	"voteondeals.com";
+		if(!$title)	$title	=	constant("CONST_SITE_ADDRESS");
 		define("_HEAD_TITLE",$title);
 		include("header_dynamic.php");
 	}
