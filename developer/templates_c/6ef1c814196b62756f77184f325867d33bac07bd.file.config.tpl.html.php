@@ -1,22 +1,36 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-09-13 02:03:36
+<?php /* Smarty version Smarty-3.0.7, created on 2011-09-15 14:56:02
          compiled from "./templates/config.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:16875556584e6f4698f0b3f3-78097544%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:7541378504e71c4aaa6e681-33543990%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '6ef1c814196b62756f77184f325867d33bac07bd' => 
     array (
       0 => './templates/config.tpl.html',
-      1 => 1315915307,
+      1 => 1316078761,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '16875556584e6f4698f0b3f3-78097544',
+  'nocache_hash' => '7541378504e71c4aaa6e681-33543990',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
+<?php echo smarty_function_call_header(array('title'=>"Developer Basic Configurations"),$_smarty_tpl);?>
+
+
+<style type="text/css" media="screen">
+input[type=text]
+	{
+		min-width:300px;
+	}
+select
+	{
+		width:300px;
+	}
+</style>
+
 <?php $_smarty_tpl->tpl_vars["actionReturn"] = new Smarty_variable($_smarty_tpl->getVariable('obj')->value->actionReturn, null, null);?>
 
 <form action="" name="formName" method="post" enctype="multipart/form-data">
@@ -131,6 +145,7 @@ $_smarty_tpl->decodeProperties(array (
     </td>
   </tr>
   <tr>
+  	
   	<td align="center">
     	<table width="90%" border="0" cellspacing="4" cellpadding="4">
     		<tr><td colspan="2"><strong>Miscellaneous</strong></td></tr>
@@ -138,6 +153,8 @@ $_smarty_tpl->decodeProperties(array (
     			<td width="40%">Local Or Online</td>
     			<td>
     				<?php echo smarty_function_get_conf_const(array('const'=>'const_local_or_online','returnVar'=>'tempVal'),$_smarty_tpl);?>
+
+    				<?php echo $_smarty_tpl->getVariable('sreeVariable')->value;?>
 
     				<select name="const_local_or_online" id="id_txt_local_or_online">
     					<option value="local">Select</option>
@@ -154,7 +171,7 @@ $_smarty_tpl->decodeProperties(array (
     </td>
   </tr>
   <tr>
-  	<td align="center"><input type="submit" value="Submit" name="actionvar"></td>
+  	<td align="center"><input type="submit" value="Submit" class='butsubmit' name="actionvar"></td>
   </tr>
   
 </table>

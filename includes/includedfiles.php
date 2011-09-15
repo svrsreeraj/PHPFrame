@@ -12,5 +12,4 @@ require_once	CONST_SITE_ABSOLUTE_PATH.'classes/masters.php';
 //Default Value Settings
 $defaultsObj	=	new defaults();
 $defaultsObj->defineConstants();
-
 ?>

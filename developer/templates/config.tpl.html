@@ -1,3 +1,16 @@
+{call_header title="Developer Basic Configurations"}
+{literal}
+<style type="text/css" media="screen">
+input[type=text]
+	{
+		min-width:300px;
+	}
+select
+	{
+		width:300px;
+	}
+</style>
+{/literal}
 {assign var="actionReturn" value=$obj->actionReturn}
 
 <form action="" name="formName" method="post" enctype="multipart/form-data">
@@ -97,6 +110,7 @@
     </td>
   </tr>
   <tr>
+  	
   	<td align="center">
     	<table width="90%" border="0" cellspacing="4" cellpadding="4">
     		<tr><td colspan="2"><strong>Miscellaneous</strong></td></tr>
@@ -104,6 +118,7 @@
     			<td width="40%">Local Or Online</td>
     			<td>
     				{get_conf_const const='const_local_or_online' returnVar='tempVal'}
+    				{$sreeVariable}
     				<select name="const_local_or_online" id="id_txt_local_or_online">
     					<option value="local">Select</option>
     					<option {if $tempVal == "local"} selected="selected" {/if} value="local">local</option>
@@ -119,7 +134,7 @@
     </td>
   </tr>
   <tr>
-  	<td align="center"><input type="submit" value="Submit" name="actionvar"></td>
+  	<td align="center"><input type="submit" value="Submit" class='butsubmit' name="actionvar"></td>
   </tr>
   
 </table>

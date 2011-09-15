@@ -10,3 +10,5 @@ PHP Version - 5.3+
 //Constants
 
 WHERE_AM_I - to define where the program runs. possible values are local and online
+
+Developer Safe Mode - http://192.168.0.8/PHPFrame/developer/?safemode=true

@@ -13,8 +13,9 @@ error_reporting(~E_NOTICE); //error handling
 set_error_handler("customError");//setting error handler
 
 //including necessary files
-if(is_file("config.inc.php"))	require_once("config.inc.php");
-else 							exit("Config.inc.php not found");
+if(is_file("../config.inc.php"))	require_once("config.inc.php");
+elseif(is_file("config.inc.php"))	require_once("config.inc.php");
+else 								exit("Config.inc.php not found :(");
 
 require_once	(CONST_SITE_ABSOLUTE_PATH.'config.php');								err_status("Config Included");
 require_once	(CONST_SITE_ABSOLUTE_PATH.'includes/db.php');							err_status("Db connected");
@@ -24,7 +25,6 @@ require_once	(CONST_SITE_ABSOLUTE_PATH.'library/siteclass.php');						err_status
 require_once	(CONST_SITE_ABSOLUTE_PATH.'library/modelclass.php');					err_status("Model Class modelclass.php Included");
 require_once 	(CONST_SITE_ABSOLUTE_PATH.'includes/includedfiles.php');				err_status("includedfiles.php included");
 require_once 	(CONST_SITE_ABSOLUTE_PATH.'includes/database_rules.php');				err_status("database_rules.php included");
-require_once 	(CONST_SITE_ABSOLUTE_PATH.'preLoader.php');								err_status("PreLoader.php included");
 require_once	(CONST_SITE_ABSOLUTE_PATH.'libs/googleshortner/urlshortner.php');		err_status("URL Shortner Included");
 require_once	(CONST_SITE_ABSOLUTE_PATH.'includes/smarty.plugin.php');				err_status("Smarty Plugin Included");
 
@@ -71,10 +71,10 @@ if(constant("CONST_TIME_ZONE_MYSQL"))	mysql_query("SET time_zone = '".constant("
 if($_REQUEST['debug']	==	"1") $_SESSION['debug']	=	"1";
 if($_REQUEST['debug']	==	"0") $_SESSION['debug']	=	"0";
 
-
-$smarty->assign("cls_db",$cls_db);
+//Assigning siteclass to Smarty
 $smarty->assign("cls_site",$cls_site);
 
+//If we need to shutdown the site for some reason uncomment the header path
 if(WHERE_AM_I	==	"online")
 	{
 		if($_REQUEST["showme"]	!=	"")	$_SESSION["showme"]	=	"1";
@@ -83,18 +83,8 @@ if(WHERE_AM_I	==	"online")
 				//header("location:http://www.example.com/underConstruction/");exit;
 			}
 	}
-function header_view($title="")
-	{
-		if(!$title)	$title	=	constant("CONST_SITE_ADDRESS");
-		define("_HEAD_TITLE",$title);
-		include("header.php");
-	}
-function headerDynamic($title="")
-	{
-		if(!$title)	$title	=	constant("CONST_SITE_ADDRESS");
-		define("_HEAD_TITLE",$title);
-		include("header_dynamic.php");
-	}
+	
+//this is our Custom error handler
 function customError($error_level,$error_message,$error_file,$error_line,$error_context)
  	{ 
 	 	if($error_level	<>	8)
@@ -108,26 +98,44 @@ function customError($error_level,$error_message,$error_file,$error_line,$error_
 					}
 			}
 	}
+//Keeping and displaying the status 
 function err_status($msg) 
 	{
 		if($_SESSION['debug'])	echo "<br>".$msg;
 	}
+
+//Key function to load model class
 function loadModelClass($session=true,$page="")
 	{
-		$modFolder	=	"models";
+		$modFolder	=	getcwd().DIRECTORY_SEPARATOR."models";
 		if(!trim($page))	$page	=	siteclass::getPageName();
 		$fileArray	=	pathinfo($page);
-		require_once($modFolder."/".$fileArray["basename"]);
+		require_once($modFolder.DIRECTORY_SEPARATOR.$fileArray["basename"]);
 		$obj		=	 new $fileArray["filename"];
 		if($session	==	true)	
 			{
 				$obj	=	$obj->getSessionObj()?$obj->getSessionObj():$obj;
 				$obj->clearAction();
-				if($obj->getRealAction())	
-					{
-						$obj->findAction();
-					}
+				if($obj->getRealAction())	$obj->findAction();
 			}
 		return $obj;
+	}
+function loadView($vars=array(),$userPage="")
+	{
+		if(!trim($page))	$page	=	siteclass::getPageName();
+		$fileArray	=	pathinfo($page);
+		$tplFile	=	$fileArray["filename"].".tpl.html";
+		if(!$userPage)	$userPage	=	$tplFile;
+		global $smarty,$obj;
+		$smarty->assign('obj',$obj);
+		foreach($vars as	$key=>$val)	$smarty->assign($key,$GLOBALS[$val]);
+		$smarty->display($userPage);
+	}
+//loading Heeder file
+function header_view($title="",$file="header.php")
+	{
+		if(!$title)	$title	=	constant("CONST_SITE_ADDRESS");
+		define("_HEAD_TITLE",$title);
+		if(is_file(getcwd().DIRECTORY_SEPARATOR.$file)) include(getcwd().DIRECTORY_SEPARATOR.$file);
 	}
 ?>

@@ -1,7 +1,7 @@
 <?php
 /**********************************************************************
 Author - System
-Date - Thursday 15th of September 2011 02:57:06 PM
+Date - Thursday 15th of September 2011 11:22:56 AM
 Purpose - Main configuration file
 **********************************************************************/
 define('CONST_DB_HOST','localhost');
@@ -11,7 +11,7 @@ define('CONST_DB_NAME','phpframe');
 define('CONST_SITE_ADDRESS','http://192.168.0.8/PHPFrame/');
 define('CONST_SITE_ABSOLUTE_PATH','/var/www/html/PHPFrame/');
 define('CONST_TIME_ZONE_PHP','Asia/Culcatta');
-define('CONST_TIME_ZONE_MYSQL','9:30');
+define('CONST_TIME_ZONE_MYSQL','5:30');
 define('CONST_LOCAL_OR_ONLINE','local');
 
 

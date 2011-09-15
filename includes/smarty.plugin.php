@@ -4,6 +4,15 @@ Created by :Sreeraj
 Created on :2011-04-05
 Purpose    :custom made smarty plugins
 **************************************************************************************/
+function smarty_function_call_header($params, &$template)
+	{
+		if(!$params['title'])		$title	=	constant("CONST_SITE_ADDRESS");
+		else 						$title	=	$params['title'];
+		if(!$params['file'])		$file	=	"header.php";
+		else 						$file	=	trim($params['file']);
+		define("_HEAD_TITLE",$title);
+		if(is_file(getcwd().DIRECTORY_SEPARATOR.$file)) include(getcwd().DIRECTORY_SEPARATOR.$file);
+	}
 function smarty_function_call_footer($params, &$template)
 	{
 		include_once 'footer.php';

@@ -4,16 +4,18 @@ Created By 	:	Sreeraj
 Created On	:	25-10-2010
 Purpose		:	Initial functions
 ****************************************************************************************/
-if(is_file("config.inc.php"))	require_once	("../init.php");
+ob_start();
+session_set_cookie_params(10*60*60);
+ini_set('session.gc_maxlifetime', '36000');
+session_start();
+ini_set("magic_quotes_gpc", "Off");
+error_reporting(1); //error handling
+
+if($_REQUEST["safemode"]	==	"true")		$_SESSION["reu_dev_safe_mode"]	=	true;
+if($_REQUEST["safemode"]	==	"false")	$_SESSION["reu_dev_safe_mode"]	=	false;
+if(($_SESSION["reu_dev_safe_mode"]	!= true) && is_file("../config.inc.php"))	require_once	("../init.php");
 else
 	{
-		ob_start();
-		session_set_cookie_params(10*60*60);
-		ini_set('session.gc_maxlifetime', '36000');
-		session_start();
-		ini_set("magic_quotes_gpc", "Off");
-		error_reporting(1); //error handling
-		
 		function err_status($msg) 
 			{
 				if($_SESSION['debug'])	echo "<br>".$msg;
@@ -42,7 +44,17 @@ else
 					}
 				return $obj;
 			}
-		
+		function loadView($vars=array(),$userPage="")
+			{
+				if(!trim($page))	$page	=	siteclass::getPageName();
+				$fileArray	=	pathinfo($page);
+				$tplFile	=	$fileArray["filename"].".tpl.html";
+				if(!$userPage)	$userPage	=	$tplFile;
+				global $smarty,$obj;
+				$smarty->assign('obj',$obj);
+				foreach($vars as	$key=>$val)	$smarty->assign($key,$GLOBALS[$val]);
+				$smarty->display($userPage);
+			}
 		//including necessary files
 		require_once	('../config.php');								
 		require_once	('../libs/smarty-3.0.7/libs/Smarty.class.php');	
@@ -83,7 +95,5 @@ else
 		//smarty object creation
 		$smarty		= 	new Smarty;
 		$smarty->compile_check	= 	true;
-		
 	}
-
 ?>
