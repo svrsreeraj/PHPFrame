@@ -26,21 +26,20 @@ else
 				define("_HEAD_TITLE",$title);
 				include("header.php");
 			}
+		//Key function to load model class
 		function loadModelClass($session=true,$page="")
 			{
-				$modFolder	=	"models";
+				$modFolder	=	getcwd().DIRECTORY_SEPARATOR."models";
 				if(!trim($page))	$page	=	siteclass::getPageName();
 				$fileArray	=	pathinfo($page);
-				require_once($modFolder."/".$fileArray["basename"]);
-				$obj		=	 new $fileArray["filename"];
+				require_once($modFolder.DIRECTORY_SEPARATOR.$fileArray["basename"]);
+				$className	=	$fileArray["filename"]."Model";
+				$obj		=	new $className;
 				if($session	==	true)	
 					{
 						$obj	=	$obj->getSessionObj()?$obj->getSessionObj():$obj;
 						$obj->clearAction();
-						if($obj->getRealAction())	
-							{
-								$obj->findAction();
-							}
+						if($obj->getRealAction())	$obj->findAction();
 					}
 				return $obj;
 			}

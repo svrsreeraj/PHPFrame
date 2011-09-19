@@ -1,10 +1,10 @@
 <?php
 /**********************************************************************
 Author - System
-Date - Thursday 15th of September 2011 11:12:25 AM
+Date - Monday 19th of September 2011 12:54:59 PM
 Purpose - Main configuration file
 **********************************************************************/
-define('CONST_DB_HOST','locahost');
+define('CONST_DB_HOST','localhost');
 define('CONST_DB_USERNAME','root');
 define('CONST_DB_PASSWORD','');
 define('CONST_DB_NAME','phpframe');

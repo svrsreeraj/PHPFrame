@@ -9,6 +9,5 @@ $obj	=	loadModelClass(true);
 $obj->executeAction();
 $smarty->assign('TPL_MSG',$_SESSION['sess_message']);
 $_SESSION['sess_message']	=	"";
-$smarty->assign('obj',$obj);
-$smarty->display('index.tpl.html');
+loadView();
 ?>

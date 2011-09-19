@@ -10,6 +10,5 @@ $obj->executeAction();
 //$obj->redirectPage($obj->getLink("","adminHome.php",false));
 $smarty->assign('TPL_MSG',$_SESSION['sess_message']);
 $_SESSION['sess_message']	=	"";
-$smarty->assign('obj',$obj);
-$smarty->display('forgotPassword.tpl.html');
+loadView();
 ?>

@@ -1,7 +1,7 @@
 <?php
 /**********************************************************************
 Author - System
-Date - Monday 19th of September 2011 01:09:44 PM
+Date - Monday 19th of September 2011 12:57:43 PM
 Purpose - Main configuration file
 **********************************************************************/
 define('CONST_DB_HOST','localhost');

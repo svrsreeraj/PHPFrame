@@ -8,7 +8,8 @@ class modelclass extends siteclass
 	{
 		public $actionVar			=	"actionvar";
 		public $redirectvar			=	"redirecturl";
-		public $defaultActionVal	=	"Listing"; 
+		public $defaultActionVal	=	"Listing";
+		public $classPostfix		=	"Model";
 		public $maxSessionCount		=	100;
 		public $actionVal			=	"";
 		public $childClass			=	"";
@@ -54,14 +55,19 @@ class modelclass extends siteclass
 		public function getMethodName($default=false)
 			{
 				if(!$this->childClass)	$this->setClassName();
-				if($default	==	false)	return $this->childClass.ucwords($this->getAction());
-				else					return $this->childClass.ucwords($this->getDefaultAction());
+				if($default	==	false)	return ucwords($this->getAction());
+				else					return ucwords($this->getDefaultAction());
 			}
 		//setting the child class name
-		public function setClassName()
+		public function setClassName($className)
 			{
-				$traceArray			=	debug_backtrace();
-				$this->childClass	=	$traceArray[1]["class"];
+				if($className)	$this->childClass	=	$className;
+				else
+					{
+						$traceArray			=	debug_backtrace();
+						$this->childClass	=	$traceArray[1]["class"];	
+					}
+				
 			}
 		//find class name from page name
 		public function getClassNameByPageName($page)
@@ -99,7 +105,7 @@ class modelclass extends siteclass
 					}
 				else
 					{
-						if(trim($methodName))	$calledFunction		=	$this->childClass.ucwords($methodName);
+						if(trim($methodName))	$calledFunction		=	ucwords($methodName);
 						$addObject		=	&$this;	
 					}
 				foreach($dataArr	as $addKey=>$addVal)
@@ -124,7 +130,7 @@ class modelclass extends siteclass
 			{
 				$traceArray			=	debug_backtrace();
 				$calledFunction		=	$traceArray["1"]["function"];
-				if(trim($methodName))	$calledFunction		=	$this->childClass.ucwords($methodName);
+				if(trim($methodName))	$calledFunction		=	ucwords($methodName);
 				
 				if(trim($page))
 					{
@@ -174,7 +180,7 @@ class modelclass extends siteclass
 					}
 				else
 					{
-						if(trim($methodName))	$calledFunction		=	$this->childClass.ucwords($methodName);
+						if(trim($methodName))	$calledFunction		=	ucwords($methodName);
 						$clearObject		=	&$this;
 					}
 				
@@ -225,7 +231,7 @@ class modelclass extends siteclass
 				$action			=	ucwords($action);
 				if($loadData)		$this->loadData($methodName,$page);
 				if($this->currentAction)	$this->previousAction	=	$this->currentAction;	
-				$this->currentAction	=	substr($methodName, strlen($this->childClass),strlen($methodName)-strlen($this->childClass));
+				$this->currentAction	=	$methodName;
 				if($ufURL)					$this->redirectPage($ufURL);
 				//navigations
 				if($navigate)	$this->redirectPage($this->getLink($action,$page,$sameParams,$newParams,$excludParams));
@@ -379,6 +385,16 @@ class modelclass extends siteclass
 				if($var){foreach($var as $key){	$temp[$key]	=	$res[$key];	}}
 				if($temp) return $temp; else return $res;
 			}
-
+		public function executeAction($loadData=true,$action="",$navigate=false,$sameParams=false,$newParams="",$excludParams="",$page="")
+			{
+				if(trim($action))	$this->setAction($action);//forced action
+				$classNameToBeCalled	=	end(pathinfo(siteclass::getPageName())).$this->classPostfix;
+				$this->setClassName($classNameToBeCalled);
+				$methodName	=		in_array($this->getMethodName(), get_class_methods($classNameToBeCalled))	? $this->getMethodName($default=false):$this->getMethodName($default=true);
+				$this->actionToBeExecuted($loadData,$methodName,$action,$navigate,$sameParams,$newParams,$excludParams,$page);
+				$this->actionReturn		=	call_user_func(array($this, $methodName));				
+				$this->actionExecuted($methodName);
+				return $this->actionReturn;	
+			}
 	}
 ?>

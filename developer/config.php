@@ -7,6 +7,5 @@ Description	:	This is admin home page after login
 require_once 'init.php';err_status("init.php included");
 $obj	=	loadModelClass(false);
 $obj->executeAction();
-$smarty->assign('obj',$obj);
-$smarty->display('config.tpl.html');
+loadView();
 ?>

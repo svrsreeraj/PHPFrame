@@ -1,36 +1,38 @@
 <?php
 /**************************************************************************************
-Created by :Sreeraj
-Created on :2011-10-12
-Purpose    :Admin Home Model Page
-******************* *******************************************************************/
-class config extends modelclass 
+ Created by :Sreeraj
+ Created on :2011-10-12
+ Purpose    :Admin Home Model Page
+ ******************* *******************************************************************/
+class configModel extends modelclass
 	{
 		public $configPath		=	"../config.inc.php";
 		public $lineBreak		=	"\r\n";
 		public $bcpDirs			=	"../Backup/Config";
 		public $byProductsConst	=	array();
-		
-		public function configListing()
+	
+		public function Listing()
 			{
 				if(is_file($this->configPath))	require_once $this->configPath;
 			}
-		public function configSubmit()
+		public function Submit()
 			{
-				if(is_dir($this->bcpDirs)	&&	is_file($this->configPath)) 
+				if(is_dir($this->bcpDirs)	&&	is_file($this->configPath))
 					{
 						copy($this->configPath, $this->bcpDirs."/config.inc.".strtotime("now").".php");
 					}
+				
 				$data	=	$this->getData("post");
+				
 				$fp 	= 	fopen($this->configPath, 'w');
-				fwrite($fp, $this->configGetHeader());
-				fwrite($fp, $this->configGetProcessedValues($data,$exceptions=array("actionvar")));
-				fwrite($fp, $this->configGetProcessedValues($this->byProductsConst));
-				fwrite($fp, $this->configGetFooter());
+				fwrite($fp, $this->GetHeader());
+				fwrite($fp, $this->GetProcessedValues($data,$exceptions=array("actionvar")));
+				fwrite($fp, $this->GetProcessedValues($this->byProductsConst));
+				fwrite($fp, $this->GetFooter());
 				fclose($fp);
 				$this->executeAction($loadData=false,$action="Listing",$navigate=true);
 			}
-		public function configGetHeader()
+		public function GetHeader()
 			{
 				$string	.=	"<?php" . $this->lineBreak;
 				$string	.=	"/**********************************************************************" . $this->lineBreak;
@@ -40,23 +42,23 @@ class config extends modelclass
 				$string	.=	"**********************************************************************/" . $this->lineBreak;
 				return $string;
 			}
-		public function configGetFooter()
+		public function GetFooter()
 			{
 				$string	.=	"?>";
 				return $string;
 			}
-		public function configGetProcessedValues($data,$exceptions=array())
+		public function GetProcessedValues($data,$exceptions=array())
 			{
 				foreach ($data as $key=> $val)
 					{
 						if(!in_array(trim($key), $exceptions))
-							if(trim($val))	$string	.=	"define('".strtoupper(trim($key))."','". $this->configOverRideValue(trim($key),trim($val))."');". $this->lineBreak;
-							else			$string	.=	"define('".strtoupper(trim($key))."','". "" ."');". $this->lineBreak;
+						if(trim($val))	$string	.=	"define('".strtoupper(trim($key))."','". $this->OverRideValue(trim($key),trim($val))."');". $this->lineBreak;
+						else			$string	.=	"define('".strtoupper(trim($key))."','". "" ."');". $this->lineBreak;
 					}
 				$string	.=	$this->lineBreak.$this->lineBreak;
 				return $string;
 			}
-		public function configOverRideValue($key,$value)
+		public function OverRideValue($key,$value)
 			{
 				switch (trim(strtoupper($key)))
 					{
@@ -65,9 +67,9 @@ class config extends modelclass
 							$userHost	=	str_replace("http://","", $userHost);
 							$userHost	=	str_replace("https//","", $userHost);
 							if($pos = strpos($userHost, "/"))	$userHost	=	substr($userHost,0,$pos);
-							
+								
 							$this->byProductsConst["CONST_SITE_ADDRESS_HOST"]		=	$userHost;
-							
+								
 							$value	=	strrev(trim($value));
 							if($value{0}	!=	"/")	$value	=	strrev($value)."/";
 							else 						$value	=	strrev($value);
@@ -89,21 +91,9 @@ class config extends modelclass
 					}
 				return $value;
 			}
-		public function __construct()
-			{
-				$this->setClassName();
-			}
-		public function executeAction($loadData=true,$action="",$navigate=false,$sameParams=false,$newParams="",$excludParams="",$page="")
-			{
-				if(trim($action))	$this->setAction($action);//forced action
-				$methodName	=		(method_exists($this,$this->getMethodName()))	? $this->getMethodName($default=false):$this->getMethodName($default=true);
-				$this->actionToBeExecuted($loadData,$methodName,$action,$navigate,$sameParams,$newParams,$excludParams,$page);
-				$this->actionReturn		=	call_user_func(array($this, $methodName));				
-				$this->actionExecuted($methodName);
-				return $this->actionReturn;
-			}
 		public function __destruct()
 			{
+				print_r($this);
 				parent::childKilled($this);
 			}
 	}

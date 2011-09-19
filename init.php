@@ -111,7 +111,8 @@ function loadModelClass($session=true,$page="")
 		if(!trim($page))	$page	=	siteclass::getPageName();
 		$fileArray	=	pathinfo($page);
 		require_once($modFolder.DIRECTORY_SEPARATOR.$fileArray["basename"]);
-		$obj		=	 new $fileArray["filename"];
+		$className	=	$fileArray["filename"]."Model";
+		$obj		=	new $className;
 		if($session	==	true)	
 			{
 				$obj	=	$obj->getSessionObj()?$obj->getSessionObj():$obj;
