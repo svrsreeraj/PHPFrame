@@ -12,3 +12,10 @@ PHP Version - 5.3+
 WHERE_AM_I - to define where the program runs. possible values are local and online
 
 Developer Safe Mode - http://192.168.0.8/PHPFrame/developer/?safemode=true
+
+Model class will be - "class configModel extends modelclass"
+
+execute action function argument changed to array
+
+siteclass::addHook(array("fromClass"=>"configModel","fromFunction"=>"GetFooter","toClass"=>"siteclass","toFunction"=>"testHook"));
+

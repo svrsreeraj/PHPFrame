@@ -799,6 +799,17 @@ class siteclass extends sdbclass
 				foreach($new	as $key=>$val)	$base[$key]	=	$val;
 				return $base;
 			}
+		static function addHook($argsArray=array())
+			{
+				global $hookSessionName;
+				$defaultArray		=	array("fromClass"=>"","fromFunction"=>"","toClass"=>"","toFunction"=>"");
+				$mergedArray		=	array_merge($defaultArray, $argsArray);
+				$hookSessionName[]	=	$mergedArray;
+			}
+		function testHook($val)
+			{
+				return $val;	
+			}
 	}	
 //class for paging
 class spaging2
@@ -1461,8 +1472,8 @@ class znisms
 		private function createsmsxml($rcvnos,$message)
 			{
 				$stringData =	'<?xml version="1.0" encoding="ISO-8859-1" ?>';
-				$message	=	str_replace("×","x",$message);
-				$message	=	str_replace("®","",$message);
+				$message	=	str_replace("ï¿½","x",$message);
+				$message	=	str_replace("ï¿½","",$message);
 				$message	=	str_replace("?","",$message);
 				$message	=	str_replace("?","'",$message);
 				$message	=	str_replace("?","'",$message);
@@ -1472,11 +1483,11 @@ class znisms
 				$message	=	str_replace("?","'",$message);
 				$message	=	str_replace("?","'",$message);
 				$message	=	str_replace("?","",$message);
-				$message	=	str_replace("¹","",$message);
-				$message	=	str_replace("²","",$message);
-				$message	=	str_replace("³","",$message);
+				$message	=	str_replace("ï¿½","",$message);
+				$message	=	str_replace("ï¿½","",$message);
+				$message	=	str_replace("ï¿½","",$message);
 				$message	=	str_replace("?","-",$message);
-				$message	=	str_replace("â","",$message);
+				$message	=	str_replace("ï¿½","",$message);
 				$message	=	str_replace("?","",$message);
 				$message	=	str_replace("?","",$message);
 				// Assigning to attributes 

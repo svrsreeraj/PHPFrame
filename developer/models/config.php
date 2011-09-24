@@ -22,6 +22,8 @@ class configModel extends modelclass
 						copy($this->configPath, $this->bcpDirs."/config.inc.".strtotime("now").".php");
 					}
 				
+				siteclass::addHook(array("fromClass"=>"configModel","fromFunction"=>"GetFooter","toClass"=>"siteclass","toFunction"=>"testHook"));
+				
 				$data	=	$this->getData("post");
 				
 				$fp 	= 	fopen($this->configPath, 'w');
@@ -30,7 +32,7 @@ class configModel extends modelclass
 				fwrite($fp, $this->GetProcessedValues($this->byProductsConst));
 				fwrite($fp, $this->GetFooter());
 				fclose($fp);
-				$this->executeAction($loadData=false,$action="Listing",$navigate=true);
+				$this->executeAction(array("action"=>"Listing","navigate"=>true));
 			}
 		public function GetHeader()
 			{
@@ -45,7 +47,7 @@ class configModel extends modelclass
 		public function GetFooter()
 			{
 				$string	.=	"?>";
-				return $string;
+				return $this->returnVal($string);
 			}
 		public function GetProcessedValues($data,$exceptions=array())
 			{
@@ -90,10 +92,5 @@ class configModel extends modelclass
 							break;
 					}
 				return $value;
-			}
-		public function __destruct()
-			{
-				print_r($this);
-				parent::childKilled($this);
 			}
 	}

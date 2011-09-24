@@ -115,7 +115,7 @@ function loadModelClass($session=true,$page="")
 		$obj		=	new $className;
 		if($session	==	true)	
 			{
-				$obj	=	$obj->getSessionObj()?$obj->getSessionObj():$obj;
+				$obj	=	$obj->getSessionObj($className)?$obj->getSessionObj($className):$obj;
 				$obj->clearAction();
 				if($obj->getRealAction())	$obj->findAction();
 			}

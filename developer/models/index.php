@@ -10,8 +10,7 @@ class indexModel extends modelclass
 		private $passwords	= array("letmefinishthis");
 		public function Listing()
 			{
-				//return $this->executeAction($loadData=true,$action="",$navigate=true,$sameParams=false,$newParams="",$excludParams="",$page="developerHome.php");
-				return $this->executeAction(false,"Signinform",true);
+				return $this->executeAction(array("action"=>"Signinform","navigate"=>true));
 			}	
 		public function ForgotPassword()
 			{
@@ -33,7 +32,7 @@ class indexModel extends modelclass
 				else
 					{
 						$this->setPageError("Username or password incorrect");
-						$this->executeAction(true,"Signinform",true);
+						$this->executeAction(array("loadData"=>true,"action"=>"Signinform","navigate"=>true));
 					}
 			}
 		public function __destruct()

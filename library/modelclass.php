@@ -234,12 +234,16 @@ class modelclass extends siteclass
 				$this->currentAction	=	$methodName;
 				if($ufURL)					$this->redirectPage($ufURL);
 				//navigations
-				if($navigate)	$this->redirectPage($this->getLink($action,$page,$sameParams,$newParams,$excludParams));
+				if($navigate)	
+					{
+						$this->childKilled($this);
+						$this->redirectPage($this->getLink($action,$page,$sameParams,$newParams,$excludParams));
+					}
 			}
 		//after action execution
 		public function actionExecuted()
 			{
-				//need to write !!!	
+				$this->childKilled($this);	
 			}
 		//returns prvious Action executed
 		public function getCalledAction()
@@ -385,16 +389,36 @@ class modelclass extends siteclass
 				if($var){foreach($var as $key){	$temp[$key]	=	$res[$key];	}}
 				if($temp) return $temp; else return $res;
 			}
-		public function executeAction($loadData=true,$action="",$navigate=false,$sameParams=false,$newParams="",$excludParams="",$page="")
+		public function executeAction($argsArray=array())
 			{
+				$defaultArray	=	array("loadData"=>true,"action"=>"","navigate"=>false,"sameParams"=>false,"newParams"=>"","excludeParams"=>"","page"=>"","ufURL"=>"");
+				$mergedArray	=	array_merge($defaultArray, $argsArray);
+				extract($mergedArray);
 				if(trim($action))	$this->setAction($action);//forced action
 				$classNameToBeCalled	=	end(pathinfo(siteclass::getPageName())).$this->classPostfix;
 				$this->setClassName($classNameToBeCalled);
 				$methodName	=		in_array($this->getMethodName(), get_class_methods($classNameToBeCalled))	? $this->getMethodName($default=false):$this->getMethodName($default=true);
-				$this->actionToBeExecuted($loadData,$methodName,$action,$navigate,$sameParams,$newParams,$excludParams,$page);
-				$this->actionReturn		=	call_user_func(array($this, $methodName));				
+				$this->actionToBeExecuted($loadData,$methodName,$action,$navigate,$sameParams,$newParams,excludeParams,$page,$ufURL);
+				$this->actionReturn		=	call_user_func(array($this, $methodName));
 				$this->actionExecuted($methodName);
 				return $this->actionReturn;	
+			}
+		public function returnVal($value)
+			{
+				global $hookSessionName;
+				$debugBackTrace	=	debug_backtrace();
+				$fromClass		=	$debugBackTrace[1]["class"];
+				$fromFunction	=	$debugBackTrace[1]["function"];
+				
+				foreach($hookSessionName as	$key=>$val)
+					{
+						if ($fromClass	==	$val["fromClass"]	&& $fromFunction	==	$val["fromFunction"])
+							{
+								if($val["toClass"])	$value	=	call_user_func(array($val["toClass"], $val["toFunction"]),$value);
+								else				$value	=	call_user_func($val["toFunction"],$value);
+							}
+					}
+				return $value;
 			}
 	}
 ?>

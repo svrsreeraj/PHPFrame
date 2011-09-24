@@ -1,7 +1,7 @@
 <?php
 /**********************************************************************
 Author - System
-Date - Friday 23rd of September 2011 01:18:47 PM
+Date - Friday 23rd of September 2011 01:02:04 PM
 Purpose - Main configuration file
 **********************************************************************/
 define('CONST_DB_HOST','localhost');
@@ -19,4 +19,3 @@ define('CONST_SITE_ADDRESS_HOST','192.168.0.8');
 define('WHERE_AM_I','local');
 
 
-?>Sree
