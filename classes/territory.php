@@ -10,31 +10,31 @@ class territory extends siteclass
 		
 		public function getAllCountries($args="1")
 			{	
-				$sql		=	"select * from vod_country where $args"; 
+				$sql		=	"select * from php_country where $args"; 
 				$result		=	$this->getdbcontents_sql($sql);
 				return $result;
 			}
 		public function getAllStates($args="1")
 			{
-				$sql		=	"select * from vod_country_state where $args"; 
+				$sql		=	"select * from php_country_state where $args"; 
 				$result		=	$this->getdbcontents_sql($sql);
 				return $result;
 				
 			}
 		public function getCountryName($args="1")
 			{
-				$countryArry	=	$this->getdbcontents_cond('vod_country',$args);
+				$countryArry	=	$this->getdbcontents_cond('php_country',$args);
 				return $countryArry[0]['country'];
 			}
 		public function getStateName($args="1")
 			{
-				$stateArry	=	$this->getdbcontents_cond('vod_country_state',$args);
+				$stateArry	=	$this->getdbcontents_cond('php_country_state',$args);
 				return $stateArry[0]['state'];
 			}
 			
 		public function insertCountry($dataArray)
 			{
-				$country_id		=	$this->db_insert('vod_country',$dataArray);
+				$country_id		=	$this->db_insert('php_country',$dataArray);
 				if(!$country_id) 
 					{
 						$this->dbRollBack;
@@ -47,7 +47,7 @@ class territory extends siteclass
 			}
 		public function insertState($dataArray)
 			{
-				$state_id		=	$this->db_insert('vod_country_state',$dataArray);
+				$state_id		=	$this->db_insert('php_country_state',$dataArray);
 				if(!$state_id) 
 					{
 						$this->dbRollBack;
@@ -58,7 +58,7 @@ class territory extends siteclass
 			}
 		public function updateCountry($dataArray,$Id)
 			{
-				$data		=	$this->db_update('vod_country',$dataArray,'id='.$Id);
+				$data		=	$this->db_update('php_country',$dataArray,'id='.$Id);
 				if(!$data) 	
 					{
 						$this->setPageError($this->getDbErrors());
@@ -68,7 +68,7 @@ class territory extends siteclass
 			}
 		public function updateState($dataArray,$stateId)
 			{
-				$data		=	$this->db_update('vod_country_state',$dataArray,"id=".$stateId);
+				$data		=	$this->db_update('php_country_state',$dataArray,"id=".$stateId);
 				if(!$data) 	
 					{
 						$this->setPageError($this->getDbErrors());

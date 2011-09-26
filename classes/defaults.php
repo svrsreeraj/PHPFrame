@@ -7,34 +7,34 @@ Purpose		:	functions for groups
 
 class defaults extends siteclass
 	{
-		//select all from table name vod_defaults_group
+		//select all from table name php_defaults_group
 		public function getAllGroups($stat="") 
 			{
 				if($stat)	$cond	=	" status='1' ";
-				$data				=	$this->getdbcontents_cond("vod_defaults_group",$cond." ORDER BY preference ASC");
+				$data				=	$this->getdbcontents_cond("php_defaults_group",$cond." ORDER BY preference ASC");
 				return $data; 
 			}
-		//select all from table name vod_defaults
+		//select all from table name php_defaults
 		public function getAllConstants($args="1")
 			{
-				$data				=	$this->getdbcontents_cond('vod_defaults',$args);
+				$data				=	$this->getdbcontents_cond('php_defaults',$args);
 				return $data; 
 			}
 		//return all constants where group id =$gId			
 		public function getConstantsByGroup($gId)
 			{	
-				$data				=	$this->getdbcontents_cond('vod_defaults','group_id ='.$gId);
+				$data				=	$this->getdbcontents_cond('php_defaults','group_id ='.$gId);
 				return $data; 
 			}
 		//return the parent name
 		public function getGroupByConstant($id)
 			{
-				$data				=	$this->getdbcontents_cond('vod_defaults_group',"status=1 AND id =".$id);		
+				$data				=	$this->getdbcontents_cond('php_defaults_group',"status=1 AND id =".$id);		
 				return $data; 
 			}
 		public function defineConstants()
 			{ 
-				$data		=		$this->getdbcontents_cond('vod_defaults');	
+				$data		=		$this->getdbcontents_cond('php_defaults');	
 				foreach ($data as $value)
 					{
 						define($value["name"],$value["value"]);
@@ -44,7 +44,7 @@ class defaults extends siteclass
 		public function insertDefaults($dataArray)
 			{
 				$this->dbStartTrans();
-				$default_id				=	$this->db_insert('vod_defaults',$dataArray);
+				$default_id				=	$this->db_insert('php_defaults',$dataArray);
 				if(!$default_id) 
 					{
 						$this->dbRollBack();
@@ -55,7 +55,7 @@ class defaults extends siteclass
 			}	
 		public function updateDefaults($dataArray,$id)
 			{				
-				$data					=	$this->db_update('vod_defaults',$dataArray,"id=$id");
+				$data					=	$this->db_update('php_defaults',$dataArray,"id=$id");
 				if(!$data) 	
 					{
 						$this->setPageError($this->getDbErrors());
@@ -67,7 +67,7 @@ class defaults extends siteclass
 		public function insertDefaultGroup($dataArray)
 			{
 				$this->dbStartTrans();
-				$group_id				=	$this->db_insert('vod_defaults_group ',$dataArray);
+				$group_id				=	$this->db_insert('php_defaults_group ',$dataArray);
 				if(!$group_id) 
 					{
 						$this->dbRollBack;
@@ -78,7 +78,7 @@ class defaults extends siteclass
 			}	
 		public function updateDefaultGroup($dataArray,$id)
 			{				
-				$data					=	$this->db_update("vod_defaults_group",$dataArray,"id='$id'");
+				$data					=	$this->db_update("php_defaults_group",$dataArray,"id='$id'");
 				if(!$data) 	
 					{
 						$this->setPageError($this->getDbErrors());

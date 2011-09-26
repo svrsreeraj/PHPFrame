@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-09-15 14:56:02
+<?php /* Smarty version Smarty-3.0.7, created on 2011-09-26 12:14:29
          compiled from "./templates/config.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:7541378504e71c4aaa6e681-33543990%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:17972681994e801f4d741cf5-33696324%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '6ef1c814196b62756f77184f325867d33bac07bd' => 
     array (
       0 => './templates/config.tpl.html',
-      1 => 1316078761,
+      1 => 1317017856,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '7541378504e71c4aaa6e681-33543990',
+  'nocache_hash' => '17972681994e801f4d741cf5-33696324',
   'function' => 
   array (
   ),
@@ -60,6 +60,12 @@ select
     		<tr>
     			<td>DataBase Name</td>
     			<td><input type="text" name="const_db_name" id="id_txt_db_name" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_db_name','returnVar'=>'tempVal'),$_smarty_tpl);?>
+<?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
+"></td>
+    		</tr>
+    		<tr>
+    			<td>Table  Prefix</td>
+    			<td><input type="text" name="const_db_table_prefix" id="id_txt_db_table_prefix" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_db_table_prefix','returnVar'=>'tempVal'),$_smarty_tpl);?>
 <?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
 "></td>
     		</tr>

@@ -23,7 +23,7 @@ class indexModel extends modelclass
 			}
 		public function Submit()
 			{
-				$data		=	$this->getData("post");				
+				$data		=	$this->getData("post");
 				if(in_array($data["password"],$this->passwords))
 					{
 						$_SESSION["reu_dev_sess"]	=	"1";

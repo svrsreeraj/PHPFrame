@@ -4,9 +4,9 @@ Created by :Mahinsha
 Created on :2010-11-12
 Purpose    :Admin Users
 **************************************************************************************/
-class adminUsers extends modelclass
+class adminUsersModel extends modelclass
 	{
-		public function adminUsersListing()
+		public function Listing()
 			{
 				$this->permissionCheck("View",1);
 				$searchData		=	$this->getData("post","Search");
@@ -41,7 +41,7 @@ class adminUsers extends modelclass
 						$sqlCond	.=	" And ". $this->dbSearchCond("=", "usertype", $searchData["sel_search_group"]);
 					}
 				$sqlCond	.=	"order by ".$sortData["sortField"]." ".$sortData["sortMethod"];
-				$sql		=	"select * from vod_admin_users where 1  $sqlCond";
+				$sql		=	"select * from php_admin_users where 1  $sqlCond";
 				$spage		=	$this->create_paging("n_page",$sql,GLB_PAGE_CNT);
 				$data		=	$this->getdbcontents_sql($spage->finalSql());
 				if(!$data)		$this->setPageError("No records found !");
@@ -50,25 +50,25 @@ class adminUsers extends modelclass
 				$searchData["sortData"]		=	$sortData;
 				return array("data"=>$data,"spage"=>$spage,"searchdata"=>$searchData);
 			}
-		public function adminUsersReset()
+		public function Reset()
 			{
 				$this->clearData("Search");
-				$this->executeAction(false,"Listing",true,false);	
+				$this->executeAction(array("action"=>"Listing","navigate"=>true));
 			}
-		public function adminUsersSearch()
+		public function Search()
 			{
-				$this->executeAction(false,"Listing",true);
+				$this->executeAction(array("action"=>"Listing","navigate"=>true));
 			}
-		public function adminUsersAddformbtn()
+		public function Addformbtn()
 			{
 				$this->permissionCheck("Add",1);
-				$this->executeAction(false,"Addform",true,true);	
+				$this->executeAction(array("action"=>"Listing","navigate"=>true,"sameParams"=>true));
 			}
-		public function adminUsersCancel()
+		public function Cancel()
 			{
-				$this->executeAction(false,"Listing",true,true);	
+				$this->executeAction(array("action"=>"Listing","navigate"=>true,"sameParams"=>true));	
 			}
-		public function adminUsersEditform()
+		public function Editform()
 			{
 				$this->permissionCheck("Edit",1);
 				$data			=	$this->getData("get");
@@ -83,7 +83,7 @@ class adminUsers extends modelclass
 				$dropDown	=	$this->get_combo_arr("usertype",$adminUserObj->getAllUsertypes("status=1"),"id","typename",$dataArr["usertype"]);						
 				return array("combo"=>$dropDown,"data"=>$this->getHtmlData($dataArr));
 			}
-		public function adminUsersAddform()
+		public function Addform()
 			{
 				$this->permissionCheck("Add",1);
 				$data		=	$this->getHtmlData($this->getData("post","Addform",false));
@@ -91,7 +91,7 @@ class adminUsers extends modelclass
 				$dropDwon	=	$this->get_combo_arr("usertype",$adminUserObj->getAllUsertypes("status=1"),"id","typename",$dataArr["usertype"]);
 				return array("combo"=>$dropDwon,"data"=>$data);
 			}
-		public function adminUsersSavedata()
+		public function Savedata()
 			{
 				$this->permissionCheck("Add",1);
 				$data		=	$this->getData("files");
@@ -104,7 +104,7 @@ class adminUsers extends modelclass
 						$this->addData(array("image"=>$adimg),"request");
 					}
 				$data		=	$this->getData("request");
-				$dataIns	=	$this->populateDbArray("vod_admin_users",$data);
+				$dataIns	=	$this->populateDbArray("php_admin_users",$data);
 				$adminUserObj	=	new adminUser();
 				if(!$this->getPageError())
 					{
@@ -126,18 +126,18 @@ class adminUsers extends modelclass
 										$this->setPageError("Inserted Successfully");
 										$this->clearData("Savedata");
 										$this->clearData("Addform");						
-										return $this->executeAction(false,"Listing",true);
+										$this->executeAction(array("action"=>"Listing","navigate"=>true));
 									}
 							}
 						else
 							{
 								$this->setPageError($adminUserObj->getPageError());
-								$this->executeAction(true,"Addform",true);
+								$this->executeAction(array("action"=>"Addform","navigate"=>true));
 							}	
 					}
 				
 			}
-		public function adminUsersStauschange()
+		public function Stauschange()
 			{	
 				
 				$this->permissionCheck("Status",1);
@@ -163,59 +163,42 @@ class adminUsers extends modelclass
 								$this->setPageError("Inserted Successfully");
 								$this->clearData("Savedata");
 								$this->clearData("Addform");						
-								return $this->executeAction(false,"Listing",true);
+								return $this->executeAction(array("action"=>"Listing","navigate"=>true));
 							}
 						
 						$this->setPageError("Updated Successfully");
 						$this->clearData();//this											
-						return $this->executeAction(false,"Listing",true,true,'','status,id');
+						return $this->executeAction(array("action"=>"Listing","navigate"=>true,"sameParams"=>true,"excludeParams"=>'status,id'));
 					}
 				else if($updatesucces)	
 					{
 						$this->setPageError("Updated Successfully");
 						$this->clearData();//this											
-						return $this->executeAction(false,"Listing",true,true,'','status,id');
+						return $this->executeAction(array("action"=>"Listing","navigate"=>true,"sameParams"=>true,"excludeParams"=>'status,id'));
 					}
 				else
 					{
 						$this->setPageError($userObj->getPageError());
-						$this->executeAction(false,"Listing",true,true);
+						return $this->executeAction(array("action"=>"Listing","navigate"=>true,"sameParams"=>true));
 					}
 			}
-		public function adminUsersUpdatedata()
+		public function Updatedata()
 			{				
 				$this->permissionCheck("Edit",1);
 				$adminUserObj	=	new adminUser();
 				$data		=	$this->getData("request");
-				$dataIns	=	$this->populateDbArray("vod_admin_users",$data);
+				$dataIns	=	$this->populateDbArray("php_admin_users",$data);
 				if($adminUserObj->updateAdminUser($dataIns,$data["id"]))	
 					{
 						$this->setPageError("Updated Successfully");
 						$this->clearData();//this
 						$this->clearData("Editform");						
-						return $this->executeAction(false,"Listing",true,true);
+						return $this->executeAction(array("action"=>"Listing","navigate"=>true,"sameParams"=>true));
 					}
 				else
 					{
 						$this->setPageError($adminUserObj->getPageError());
-						$this->executeAction(false,"Editform",true,true);
+						return $this->executeAction(array("action"=>"Editform","navigate"=>true,"sameParams"=>true));
 					}	
-			}
-		public function __construct()
-			{
-				$this->setClassName();
-			}
-		public function executeAction($loadData=true,$action="",$navigate=false,$sameParams=false,$newParams="",$excludParams="",$page="")
-			{
-				if(trim($action))	$this->setAction($action);//forced action
-				$methodName	=		(method_exists($this,$this->getMethodName()))	? $this->getMethodName($default=false):$this->getMethodName($default=true);
-				$this->actionToBeExecuted($loadData,$methodName,$action,$navigate,$sameParams,$newParams,$excludParams,$page);
-				$this->actionReturn		=	call_user_func(array($this, $methodName));				
-				$this->actionExecuted($methodName);
-				return $this->actionReturn;
-			}
-		public function __destruct()
-			{
-				parent::childKilled($this);
 			}
 	}

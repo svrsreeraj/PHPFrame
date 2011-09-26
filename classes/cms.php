@@ -16,7 +16,7 @@ class cms extends siteclass
 		//CMS SECTION
 		public function getCMSSectionData($args="1")
 			{
-				$sql					=	"SELECT * FROM vod_cms_section WHERE $args";			
+				$sql					=	"SELECT * FROM php_cms_section WHERE $args";			
 				$data					=	$this->getdbcontents_sql($sql);	
 				return $data;
 			}
@@ -24,7 +24,7 @@ class cms extends siteclass
 			{
 				$this->dbStartTrans();
 				$dataArray["date_added"]=	"escape now() escape";
-				$section_id				=	$this->db_insert('vod_cms_section',$dataArray);
+				$section_id				=	$this->db_insert('php_cms_section',$dataArray);
 				if(!$section_id) 
 					{
 						$this->dbRollBack;
@@ -36,7 +36,7 @@ class cms extends siteclass
 		public function updateCMSSection($dataArray,$id)
 			{
 				$dataArray["date_added"]	=	"escape now() escape";
-				$data						=	$this->db_update('vod_cms_section',$dataArray,"id=$id");
+				$data						=	$this->db_update('php_cms_section',$dataArray,"id=$id");
 				if(!$data) 	
 					{
 						$this->setPageError($this->getDbErrors());
@@ -47,25 +47,25 @@ class cms extends siteclass
 			}
 		public function deleteCMSSection($id)
 			{
-				$data		=	$this->dbDelete_cond('vod_cms_section',"id=$id");
+				$data		=	$this->dbDelete_cond('php_cms_section',"id=$id");
 			}
 		public function getCMSSection($id)
 			{
-				$data		=	$this->getdbcontents_cond('vod_cms_section',"id=$id");
+				$data		=	$this->getdbcontents_cond('php_cms_section',"id=$id");
 				return $data; 	
 			}
 		
 		//CMS	
 		public function getCMSData($args="1") //to fetch all cms data
 			{
-				$sql					=	"SELECT * FROM vod_cms WHERE $args";			
+				$sql					=	"SELECT * FROM php_cms WHERE $args";			
 				$data					=	$this->getdbcontents_sql($sql);	
 				return $data;
 			}
 		public function insertCMS($dataArray)
 			{
 				$this->dbStartTrans();
-				$this->cmsId			=	$this->db_insert('vod_cms',$dataArray);
+				$this->cmsId			=	$this->db_insert('php_cms',$dataArray);
 				if(!$this->cmsId) 
 					{
 						$this->dbRollBack;
@@ -76,7 +76,7 @@ class cms extends siteclass
 			}	
 		public function updateCMS($dataArray,$id)
 			{
-				$data					=	$this->db_update('vod_cms',$dataArray,"id=$id ");
+				$data					=	$this->db_update('php_cms',$dataArray,"id=$id ");
 				if(!$data) 	
 					{
 						$this->setPageError($this->getDbErrors());
@@ -86,11 +86,11 @@ class cms extends siteclass
 			}
 		public function deleteCMS($id)
 			{
-				$data					=	$this->dbDelete_cond('vod_cms',"id=$id");
+				$data					=	$this->dbDelete_cond('php_cms',"id=$id");
 			}
 		public function getCMS($id)
 			{
-				$data					=	$this->getdbcontents_cond('vod_cms',"id=$id");
+				$data					=	$this->getdbcontents_cond('php_cms',"id=$id");
 				return $data; 	
 			}
 		public function sendMailCMS($id,$to,$from,$subject,$vars,$priority=0)
@@ -110,7 +110,7 @@ class cms extends siteclass
 									"priority"=>$priority,
 									"date_added"=>"escape now() escape"
 								);
-				$this->db_insert('vod_email_pending',$dataArray);
+				$this->db_insert('php_email_pending',$dataArray);
 				return true;
 				
 			}

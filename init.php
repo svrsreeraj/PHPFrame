@@ -12,20 +12,29 @@ ini_set("magic_quotes_gpc", "Off");
 error_reporting(~E_NOTICE); //error handling
 set_error_handler("customError");//setting error handler
 
+
 //including necessary files
-if(is_file("../config.inc.php"))	require_once("config.inc.php");
-elseif(is_file("config.inc.php"))	require_once("config.inc.php");
-else 								exit("Config.inc.php not found :(");
+if(is_file(dirname(__FILE__)."/config.inc.php"))	require_once("config.inc.php"); 			//for adminpanel,developers etc
+else 												exit("Config.inc.php not found :(");
 
 require_once	(CONST_SITE_ABSOLUTE_PATH.'config.php');								err_status("Config Included");
 require_once	(CONST_SITE_ABSOLUTE_PATH.'includes/db.php');							err_status("Db connected");
-require_once	(CONST_SITE_ABSOLUTE_PATH.'libs/smarty-3.0.7/libs/Smarty.class.php');	err_status("Smarty Class Included");
+
 require_once	(CONST_SITE_ABSOLUTE_PATH.'library/dbclass.php');						err_status("Db Class dbclass.php Included");
 require_once	(CONST_SITE_ABSOLUTE_PATH.'library/siteclass.php');						err_status("site Class siteclass.php Included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'library/spaging.php');						err_status("paging Class spaging.php Included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'library/upload.php');						err_status("upload Class upload.php Included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'library/phpValidations.php');				err_status("validation Class phpValidations.php Included");
 require_once	(CONST_SITE_ABSOLUTE_PATH.'library/modelclass.php');					err_status("Model Class modelclass.php Included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'library/moduleclass.php');					err_status("Module Class moduleclass.php Included");
+
 require_once 	(CONST_SITE_ABSOLUTE_PATH.'includes/includedfiles.php');				err_status("includedfiles.php included");
 require_once 	(CONST_SITE_ABSOLUTE_PATH.'includes/database_rules.php');				err_status("database_rules.php included");
+
+
 require_once	(CONST_SITE_ABSOLUTE_PATH.'libs/googleshortner/urlshortner.php');		err_status("URL Shortner Included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'libs/smarty-3.0.7/libs/Smarty.class.php');	err_status("Smarty Class Included");
+
 require_once	(CONST_SITE_ABSOLUTE_PATH.'includes/smarty.plugin.php');				err_status("Smarty Plugin Included");
 
 

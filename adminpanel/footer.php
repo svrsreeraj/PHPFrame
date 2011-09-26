@@ -23,7 +23,7 @@
 	 </td>
   </tr>
 </table>
-	<script type="text/javascript" src="js/footerScript.js"> </script>
-	<script type="text/javascript" src="js/formValidation.js"></script>
+	<script type="text/javascript" src="<?php echo constant("CONST_ADMIN_URL");?>js/footerScript.js"> </script>
+	<script type="text/javascript" src="<?php echo constant("CONST_ADMIN_URL");?>js/formValidation.js"></script>
 </body>
 </html>

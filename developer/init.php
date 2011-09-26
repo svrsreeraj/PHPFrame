@@ -88,9 +88,6 @@ else
 				    }
 			    unset($process);
 			}
-		
-		
-		
 		//smarty object creation
 		$smarty		= 	new Smarty;
 		$smarty->compile_check	= 	true;

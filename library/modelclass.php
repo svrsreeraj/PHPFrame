@@ -391,7 +391,7 @@ class modelclass extends siteclass
 			}
 		public function executeAction($argsArray=array())
 			{
-				$defaultArray	=	array("loadData"=>true,"action"=>"","navigate"=>false,"sameParams"=>false,"newParams"=>"","excludeParams"=>"","page"=>"","ufURL"=>"");
+				$defaultArray	=	array("loadData"=>false,"action"=>"","navigate"=>false,"sameParams"=>false,"newParams"=>"","excludeParams"=>"","page"=>"","ufURL"=>"");
 				$mergedArray	=	array_merge($defaultArray, $argsArray);
 				extract($mergedArray);
 				if(trim($action))	$this->setAction($action);//forced action
