@@ -8,6 +8,10 @@ class adminHomeModel extends modelclass
 	{
 		public function Listing()
 			{
+				$moduleClass	=	 new moduleclass();
+				$moduleClass->installModule("cms");
+				print_r($moduleClass->errorArray);
+				exit;
 				return array();
 			}
 		
