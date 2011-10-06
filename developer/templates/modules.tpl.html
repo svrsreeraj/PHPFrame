@@ -1,0 +1,37 @@
+{call_header title="Modules Configurations"}
+{assign var="actionReturn" value=$obj->actionReturn}
+<form action="" name="formName" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellspacing="3" cellpadding="3">
+  <tr>
+  	<td align="center">
+    	<table width="90%" border="0" cellspacing="4" cellpadding="4">
+    		<tr><td colspan="2"><strong>Modules</strong></td></tr>
+    		{foreach from=$actionReturn.modules item=data name=i}
+    		<tr>
+    			<td width="40%">{$data.module}</td>
+    			<td width="40%">
+    			{if $data.status.moduleError==1}
+    				Module Error
+    			{/if}
+    			
+    			{if $data.status.moduleError==0 && $data.status.moduleInstalled==0}
+    				Install
+    			{/if}
+    			
+    			{if $data.status.moduleInstalled==1 && $data.status.moduleInstalledErrorLog|@count > 0}
+    			 	Error In Installation
+    			{/if}	
+    			
+    			{if $data.status.moduleInstalled==1}
+    				Uninstall
+    			{/if}
+    			
+    			</td>
+    		</tr>
+    		{/foreach}
+    	</table>
+    </td>
+  </tr>
+ </table>
+</form>
+{call_footer}

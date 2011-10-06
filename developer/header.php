@@ -78,6 +78,7 @@ define("CONST_DEVELOPER_URL",constant("CONST_SITE_ADDRESS")."developer/");
 				<div class="leftMenuBody">
 					<a href = "developerHome.php"  class="letnav">Developer Home</a>
 					<a href = "config.php"  class="letnav">Basic Config</a>
+					<a href = "modules.php"  class="letnav">Modules</a>
 					<a href="logout.php" class="letnav ">Logout</a>
 				</div>
 			</div>

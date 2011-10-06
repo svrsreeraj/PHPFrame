@@ -45,7 +45,57 @@ class moduleclass extends siteclass
 				$confFile	=	$path.$this->moduleConfFile;
 				if(is_file($confFile))	return $confFile;
 				else 					return false;
-			}	
+			}
+		public function getModulesList()
+			{
+				$dirArray	=	array();
+				$path		=	constant("CONST_SITE_ABSOLUTE_PATH").$this->moduleLocation."/";
+				if ($handle = opendir($path)) 
+					{
+					    while (false !== ($file = readdir($handle)))	
+						    {
+						    	if(($file != ".")	&&	($file != ".."))	$dirArray[]	=	$file;
+						    }
+					    closedir($handle);
+					}
+				return $dirArray;
+			}
+		public function getModuleStatus($module)
+			{
+				$statusArray	=	array();
+				if(!$this->checkModuleError($module))
+					{
+						$statusArray["moduleError"]		=	1;
+						$statusArray["moduleErrorLog"]	=	$this->errorArray;
+					}
+				else
+					{
+						$statusArray["moduleError"]		=	0;
+						$statusArray["moduleErrorLog"]	=	array();
+					}
+					
+				if(!$this->checkModuleInstalled($module))
+					{
+						$statusArray["moduleInstalled"]			=	1;
+						$statusArray["moduleInstalledErrorLog"]	=	$this->errorArray;
+					}
+				else
+					{
+						$statusArray["moduleInstalled"]			=	0;
+						$statusArray["moduleInstalledErrorLog"]	=	array();
+					}
+				return $statusArray;
+			}
+		public function getModulesListWithStatus()
+			{
+				$newArray	=	array();
+				$modules	=	$this->getModulesList();
+				foreach ($modules	as $key=>$val)
+					{
+						$newArray[]	=	array("module"=>$val,"status"=>$this->getModuleStatus($val));
+					}
+				return $newArray;
+			}
 		public function installModule($module)
 			{
 				if(!$confFile = $this->getModulePathByName($module))	$this->errorArray[]	=	"Module $module Configuration file not found";
@@ -89,8 +139,7 @@ class moduleclass extends siteclass
 						if($this->errorArray)	$installFailedFlag	=	1;
 						else 					$this->statusArray[]	=	"Admin Permissions inserted successfully";
 					}
-				
-					
+				/******** OOOOOOOPS Something went wrong :( *******************/	
 				if($installFailedFlag	==	1)
 					{
 						$this->uninstallModule($module);
@@ -254,6 +303,7 @@ class moduleclass extends siteclass
 				
 				$modulePath	=	constant("CONST_SITE_ABSOLUTE_PATH").$this->moduleLocation.$module."/";
 				
+				$this->checkModuleError($module);//checking whether the module is valid and correct for installation
 				foreach($menus	as $key=>$menu)
 					{
 						//checking whether menuname is availabe
@@ -264,12 +314,25 @@ class moduleclass extends siteclass
 								if($this->getdbcount_sql($sql))		$this->errorArray[]	=	"Menu Name is already exist in the database :(";
 							}
 					}
+			}
+		public function checkModuleError($module)
+			{
+				$this->errorArray	=	array();
+				if(!$confFile = $this->getModulePathByName($module))	$this->errorArray[]	=	"Module $module Configuration file not found";
+				require $confFile;
+				
+				$modulePath	=	constant("CONST_SITE_ABSOLUTE_PATH").$this->moduleLocation.$module."/";
+				
+				foreach($menus	as $key=>$menu)
+					{
+						//checking whether menuname is availabe
+						if(!trim($menu["menuName"]))	$this->errorArray[]	=	"Not a valid menu name";
+					}
 				foreach($pages as	$key=>$val)//checking existance of pages
 					{
 						if(!trim($val["page"]))	$this->errorArray[]	=	"Found empty filename";
 						elseif(!is_file($modulePath.$val["page"]))	$this->errorArray[]	=	$val["page"] . " not exisits !!";
 					}
-
 				$newArray	=	array();
 				foreach($pages	as 	$key=>$val)
 					{
@@ -281,9 +344,34 @@ class moduleclass extends siteclass
 						$sql	=	"select * from ".constant("CONST_DB_TABLE_PREFIX").$this->tbl_admin_actions	." where action = '".mysql_real_escape_string($val)."'";
 						if(!$this->getdbcount_sql($sql))		$this->errorArray[]	=	"'$val' action is not available in the database";	
 					}
-			}	
+				if($this->errorArray)	return false;
+				else 					return true;
+			}
+		public function checkModuleInstalled($module)
+			{
+				$this->errorArray	=	array();
+				if(!$confFile = $this->getModulePathByName($module))	$this->errorArray[]	=	"Module $module Configuration file not found";
+				require $confFile;
+				
+				$modulePath		=	constant("CONST_SITE_ABSOLUTE_PATH").$this->moduleLocation.$module."/";
+				$installed		=	false;
+				
+				foreach($menus	as $key=>$menu)
+					{
+						$sql	=	"select * from ".constant("CONST_DB_TABLE_PREFIX").$this->tbl_admin_menus." where menuname = '".mysql_real_escape_string($menu["menuName"])."'";
+						if($this->getdbcount_sql($sql))		$installed = true;
+						else 								$this->errorArray[]	=	"Menu Name '".$menu["menuName"]."' is not found in the database :(";
+					}
+				foreach($queries	as	$key=>$val)
+					{
+						if($this->db_query("select count(*) from `$key`"))	$installed		=	true;
+						else 	$this->errorArray[]	=	"Table $key not found in the Database";
+					}
+				if($installed)	return false;
+				else 			return true;
+			}
 		public function uninstallModule($module)
-			{	
+			{
 				if(!$confFile = $this->getModulePathByName($module))	exit("Module Configuration file not found");
 				require $confFile;
 				$this->rollBackTables($queries);
@@ -343,7 +431,5 @@ class moduleclass extends siteclass
 						$this->db_query($sql);
 					}
 			}
-			
-
 	}
 ?>
