@@ -1,0 +1,186 @@
+{literal}
+<script language="javascript" type="text/javascript">
+function ajaxFunction_page(param,div)
+	{
+		document.getElementById(div).innerHTML	=	"Loading...."
+		var ajaxRequest;  // The variable that makes Ajax possible!									
+		try{
+			// Opera 8.0+, Firefox, Safari
+			
+			ajaxRequest = new XMLHttpRequest();
+		} catch (e){
+			// Internet Explorer Browsers
+			try{
+				ajaxRequest = new ActiveXObject("Msxml2.XMLHTTP");
+			} catch (e) {
+				try{
+					ajaxRequest = new ActiveXObject("Microsoft.XMLHTTP");
+				} catch (e){
+					// Something went wrong
+					alert("Your browser broke!");
+					return false;
+				}
+			}
+		}
+		// Create a function that will receive data sent from the server
+		ajaxRequest.onreadystatechange = function()
+		{
+			if(ajaxRequest.readyState == 4 )
+			{
+				   document.getElementById(div).innerHTML= ajaxRequest.responseText;
+				  //document.getElementById(div).style.visibility = 'visible'; 										
+			}
+		}    
+		ajaxRequest.open("GET",param, true);
+		ajaxRequest.send(null); 
+	}	
+
+function fun(id)
+	{
+		document.frm1.action="adminPermission.php?flag=" + id;
+		document.frm1.submit();
+	}
+
+function grpfun(id)
+	{
+		var grps	= $("input[name=group"+id+"]");
+		var chlds	= $("input[name^='group_"+id+"_']:checkbox");
+		if(grps.attr('checked'))
+			{
+				chlds.each(function(index) 
+					{
+						$(this).attr('checked',true);
+					});
+			}
+		else
+			{
+				if($("input[name^='group_"+id+"_']:checkbox:checked").length>0)
+					{
+						chlds.each(function(index) 
+							{
+								$(this).attr('checked',false);
+							});
+
+					}
+			}
+	}
+
+function grpdefun(id)
+	{
+		var element = 	id.split("_");
+		var topId	=	element[0]+element[1]
+		var grps	= $("input[name="+element[0]+element[1]+"]");
+		var chlds	= $("input[name^="+element[0]+"_"+element[1]+"]:checkbox:checked");
+		if(chlds.length	==	0)	grps.attr('checked', false);
+		else					grps.attr('checked', true);
+	}
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+$("#adminpaer").tooltip();
+});
+</script>
+{/literal}                   
+ <form name="frm1" method="post" action="" >
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+
+<tr>
+	<td class="pageHead"><span id="adminpaer"><strong>Set Permission </strong></span></td>
+</tr>
+{if $TPL_MESSAGE}
+<tr>
+	<td class="errorMessage">{$TPL_MESSAGE}</td>
+</tr>
+{/if}
+{if $obj->permissionCheck("View")}
+<tr>
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td  align="right">&nbsp;</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td>&nbsp;</td>
+							<td>Select User Type:</td>
+							<td>{$TPL_ROLE}	</td>							
+						</tr>
+					</table>
+				</td>
+			</tr>
+			
+			{if $menus}
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+						<td colspan="4">
+							<div align="right">
+								{if $obj->permissionCheck("Edit")}
+								<input type="submit" name="Submit" value="Update"  class="butsubmit" />	
+								{/if}		
+							</div>
+						</td>
+					</tr>
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="formTable">
+					 {foreach item=menu from=$menus}
+					
+					<tr  align="left" valign="middle">
+					
+					<th  style="text-align:left;" colspan="2">{$menu.menutitle} 
+					 <input type="checkbox" name="group{$menu.id}"  value="{$menu.id}"  
+					 {if $menu.checked	==	"1"} checked = "checked" {/if}  onclick="return grpfun({$menu.id}) "/>
+					</th>					
+					</tr>
+					
+					 	{foreach item=page from=$menu.pages}
+							<tr align="center" valign="middle">
+							
+							<td>{$page.pagetitle}</td>
+							<td>
+							<table cellpadding="0" cellspacing="0"  border="0">
+							<tr>
+							{foreach item=action from=$page.action}
+							<td>
+							<input type="checkbox" name="group_{$menu.id}_{$page.id}_{$action.id}" id="group_{$menu.id}_{$page.id}_{$action.id}" value="{$action.id}"   
+							{if $action.checked  == "1"} checked="checked" {/if} onclick="return grpdefun('group_{$menu.id}_{$page.id}_{$action.id}')" />
+								
+								{$action.action}
+							</td>
+							{/foreach}
+							
+							</tr>
+							</table>
+							</td> 							
+							</tr>
+						{/foreach}
+					{/foreach}
+					<tr>
+						<td colspan="4">
+							<div align="center">
+								{if $obj->permissionCheck("Edit")}
+								<input type="submit" name="Submit" value="Update"  class="butsubmit" />	
+								{/if}	
+							</div>
+						</td>
+					</tr>
+					
+					
+					{/if}
+					
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+{/if}
+</table>
+</form>
+{include_php file="footer.php"}

@@ -243,7 +243,11 @@ class modelclass extends siteclass
 		//after action execution
 		public function actionExecuted()
 			{
-				$this->childKilled($this);	
+				//$this->childKilled($this);	
+			}
+		public function __destruct()
+			{
+				$this->childKilled($this);		
 			}
 		//returns prvious Action executed
 		public function getCalledAction()

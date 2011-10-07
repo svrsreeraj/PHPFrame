@@ -6,24 +6,29 @@
   	<td align="center">
     	<table width="90%" border="0" cellspacing="4" cellpadding="4">
     		<tr><td colspan="2"><strong>Modules</strong></td></tr>
+    		<tr><td colspan="2">
+    			<div style="color:red;">
+				{$obj->popPageError()}
+				</div>
+			</td></tr>
     		{foreach from=$actionReturn.modules item=data name=i}
     		<tr>
     			<td width="40%">{$data.module}</td>
     			<td width="40%">
     			{if $data.status.moduleError==1}
-    				Module Error
+    				<a href="javascript:;" title="{array2nl array=$data.status.moduleErrorLog}">Module Error</a>
     			{/if}
     			
     			{if $data.status.moduleError==0 && $data.status.moduleInstalled==0}
-    				Install
+    				<a href="modules.php?actionvar=install&module={$data.module}" title="Install {$data.module}">Install</a>
     			{/if}
     			
     			{if $data.status.moduleInstalled==1 && $data.status.moduleInstalledErrorLog|@count > 0}
-    			 	Error In Installation
+    			 	<a href="javascript:;" title="{array2nl array=$data.status.moduleInstalledErrorLog}">Error in installation</a>
     			{/if}	
     			
     			{if $data.status.moduleInstalled==1}
-    				Uninstall
+    				<a href="modules.php?actionvar=Uninstall&module={$data.module}" title="Un install {$data.module}">Un Install</a>
     			{/if}
     			
     			</td>

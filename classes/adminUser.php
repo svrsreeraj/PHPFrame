@@ -623,6 +623,8 @@ class adminUser extends siteclass
 						$permstat		=	$this->getPermission($this->dbSearchCond("=","usertypeid",$utid)."and pactionid in ($actids) ");						
 						if($permstat)
 							{
+								if(trim($val["module"]))	$page	=	constant("CONST_SITE_ADMIN_MODULE_ADDRESS").$val["module"]."/".$page;
+								else 						$page	=	constant("CONST_SITE_ADMIN_ADDRESS").$page;
 								$str	.=	$this->head_page($ptitle,$page,$pid,$selpid);
 							}
 					}

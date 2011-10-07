@@ -9,6 +9,9 @@ if(!$_SESSION["reu_dev_sess"])
 		header("location:index.php");
 		exit;		
 	}
+$CONST_SITE_ADDRESS		=	constant("CONST_SITE_ADDRESS");
+if(!defined("CONST_SITE_ADDRESS"))	$CONST_SITE_ADDRESS	=	"../";
+$CONST_DEVELOPER_URL	=	$CONST_SITE_ADDRESS."developer/";
 define("CONST_DEVELOPER_URL",constant("CONST_SITE_ADDRESS")."developer/");
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -16,12 +19,12 @@ define("CONST_DEVELOPER_URL",constant("CONST_SITE_ADDRESS")."developer/");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php echo _HEAD_TITLE;?></title>
-<link href="<?php echo constant("CONST_DEVELOPER_URL")?>style.css" rel="stylesheet" type="text/css" />
-<link rel="SHORTCUT ICON" href="<?php echo constant("CONST_SITE_ADDRESS")?>/images/favicon.ico">
-<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADDRESS")?>js/jquery-1.4.3.min.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADDRESS")?>js/jquery_facebook.alert.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADDRESS")?>js/tooltip.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADDRESS")?>js/jquery.tooltip/tooltip.jquery.js"></script>
+<link href="<?php echo $CONST_DEVELOPER_URL?>style.css" rel="stylesheet" type="text/css" />
+<link rel="SHORTCUT ICON" href="<?php echo $CONST_SITE_ADDRESS?>/images/favicon.ico">
+<script type="text/javascript" language="javascript" src="<?php echo $CONST_SITE_ADDRESS?>js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" language="javascript" src="<?php echo $CONST_SITE_ADDRESS?>js/jquery_facebook.alert.js"></script>
+<script type="text/javascript" language="javascript" src="<?php echo $CONST_SITE_ADDRESS?>js/tooltip.js"></script>
+<script type="text/javascript" language="javascript" src="<?php echo $CONST_SITE_ADDRESS?>js/jquery.tooltip/tooltip.jquery.js"></script>
 
 </head>
 <body>
@@ -49,13 +52,13 @@ define("CONST_DEVELOPER_URL",constant("CONST_SITE_ADDRESS")."developer/");
               <?php 
               if($_SESSION["reu_dev_safe_mode"]	==	true)	echo "(Safe Mode)";
               ?> 
-              <a title="Click here to logout" class="letnav" href="<?php echo constant("CONST_DEVELOPER_URL")?>logout.php">Logout</a>
+              <a title="Click here to logout" class="letnav" href="<?php echo $CONST_DEVELOPER_URL?>logout.php">Logout</a>
               </td>
             </tr>
         </table></td>
       </tr>
       <tr>
-        <td align="left" valign="top" bgcolor="#0FA1DA"><img src="<?php echo constant("CONST_DEVELOPER_URL")?>images/space.jpg" width="3" height="5" /></td>
+        <td align="left" valign="top" bgcolor="#0FA1DA"><img src="<?php echo $CONST_DEVELOPER_URL?>images/space.jpg" width="3" height="5" /></td>
       </tr>
     </table></td>
   </tr>
@@ -63,13 +66,13 @@ define("CONST_DEVELOPER_URL",constant("CONST_SITE_ADDRESS")."developer/");
     <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
         <td width="200" align="left" valign="top" 
-	style="background-image:url(<?php echo constant("CONST_DEVELOPER_URL")?>images/inner_11.gif); background-position:left top; background-repeat:repeat-y; padding-top:20px;">
+	style="background-image:url(<?php echo $CONST_DEVELOPER_URL?>images/inner_11.gif); background-position:left top; background-repeat:repeat-y; padding-top:20px;">
 		
 		
 		
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
-			<td width="20%" align="left" valign="top"  style="background-image:url(<?php echo constant("CONST_DEVELOPER_URL")?>images/inner_11.gif);
+			<td width="20%" align="left" valign="top"  style="background-image:url(<?php echo $CONST_DEVELOPER_URL?>images/inner_11.gif);
 			 background-position:left top; background-repeat:repeat-y; padding-top:2px;">
 			
 			
@@ -78,9 +81,16 @@ define("CONST_DEVELOPER_URL",constant("CONST_SITE_ADDRESS")."developer/");
 				<div class="leftMenuBody">
 					<a href = "developerHome.php"  class="letnav">Developer Home</a>
 					<a href = "config.php"  class="letnav">Basic Config</a>
-					<a href = "modules.php"  class="letnav">Modules</a>
 					<a href="logout.php" class="letnav ">Logout</a>
 				</div>
+				<?php if(!constant("DEVELOER_LIMITED_ACCESS")){?>
+				<div class="LeftMenuHead LeftMenuHeadCurrent">Advenced Options</div>
+				<div class="leftMenuBody">
+					
+					<a href = "modules.php"  class="letnav">Modules</a>
+
+				</div>
+				<?php }?>
 			</div>
 			<script type="text/javascript">
 							$("#idLeftMenu div.LeftMenuHead").click(function()

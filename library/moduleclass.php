@@ -98,6 +98,7 @@ class moduleclass extends siteclass
 			}
 		public function installModule($module)
 			{
+				$this->errorArray	=	array();
 				if(!$confFile = $this->getModulePathByName($module))	$this->errorArray[]	=	"Module $module Configuration file not found";
 				require $confFile;
 				if($this->errorArray)	exit("Module Configuration file not found");

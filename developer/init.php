@@ -16,13 +16,14 @@ if($_REQUEST["safemode"]	==	"false")	$_SESSION["reu_dev_safe_mode"]	=	false;
 if(($_SESSION["reu_dev_safe_mode"]	!= true) && is_file("../config.inc.php"))	require_once	("../init.php");
 else
 	{
+		define("DEVELOER_LIMITED_ACCESS",true);
 		function err_status($msg) 
 			{
 				if($_SESSION['debug'])	echo "<br>".$msg;
 			}
 		function header_view($title="")
 			{
-				if(!$title)	$title	=	"voteondeals.com";
+				if(!$title)	$title	=	"Developer Board";
 				define("_HEAD_TITLE",$title);
 				include("header.php");
 			}

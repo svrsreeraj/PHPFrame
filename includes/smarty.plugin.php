@@ -39,4 +39,11 @@ function smarty_function_get_conf_const($params, &$template)
 		$tempConst	=	trim(strtoupper($params["const"]));
 		$template->assign($params['returnVar'], constant($tempConst));
 	}
+function smarty_function_array2nl($params, &$template)
+	{
+		$returnString	=	"";
+		$array	=	$params["array"];
+		$returnString	=	implode("\n", $array);
+		echo $returnString;
+	}
 ?>

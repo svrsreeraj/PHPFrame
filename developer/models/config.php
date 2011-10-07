@@ -6,10 +6,12 @@
  ******************* *******************************************************************/
 class configModel extends modelclass
 	{
-		public $configPath		=	"../config.inc.php";
-		public $lineBreak		=	"\r\n";
-		public $bcpDirs			=	"../Backup/Config";
-		public $byProductsConst	=	array();
+		public $configPath			=	"../config.inc.php";
+		public $lineBreak			=	"\r\n";
+		public $bcpDirs				=	"../Backup/Config";
+		public $byProductsConst		=	array();
+		public $adminPanel			=	"adminpanel";
+		public $adminPanelModules	=	"modules";
 	
 		public function Listing()
 			{
@@ -75,6 +77,10 @@ class configModel extends modelclass
 							$value	=	strrev(trim($value));
 							if($value{0}	!=	"/")	$value	=	strrev($value)."/";
 							else 						$value	=	strrev($value);
+							
+							$this->byProductsConst["CONST_SITE_ADMIN_ADDRESS"]		=	$value.$this->adminPanel."/";
+							$this->byProductsConst["CONST_SITE_ADMIN_MODULE_ADDRESS"]		=	$value.$this->adminPanel."/".$this->adminPanelModules."/";
+							
 							return $value;
 							break;
 						case "CONST_SITE_ABSOLUTE_PATH":

@@ -13,10 +13,11 @@ CKEDITOR.editorConfig = function( config )
 CKEDITOR.editorConfig = function( config )
 {
     config.toolbar = 'MyToolbar';
+	config.filebrowserUploadUrl = '../libs/ckeditor_3.5.1/ckupload.php';
  
     config.toolbar_MyToolbar =
     [
-         ['Source','-','Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','-','About']
+         ['Source','-','Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','-','About','-','Image']
     ];
 	
 	config.height = 420; 
