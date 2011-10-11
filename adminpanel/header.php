@@ -4,7 +4,8 @@ Created by 		:Sreeraj
 Created on 		:2010-11-10
 Purpose			:Header area
 ****************************************************************************************/
-$objCls     		= new adminUser();
+require_once 'core/classes/coreAdminUser.php';
+$objCls     		= new coreAdminUser();
 if(!$objCls->check_session())
 	{
 		$_SESSION['sess_message'] 				=	"To access this page, you have to login";
@@ -53,7 +54,7 @@ define("CONST_ADMIN_URL",constant("CONST_SITE_ADDRESS")."adminpanel/");
 						{
 								echo "<td>";
 								echo "<tr>Welcome <b>".$userSess[fname]." ".$userSess[lname]." (".$usertype[0]['typename'].") </b></tr>";
-								echo '<tr><a href="adminHome.php" class="letnav" title="Click here to logout">Home</a>&nbsp;<a href="logout.php" class="letnav" title="Click here to logout">Logout</a></tr>';
+								echo '<tr><a href="'.constant("CONST_ADMIN_CORE_URL").'adminHome.php" class="letnav" title="Click here to logout">Home</a>&nbsp;<a href="'.constant("CONST_ADMIN_CORE_URL").'logout.php" class="letnav" title="Click here to logout">Logout</a></tr>';
 								echo "</td>";
 						}
 					?>

@@ -697,8 +697,7 @@ class siteclass extends sdbclass
 						 $sql	 =	"update $table set `$field` = !($field) where id='$id'";
 						return  $this->db_query($sql);
 					}
-			}			
-			
+			}		
 		function permissionCheck($action,$redirect="")
 			{
 				$objCls		= 	new adminUser();

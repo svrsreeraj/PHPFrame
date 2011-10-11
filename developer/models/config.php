@@ -12,7 +12,8 @@ class configModel extends modelclass
 		public $byProductsConst		=	array();
 		public $adminPanel			=	"adminpanel";
 		public $adminPanelModules	=	"modules";
-	
+		public $adminPanelCore		=	"core";
+		
 		public function Listing()
 			{
 				if(is_file($this->configPath))	require_once $this->configPath;
@@ -78,8 +79,9 @@ class configModel extends modelclass
 							if($value{0}	!=	"/")	$value	=	strrev($value)."/";
 							else 						$value	=	strrev($value);
 							
-							$this->byProductsConst["CONST_SITE_ADMIN_ADDRESS"]		=	$value.$this->adminPanel."/";
-							$this->byProductsConst["CONST_SITE_ADMIN_MODULE_ADDRESS"]		=	$value.$this->adminPanel."/".$this->adminPanelModules."/";
+							$this->byProductsConst["CONST_SITE_ADMIN_ADDRESS"]			=	$value.$this->adminPanel."/";
+							$this->byProductsConst["CONST_SITE_ADMIN_MODULE_ADDRESS"]	=	$value.$this->adminPanel."/".$this->adminPanelModules."/";
+							$this->byProductsConst["CONST_SITE_ADMIN_CORE_ADDRESS"]		=	$value.$this->adminPanel."/".$this->adminPanelCore."/";
 							
 							return $value;
 							break;

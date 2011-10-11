@@ -1,7 +1,7 @@
 <?php
 /**********************************************************************
 Author - System
-Date - Monday 10th of October 2011 03:35:43 PM
+Date - Friday 7th of October 2011 05:29:03 PM
 Purpose - Main configuration file
 **********************************************************************/
 define('CONST_DB_HOST','localhost');
@@ -18,9 +18,8 @@ define('CONST_LOCAL_OR_ONLINE','local');
 
 define('CONST_SITE_ADDRESS_HOST','192.168.0.8');
 define('CONST_SITE_ADMIN_ADDRESS','http://192.168.0.8/PHPFrame/adminpanel/');
-define('CONST_SITE_ADMIN_MODULE_ADDRESS','http://192.168.0.8/PHPFrame/adminpanel/modules/');
-define('CONST_SITE_ADMIN_CORE_ADDRESS','http://192.168.0.8/PHPFrame/adminpanel/core/');
 define('WHERE_AM_I','local');
+define('CONST_SITE_ADMIN_MODULE_ADDRESS','http://192.168.0.8/PHPFrame/adminpanel/modules/');
 
 
 ?>

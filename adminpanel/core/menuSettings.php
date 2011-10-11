@@ -1,8 +1,8 @@
 <?php
 /**************************************************************************************
-Created by :Mahinsha
-Created on :2010-11-12
-Purpose    :Defaults
+Created by :M S Anith
+Created on :2010-11-15
+Purpose    :Leftmenu Settinga
 **************************************************************************************/
 require_once 'init.php';err_status("init.php included");
 $obj	=	loadModelClass(true);
