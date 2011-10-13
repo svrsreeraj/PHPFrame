@@ -700,7 +700,7 @@ class siteclass extends sdbclass
 			}		
 		function permissionCheck($action,$redirect="")
 			{
-				$objCls		= 	new adminUser();
+				$objCls		= 	new coreAdminUser();
 				return $objCls->permissionMenuCheck($action,$redirect);				
 			}
 		function getPopUpTable($headArray,$dataArray,$tWidth="100%",$params='class="listTablePopUp"')

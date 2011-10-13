@@ -10,7 +10,7 @@ header_view("Admin Permission");err_status("header included");
 $role			=	$_REQUEST["role"];
 $flag			=	$_REQUEST["flag"];
 
-$objCls			= 	new adminUser();
+$objCls			= 	new coreAdminUser();
 
 if($flag)
 	{		
@@ -44,7 +44,7 @@ if(isset($_POST['Submit']))
 	{	
 		$objCls->permissionCheck("Edit",1);
 		if(!$flag)	exit("unknown error occured");
-		$objCls->db_query("delete from php_admin_permission where usertypeid='$flag'");
+		$objCls->db_query("delete from ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION")." where usertypeid='$flag'");
 		
 		foreach ($menuval as $key => $value)
 			{	

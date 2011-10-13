@@ -30,16 +30,16 @@ class changePasswordModel extends modelclass
 				
 				if($count==0)
 					{
-						$adminNew			=	new adminUser();
+						$adminNew			=	new coreAdminUser();
 						$logedin			=	end($adminNew->	get_user_data());
 						$userid				= 	$logedin['id'];		
 						$query				=	$this->dbSearchCond("=", "id",$userid);
-						$sql				=	"select password from  php_admin_users where".$query  ;
+						$sql				=	"select password from  ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")." where".$query  ;
 						$pass				=	end($this->getdbcontents_sql($sql));
 						if($pass['password']==$data['oldPass'])
 							{
 								$newpass	=		$data['confNewpass'];
-								$sqlupdate	=		"UPDATE php_admin_users SET password = '$newpass' WHERE id='$userid'";
+								$sqlupdate	=		"UPDATE ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")." SET password = '$newpass' WHERE id='$userid'";
 								$change		=		mysql_query($sqlupdate);
 								if($change)
 									{

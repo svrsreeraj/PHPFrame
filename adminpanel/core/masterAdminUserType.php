@@ -21,7 +21,7 @@ $tpls["parentpagevar"]			=	"";
 $tpls["parentBtnBack"]			=	"";
 
 //database details
-$def_data["table"]				=	"php_admin_usertype";
+$def_data["table"]				=	constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERTYPE");
 $def_data["primary"]			=	"id";
 $def_data["name"]				=	"typename";
 $def_data["prference"]			=	"preference";

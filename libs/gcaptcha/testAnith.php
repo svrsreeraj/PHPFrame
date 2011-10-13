@@ -70,7 +70,7 @@ HTML;
 <p><strong>Write the following word:</strong></p>
 
 
-<form method="GET">
+<form method="get">
 <img src="captcha.php" id="captcha" /><br/>
 
 

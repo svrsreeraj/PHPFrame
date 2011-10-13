@@ -41,7 +41,7 @@ class adminUsersModel extends modelclass
 						$sqlCond	.=	" And ". $this->dbSearchCond("=", "usertype", $searchData["sel_search_group"]);
 					}
 				$sqlCond	.=	"order by ".$sortData["sortField"]." ".$sortData["sortMethod"];
-				$sql		=	"select * from php_admin_users where 1  $sqlCond";
+				$sql		=	"select * from ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")." where 1  $sqlCond";
 				$spage		=	$this->create_paging("n_page",$sql,GLB_PAGE_CNT);
 				$data		=	$this->getdbcontents_sql($spage->finalSql());
 				if(!$data)		$this->setPageError("No records found !");
@@ -104,7 +104,7 @@ class adminUsersModel extends modelclass
 						$this->addData(array("image"=>$adimg),"request");
 					}
 				$data		=	$this->getData("request");
-				$dataIns	=	$this->populateDbArray("php_admin_users",$data);
+				$dataIns	=	$this->populateDbArray(constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS"),$data);
 				$adminUserObj	=	new coreAdminUser();
 				if(!$this->getPageError())
 					{
@@ -187,7 +187,7 @@ class adminUsersModel extends modelclass
 				$this->permissionCheck("Edit",1);
 				$adminUserObj	=	new coreAdminUser();
 				$data		=	$this->getData("request");
-				$dataIns	=	$this->populateDbArray("php_admin_users",$data);
+				$dataIns	=	$this->populateDbArray(constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS"),$data);
 				if($adminUserObj->updateAdminUser($dataIns,$data["id"]))	
 					{
 						$this->setPageError("Updated Successfully");

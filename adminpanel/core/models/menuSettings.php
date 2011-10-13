@@ -27,13 +27,13 @@ class menuSettingsModel extends modelclass
 					}					
 				$sqlCond		.=	" order by ".$sortData["sortField"]." ".$sortData["sortMethod"];				
 				
-				$sql			=	"select * from php_admin_menus where 1  $sqlCond";
+				$sql			=	"select * from ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS")." where 1  $sqlCond";
 				$spage			=	$this->create_paging("n_page",$sql,GLB_PAGE_CNT);
 				$data			=	$this->getdbcontents_sql($spage->finalSql());	
 				if(!$data)	$this->setPageError("No records found !");
 				
 				$searchData					=	$this->getHtmlData($this->getData("post","Search",false));				 
-				$searchData["sortData"]		=	$sortData;				
+				$searchData["sortData"]		=	$sortData;
 				return array("data"=>$data,"spage"=>$spage,"searchdata"=>$searchData);
 			}		
 		public function menuSettingsSearch()
@@ -49,7 +49,7 @@ class menuSettingsModel extends modelclass
 			{	
 				$this->permissionCheck("Status",1);					
 				$data		=	$this->getData("request");						
-				if($this->statusChange("php_admin_menus",$data["id"]))
+				if($this->statusChange(constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS"),$data["id"]))
 					{
 						$this->setPageError("Status Changed Successfully");
 						$this->clearData();											
@@ -60,7 +60,7 @@ class menuSettingsModel extends modelclass
 			{	
 				$this->permissionCheck("Status",1);					
 				$data		=	$this->getData("request");						
-				if($this->statusChange("php_admin_menus",$data["id"],"menable"))
+				if($this->statusChange(constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS"),$data["id"],"menable"))
 					{
 						$this->setPageError("Status Changed Successfully");
 						$this->clearData();											
@@ -80,7 +80,7 @@ class menuSettingsModel extends modelclass
 			{				
 				$this->permissionCheck("Edit",1);
 				$data		=	$this->getData("get");
-				$userObj	=	new adminUser();
+				$userObj	=	new coreAdminUser();
 				$dataArr	=	end($userObj->getAllMenus("id='".$data["id"]."'"));
 				if(!$dataArr)
 					{
@@ -100,9 +100,9 @@ class menuSettingsModel extends modelclass
 			{
 				$this->permissionCheck("Add",1);
 				$data		=	$this->getData("post");
-				$dataIns	=	$this->populateDbArray("php_admin_menus",$data);
-				$dataIns["preference"]	=	$this->getMaxPreference("php_admin_menus");	
-				$userObj	=	new adminUser();
+				$dataIns	=	$this->populateDbArray(constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS"),$data);
+				$dataIns["preference"]	=	$this->getMaxPreference(constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS"));	
+				$userObj	=	new coreAdminUser();
 				if($userObj->insertMenu($dataIns))	
 					{
 						$this->setPageError("Inserted Successfully");
@@ -121,11 +121,11 @@ class menuSettingsModel extends modelclass
 				$this->permissionCheck("Edit",1);
 				$this->permissionCheck("Edit",1);	
 				$data		=	$this->getData("request");
-				$dataIns	=	$this->populateDbArray("php_admin_menus",$data);
-				$userObj	=	new adminUser();				
+				$dataIns	=	$this->populateDbArray(constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS"),$data);
+				$userObj	=	new coreAdminUser();				
 				if($userObj->updateMenu($dataIns,$data["id"]))	
 					{
-						$this->sortingRecords("php_admin_menus",$data["id"],$data["txtpreference"]);
+						$this->sortingRecords(constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS"),$data["id"],$data["txtpreference"]);
 						$this->setPageError("Updated Successfully");
 						$this->clearData();//this
 						$this->clearData("Editform");						

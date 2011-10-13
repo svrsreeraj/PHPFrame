@@ -15,7 +15,7 @@ class coreAdminUser extends siteclass
 		function __construct($user_session="",$usertable="")
 			{
 				if(!$user_session)		$user_session	=	"sess_admin";
-				if(!$usertable)			$usertable		=	"php_admin_users";			
+				if(!$usertable)			$usertable		=	constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS");			
 				$this->user_session						=	$user_session;
 				$this->usertable						=	$usertable;
 			}
@@ -58,254 +58,35 @@ class coreAdminUser extends siteclass
 		public function validateAdminUser($username,$password)
 			{				
 				$cond			=	$this->dbSearchCond("=","email",$username)." and ".$this->dbSearchCond("=","password",$password)." and status='1'";
-				$data			=	$this->getdbcontents_cond('php_admin_users',$cond);
+				$data			=	$this->getdbcontents_cond(constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS"),$cond);
 				if($data)			return $data;						
 				else 				return false;			  
 			}
 		public function getDetails($id="")
 			{	
 				if(!$id)	$id					=	$this->adminid;
-							$resultArry			=	$this->getdbcontents_cond('php_admin_users',"id=".$id);
+							$resultArry			=	$this->getdbcontents_cond(constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS"),"id=".$id);
 							return $resultArry;
 			}
 		//return the curresponding admin details from all related tables
 		public function getAdminDetails($id="")
 			{	
 				if(!$id)	$id						=	$this->adminid;
-				$resultArry	['admin_details']		=	$this->getdbcontents_cond('php_admin_users',"id=".$id,true);
-				$resultArry['vendor']				=	$this->getSalesTeamVendors($id);
-				$resultArry['deals']				=	$this->getSalesTeamDeals($id);
+				$resultArry	['admin_details']		=	$this->getdbcontents_cond(constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS"),"id=".$id,true);
 				return $resultArry;
 			}
 		public function getAdminUsers($args="1")
 			{	
-				$sql				=	"select *,concat(fname,\" \",lname) as fullname from php_admin_users where $args";
+				$sql				=	"select *,concat(fname,\" \",lname) as fullname from ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")." where $args";
 				$resultArry			=	$this->getdbcontents_sql($sql);	
 				return $resultArry;
 			}
 		
-		//return vendors related to sales agent team 
-		public function getSalesTeamVendors($adminId,$args="1")
-			{				
-				$condn								=	$this->dbSearchCond("=","saleagent_id",$adminId)."and $args";
-				$resultArry							=	$this->getdbcontents_cond('php_vendor',$condn,true);
-				return $resultArry;
-			}
-		//return deals related to sales agent team 		
-		public function getSalesTeamDeals($adminId,$args="")
-			{					
-				$resultArry							=	array();
-				$vendorArr							=	$this-> getSalesTeamVendors($adminId,"status='1'");				
-				foreach($vendorArr as $key=>$val)
-					{
-						if($this->getdbcount_cond('php_deal','vendor_id='.$val['id']))						
-							{
-								$resultArry[]		=	$this->getdbcontents_cond('php_deal','vendor_id='.$val['id']);
-							}
-					}
-				return $resultArry;								
-			}
-			
-		public function getSalesTeamPayments($args="1")
-			{					
-				$resultArry							=	array();
-				$vendorArr							=	$this-> getSalesTeamVendors($adminId,"status='1'");				
-				foreach($vendorArr as $key=>$val)
-					{
-						if($this->getdbcount_cond('php_deal','vendor_id='.$val['id']))						
-							{
-								$resultArry[]		=	$this->getdbcontents_cond('php_deal','vendor_id='.$val['id']);
-							}
-					}
-				return $resultArry;								
-			}
-			//===================================================From Mahins================================//
-		 public function getTotalSiteCommision($adminId,$args="1")
-			{				
-			
-				$sql									=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans pd 
-				where pd.deal_payment_id=p.id and ".$this->dbSearchCond("=","pd.admin_id",$adminId)."and $args";
-				$result									=	$this->getdbcontents_sql($sql);
-				foreach($result as $data)
-					{
-						$total_site_Commision			=	$total_site_Commision+$data['total_comm_site'];
-					}
-				return $total_site_Commision;
-			}
-		public function getSiteCommisionByVendor($adminId,$vendorID="")
-			{				
-				$sql									=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans pd
-				 where pd.deal_payment_id=p.id and ".$this->dbSearchCond("=","pd.admin_id",$adminId)."and ".$this->dbSearchCond("=","pd.vendor_id",$adminId)."='$vendorID'";
-				$result									=	$this->getdbcontents_sql($sql);
-				foreach($result as $data)
-					{
-						$total_site_Commision			=	$total_site_Commision+$data['total_comm_site'];
-					}
-				return $total_site_Commision;
-			}	
-		public function getSiteCommisionByDeal($adminId="",$dealID="")
-			{				
-				$sql									=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans pd
-				 where pd.deal_payment_id=p.id and ".$this->dbSearchCond("=","pd.admin_id",$adminId)." and ".$this->dbSearchCond("=","p.deal_id",$dealID);
-				$result									=	$this->getdbcontents_sql($sql);
-				
-				foreach($result as $data)
-					{
-					$total_site_Commision				=	$total_site_Commision+$data['total_comm_site'];
-					}
-				return $total_site_Commision;
-			}	
-		public function getTotalSalesCommision($adminId,$args="1")
-			{	
-				$sql									=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans pd 
-														 	where pd.deal_payment_id=p.id and ".$this->dbSearchCond("=","pd.admin_id",$adminId)."and $args";
-				$result									=	$this->getdbcontents_sql($sql);
-				
-				foreach($result as $data)
-					{
-						$total_comm_sales				=	$total_site_Commision+$data['total_comm_sales'];
-					}
-				return $total_comm_sales;			
-				
-			}
-		public function getSalesCommisionByDeal($adminId="",$dealID="")
-			{				
-					$sql								=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans pd
-					 where pd.deal_payment_id=p.id and ".$this->dbSearchCond("=","pd.admin_id",$adminId)." and ".$this->dbSearchCond("=","p.deal_id",$dealID);
-				$result									=	$this->getdbcontents_sql($sql);
-				
-				foreach($result as $data)
-					{
-						$total_comm_sales				=	$total_site_Commision+$data['total_comm_sales'];
-					}
-				return $total_comm_sales;
-			}	
-		public function getSalesCommisionByVendor($adminId="",$vendorID="")
-			{				
-				$sql									=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans pd 
-				where pd.deal_payment_id=p.id and ".$this->dbSearchCond("=","pd.admin_id",$adminId)." and ".$this->dbSearchCond("=","pd.vendor_id",$vendorID);
-				$result									=	$this->getdbcontents_sql($sql);
-				
-				foreach($result as $data)
-					{
-						$total_comm_sales				=	$total_site_Commision+$data['total_comm_sales'];
-					}
-				return $total_comm_sales;
-			}	
-			
-		public function getPaidSitePayment($args="1")
-			{
-				$sql									=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans 
-																pd where pd.deal_payment_id=p.id  and $args";
-				$result									=	$this->getdbcontents_sql($sql);
-				
-				foreach($result as $data)
-					{
-						$used_comm_site					=	$unit_comm_site+$data['used_comm_site'];
-					}
-				return $used_comm_site;
-				//to get details of paid payments to site admins(meghna pls chk fiel is correct.if else pls change)
-			}
-		public function getPaidSalesPayment($args="1")
-			{
-				$sql									=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans pd 
-															where pd.deal_payment_id=p.id  and $args";
-				$result									=	$this->getdbcontents_sql($sql);
-				
-				foreach($result as $data)
-					{
-						$used_comm_sales				=	$unit_comm_site+$data['used_comm_sales'];
-					}
-				return $used_comm_sales;
-			}
-		public function getPaidVendorPayment($args="1")
-			{
-				$sql									=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans  pd 
-															where pd.deal_payment_id=p.id  and $args";
-				$result									=	$this->getdbcontents_sql($sql);
-				
-				foreach($result as $data)
-					{
-						$used_comm_vendor				=	$unit_comm_site+$data['used_comm_vendor'];
-					}
-				return $used_comm_vendor;
-			}	
-			
-		public function getBalanceSitePayment($args="1")
-			{
-				$sql									=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans
-			                                                  pd where pd.deal_payment_id=p.id  and $args";
-				$result									=	$this->getdbcontents_sql($sql);
-				
-				foreach($result as $data)
-					{
-						$balance_comm_site				=	$unit_comm_site+$data['balance_comm_site'];
-					}
-				return $balance_comm_site;
-			}
-		public function getBalanceSalesPayment($args="")
-			{
-				$sql									=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans pd  
-																where pd.deal_payment_id=p.id  and $args";
-				$result									=	$this->getdbcontents_sql($sql);
-				
-				foreach($result as $data)
-					{
-						$balance_comm_sales				=	$unit_comm_site+$data['balance_comm_sales'];
-					}
-				return $balance_comm_sales;
-			}
-		public function getBalanceVendorPayment($args="")
-			{
-				$sql									=	"select p.*,pd.*  from php_deal_payments p,php_deal_payments_trans pd
-															 where pd.deal_payment_id=p.id  and $args";
-				$result									=	$this->getdbcontents_sql($sql);
-				
-				foreach($result as $data)
-					{
-						$balance_comm_vendor			=	$unit_comm_site+$data['balance_comm_vendor'];
-					}
-				return $balance_comm_vendor;
-			}
-			
-		public function createSitePayment($dataArr)
-			{
-				$id										=	$this->db_insert('php_admin_users',$dataArr);
-				if(!id)
-					{
-						$this->dbRollBack;
-						$this->setPageError($this->getDbErrors());
-						return false;
-					}
-				else	return $id;
-			}
-		public function createSalesPayment($dataArr)
-			{
-				$id										=	$this->db_insert('php_admin_users',$dataArr);
-				if(!id)
-					{
-						$this->dbRollBack;
-						$this->setPageError($this->getDbErrors());
-						return false;
-					}
-				else	return $id;	
-			}
-		public function createVendorPayment($dataArr)
-			{
-				$id											=	$this->db_insert('php_admin_users',$dataArr);
-				if(!id)
-					{
-						$this->dbRollBack;
-						$this->setPageError($this->getDbErrors());
-						return false;
-					}
-				else	return $id;
-			}		
 		public function createAdminUser($dataArr)
 			{
 				$date					=	"escape now() escape";
 				$dataArr['date_added']	=	$date;
-				$adminid			 	=	$this->db_insert('php_admin_users',$dataArr,true);				
+				$adminid			 	=	$this->db_insert(constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS"),$dataArr,true);				
 				if(!$adminid)
 					{
 						$this->dbRollBack;
@@ -317,7 +98,7 @@ class coreAdminUser extends siteclass
 	
 		public function updateAdminUser($dataArr,$id)
 			{	
-				$data					=	$this->db_update('php_admin_users',$dataArr,"id=".$id,true);				
+				$data					=	$this->db_update(constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS"),$dataArr,"id=".$id,true);				
 				if(!$data) 		
 					{
 						$this->setPageError($this->getDbErrors());
@@ -328,34 +109,29 @@ class coreAdminUser extends siteclass
 		
 		public function deleteAdminUser($id)
 			{
-				$vendor									=	$this->getdbcount_cond('php_vendor',"saleagent_id =".$id);
-				$payments								=	$this->getdbcount_cond('php_deal_payments_trans',"saleagent_id =".$id);
-				if((!$vendor)||(!$payments))
-					 {
-						$this->dbDelete_cond('php_admin_users',$cond);
-						return true;
-					 }				 
+				$this->dbDelete_cond(constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS"),$cond);
+				return true;
 			}
 		
 		//*************************************LEFT MENU & PERMISSION********************************BY ANITH********//
 			
 		public function getAllUsertypes($args="")
 			{
-				$sql					=	"SELECT * FROM php_admin_usertype WHERE $args";			
+				$sql					=	"SELECT * FROM ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERTYPE")." WHERE $args";			
 				$data					=	$this->getdbcontents_sql($sql);	
 				return $data;
 			}		
 			
 		public function getAllActions($args="")
 			{
-				$sql					=	"SELECT * FROM php_admin_actions WHERE $args";			
+				$sql					=	"SELECT * FROM ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS")." WHERE $args";			
 				$data					=	$this->getdbcontents_sql($sql);	
 				return $data;
 			}	
 			
 		public function getAllPageActions($args="")
 			{
-				$sql					=	"SELECT * FROM php_admin_page_actions WHERE $args";			
+				$sql					=	"SELECT * FROM ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS")." WHERE $args";			
 				$data					=	$this->getdbcontents_sql($sql);	
 				return $data;
 			}
@@ -370,21 +146,21 @@ class coreAdminUser extends siteclass
 			}	
 		public function getAllMenus($args="")
 			{
-				$sql					=	"SELECT * FROM php_admin_menus WHERE $args";			
+				$sql					=	"SELECT * FROM ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS")." WHERE $args";			
 				$data					=	$this->getdbcontents_sql($sql);	
 				return $data;
 			}
 			
 		public function getAllPages($args="")
 			{
-				$sql					=	"SELECT * FROM php_admin_pages WHERE $args";			
+				$sql					=	"SELECT * FROM ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES")." WHERE $args";			
 				$data					=	$this->getdbcontents_sql($sql);	
 				return $data;
 			}	
 			
 		public function getPageDetails($args="1")	
 			{
-				$sql					=	"SELECT pg.*,act.id as actid FROM `php_admin_pages` as pg, `php_admin_page_actions` as
+				$sql					=	"SELECT pg.*,act.id as actid FROM `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES")."` as pg, `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS")."` as
 											 act WHERE pg.id=act.pageid and $args";			
 				$data					=	$this->getdbcontents_sql($sql);	
 				return $data;
@@ -397,21 +173,21 @@ class coreAdminUser extends siteclass
 			}
 		public function getPageActionDetails($args="1")	
 			{
-				$sql					=	"SELECT pg.*,act.action FROM `php_admin_page_actions` as pg, `php_admin_actions` as
+				$sql					=	"SELECT pg.*,act.action FROM `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS")."` as pg, `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS")."` as
 											 act WHERE act.id=pg.actionid and $args";			
 				$data					=	$this->getdbcontents_sql($sql);	
 				return $data;
 			}
 		public function getPermission($args="1")	
 			{
-				$sql					=	"SELECT * FROM `php_admin_permission`  WHERE $args";			
+				$sql					=	"SELECT * FROM `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION")."`  WHERE $args";			
 				$data					=	$this->getdbcontents_sql($sql);	
 				return $data;
 			}
 		
 		public function insertMenu($dataArr)
 			{
-				$menuid			 =	$this->db_insert('php_admin_menus',$dataArr);
+				$menuid			 =	$this->db_insert(constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS"),$dataArr);
 				if(!$menuid)	
 					{
 						$this->setPageError($this->getDbErrors());
@@ -425,7 +201,7 @@ class coreAdminUser extends siteclass
 				$this->dbStartTrans();
 				$pageArr						=	$dataArr['page'];
 				$actionArr						=	$dataArr['actions'];
-				$pageid							=	$this->db_insert('php_admin_pages',$pageArr);
+				$pageid							=	$this->db_insert(constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES"),$pageArr);
 				
 				if($pageid)
 					{
@@ -433,7 +209,7 @@ class coreAdminUser extends siteclass
 							{
 								$act_arr['actionid']	=	$val;
 								$act_arr['pageid']		=	$pageid;
-								$result					=	$this->db_insert('php_admin_page_actions',$act_arr);
+								$result					=	$this->db_insert(constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS"),$act_arr);
 								if(!$result)
 									{	$this->dbRollBack();
 										$this->setPageError($this->getDbErrors());
@@ -451,7 +227,7 @@ class coreAdminUser extends siteclass
 			}
 		public function insertPermission($dataArr)
 			{
-				$pid			 =	$this->db_insert('php_admin_permission',$dataArr);							
+				$pid			 =	$this->db_insert(constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION"),$dataArr);							
 				if(!$pid) 
 					{
 						$this->setPageError($this->getDbErrors());
@@ -462,7 +238,7 @@ class coreAdminUser extends siteclass
 			
 		public function updateMenu($dataArr,$id)
 			{
-				$data		=	$this->db_update('php_admin_menus',$dataArr,"id=".$id);
+				$data		=	$this->db_update(constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS"),$dataArr,"id=".$id);
 				if(!$data) 		
 					{
 						$this->setPageError($this->getDbErrors());
@@ -475,7 +251,7 @@ class coreAdminUser extends siteclass
 			{
 				$pageArr						=	$dataArr['page'];
 				$actionArr						=	$dataArr['actions'];
-				$data							=	$this->db_update('php_admin_pages',$pageArr,"id=".$id);
+				$data							=	$this->db_update(constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES"),$pageArr,"id=".$id);
 				if(!$data) 		
 					{
 						$this->setPageError($this->getDbErrors());
@@ -489,7 +265,7 @@ class coreAdminUser extends siteclass
 									{
 										$act_arr['actionid']	=	$val;
 										$act_arr['pageid']		=	$id;
-										$result					=	$this->db_insert('php_admin_page_actions',$act_arr);
+										$result					=	$this->db_insert(constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS"),$act_arr);
 										if(!$result)
 											{
 												$this->setPageError($this->getDbErrors());
@@ -674,7 +450,16 @@ class coreAdminUser extends siteclass
 					{
 						if($redirect)	
 							{
-								header("location:noPermission.php");exit;	
+								if(!$this->check_session())
+									{
+										$_SESSION['adminLoginRedirectLink']	=	substr(constant("CONST_HOST_ADDRESS"),0,strlen(constant("CONST_HOST_ADDRESS"))-1).$_SERVER["REQUEST_URI"];
+										header("location:".constant("CONST_SITE_ADMIN_ADDRESS"));exit;
+									}
+								else 
+									{
+										header("location:".constant("CONST_SITE_ADMIN_CORE_ADDRESS")."noPermission.php");exit;
+									}
+									
 							}
 						else return false;
 					}

@@ -22,7 +22,7 @@ $tpls["parentBtnBack"]			=	"";
 //database details
 $def_data["table"]				=	constant("CONST_MODULE_CMS_TABLE_SECTION");
 $def_data["primary"]			=	"id";
-$def_data["name"]				=	"section";
+$def_data["name"]				=	"cms_category";
 $def_data["prference"]			=	"preference";
 $def_data["foreign"]			=	"";
 $def_data["status"]				=	"status";

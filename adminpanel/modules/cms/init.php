@@ -4,7 +4,7 @@ Created By 	:	Sreeraj
 Created On	:	25-10-2010
 Purpose		:	Initial functions
 ****************************************************************************************/
-require_once	(dirname(__FILE__)."/../../../init.php");
+require_once	(dirname(__FILE__)."/../../init.php");
 $currentModulePath			=	moduleclass::getModulePath(__FILE__);
 $currentModuleURL			=	moduleclass::getModuleURL(__FILE__,CONST_SITE_ABSOLUTE_PATH,CONST_SITE_ADDRESS);
 $currentModuleFolderName	=	moduleclass::getModuleFolderName(__FILE__);

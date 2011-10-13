@@ -9,7 +9,7 @@ class pageSettingsModel extends modelclass
 		public function Listing()
 			{
 				$this->permissionCheck("View",1);
-				$userObj			=	new adminUser();
+				$userObj			=	new coreAdminUser();
 				$searchData			=	$this->getData("post","Search");
 				$sortData			=	$this->getData("request","Search");
 				$searchCombo		=	$this->get_combo_arr("sel_search_menu",$userObj->getAllMenus(" status='1'"),"id","menutitle",$searchData["sel_search_menu"],"style='width:100px;'","Any Menu");
@@ -34,7 +34,7 @@ class pageSettingsModel extends modelclass
 					}				
 				$sqlCond			.=	"order by ".$sortData["sortField"]." ".$sortData["sortMethod"];				
 				
-				$sql				=	"select p.*, m.menutitle from php_admin_pages as p, php_admin_menus as m
+				$sql				=	"select p.*, m.menutitle from ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES")." as p, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS")." as m
 										 where 1 and p.menuid=m.id  $sqlCond";								 
 				
 				$spage				=	$this->create_paging("n_page",$sql,GLB_PAGE_CNT);
@@ -58,7 +58,7 @@ class pageSettingsModel extends modelclass
 			{	
 				$this->permissionCheck("Status",1);					
 				$data		=	$this->getData("request");						
-				if($this->statusChange("php_admin_pages",$data["id"]))
+				if($this->statusChange(constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES"),$data["id"]))
 					{
 						$this->setPageError("Status Changed Successfully");
 						$this->clearData();											
@@ -69,7 +69,7 @@ class pageSettingsModel extends modelclass
 			{	
 				$this->permissionCheck("Status",1);					
 				$data		=	$this->getData("request");						
-				if($this->statusChange("php_admin_pages",$data["id"],"penable"))
+				if($this->statusChange(constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES"),$data["id"],"penable"))
 					{
 						$this->setPageError("Status Changed Successfully");
 						$this->clearData();											
@@ -89,7 +89,7 @@ class pageSettingsModel extends modelclass
 			{				
 				$this->permissionCheck("Edit",1);
 				$data		=	$this->getData("get");
-				$userObj	=	new adminUser();
+				$userObj	=	new coreAdminUser();
 				$dataArr	=	end($userObj->getAllPages("id='".$data["id"]."'"));
 				$actArr		=	$userObj->getAllPageActions("pageid='".$data["id"]."'");				
 				foreach($actArr as $key=>$val)  $actid[]	=	$val['actionid'];
@@ -114,7 +114,7 @@ class pageSettingsModel extends modelclass
 			{
 				$this->permissionCheck("Add",1);					
 				$data		=	$this->getHtmlData($this->getData("post","Addform",false));
-				$userObj	=	new adminUser();
+				$userObj	=	new coreAdminUser();
 				$dropDwon	=	$this->get_combo_arr("menuid",$userObj->getAllMenus(" status='1' "),"id","menutitle",$data["menuid"],"style='width:100px;'valtype='emptyCheck-Please select a menu'");
 				$actionArr	=	$userObj->getAllActions("status='1' ORDER BY preference asc");
 				return array("combo"=>$dropDwon,"data"=>$data,"actionArr"=>$actionArr);
@@ -123,11 +123,11 @@ class pageSettingsModel extends modelclass
 			{
 				$this->permissionCheck("Add",1);
 				$data					=	$this->getData("post");
-				$dataIns				=	$this->populateDbArray("php_admin_pages",$data);
-				$dataIns["preference"]	=	$this->getMaxPreference("php_admin_pages");	
+				$dataIns				=	$this->populateDbArray(constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES"),$data);
+				$dataIns["preference"]	=	$this->getMaxPreference(constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES"));	
 				$pageArr["page"]		=	$dataIns;	
 				$pageArr["actions"]		=	$data["actions"];					
-				$userObj	=	new adminUser();
+				$userObj	=	new coreAdminUser();
 				if($userObj->insertPage($pageArr))	
 					{
 						$this->setPageError("Inserted Successfully");
@@ -145,13 +145,13 @@ class pageSettingsModel extends modelclass
 			{
 				$this->permissionCheck("Edit",1);
 				$data				=	$this->getData("request");
-				$dataIns			=	$this->populateDbArray("php_admin_pages",$data);
+				$dataIns			=	$this->populateDbArray(constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES"),$data);
 				$pageArr["page"]	=	$dataIns;	
 				$pageArr["actions"]	=	$data["actions"];	
-				$userObj			=	new adminUser();				
+				$userObj			=	new coreAdminUser();				
 				if($userObj->updatePage($pageArr,$data["id"]))	
 					{
-						$this->sortingRecords("php_admin_pages",$data["id"],$data["txtpreference"]);
+						$this->sortingRecords(constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES"),$data["id"],$data["txtpreference"]);
 						$this->setPageError("Updated Successfully");
 						$this->clearData();//this
 						$this->clearData("Editform");						

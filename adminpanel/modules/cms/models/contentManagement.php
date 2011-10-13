@@ -12,7 +12,7 @@ class contentManagementModel extends modelclass
 				$cmsObj				=	new cmsModule();
 				$searchData			=	$this->getData("post","Search");
 				$sortData			=	$this->getData("request","Search");
-				$searchCombo		=	$this->get_combo_arr("sel_search_group",$cmsObj->getCMSSectionData("1"),"id","section",$searchData["sel_search_group"],"","Any Group");
+				$searchCombo		=	$this->get_combo_arr("sel_search_group",$cmsObj->getCMSSectionData("1"),"id","cms_category",$searchData["sel_search_group"],"","Any Group");
 				if(!trim($sortData["sortField"]))
 						{
 							$this->addData(array("sortField"=>"cms.id"),"request","Search");
@@ -25,7 +25,7 @@ class contentManagementModel extends modelclass
 						$sqlCond	.=	$this->dbSearchCond("like", "cms.description", "%".$searchData["keyword"]."%"). " or";
 						$sqlCond	.=	$this->dbSearchCond("like", "cms.title", "%".$searchData["keyword"]."%"). " or";
 						$sqlCond	.=	$this->dbSearchCond("like", "cms.date_added", "%".$searchData["keyword"]."%"). " or";
-						$sqlCond	.=	$this->dbSearchCond("like", "sect.section", "%".$searchData["keyword"]."%");
+						$sqlCond	.=	$this->dbSearchCond("like", "sect.cms_category", "%".$searchData["keyword"]."%");
 						$sqlCond	.=	") ";
 					}
 				if(trim($searchData["sel_search_group"]))
@@ -33,7 +33,7 @@ class contentManagementModel extends modelclass
 						$sqlCond	.=	" And ". $this->dbSearchCond("=", "cms.section_id", $searchData["sel_search_group"]);
 					}
 				$sqlCond			.=	"order by ".$sortData["sortField"]." ".$sortData["sortMethod"];
-				$sql				=	"SELECT  cms.*,sect.section	FROM  ".constant("CONST_MODULE_CMS_TABLE_SECTION")."  sect,".constant("CONST_MODULE_CMS_TABLE_CMS")."  cms where  cms.section_id  = sect.id $sqlCond";
+				$sql				=	"SELECT  cms.*,sect.cms_category	FROM  ".constant("CONST_MODULE_CMS_TABLE_SECTION")."  sect,".constant("CONST_MODULE_CMS_TABLE_CMS")."  cms where  cms.section_id  = sect.id $sqlCond";
 				$spage				=	$this->create_paging("n_page",$sql,GLB_PAGE_CNT);
 				$data				=	$this->getdbcontents_sql($spage->finalSql());
 				
@@ -73,7 +73,7 @@ class contentManagementModel extends modelclass
 						$this->clearData();
 						return $this->executeAction(false,"Listing",true);
 					}
-				$dropDwon	=	$this->get_combo_arr("section_id",$cmsObj->getCMSSectionData("status=1"),"id","section",$dataArr["section_id"],"valtype='emptyCheck-please select a section'");
+				$dropDwon	=	$this->get_combo_arr("section_id",$cmsObj->getCMSSectionData("status=1"),"id","cms_category",$dataArr["section_id"],"valtype='emptyCheck-please select a section'");
 				
 				return array("combo"=>$dropDwon,"data"=>$this->getHtmlData($dataArr));
 			}
@@ -82,7 +82,7 @@ class contentManagementModel extends modelclass
 				$this->permissionCheck("Add",1);
 				$data		=	$this->getHtmlData($this->getData("post","Addform",false));
 				$cmsObj		=	new cmsModule();
-				$dropDwon	=	$this->get_combo_arr("section_id",$cmsObj->getCMSSectionData("status=1"),"id","section",$data["section_id"], "valtype='emptyCheck-please select a section'");
+				$dropDwon	=	$this->get_combo_arr("section_id",$cmsObj->getCMSSectionData("status=1"),"id","cms_category",$data["section_id"], "valtype='emptyCheck-please select a section'");
 				return array("combo"=>$dropDwon,"data"=>$data);
 			}
 		public function Savedata()

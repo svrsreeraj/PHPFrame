@@ -20,8 +20,8 @@ class indexModel extends modelclass
 				$data		=	$this->getData("post");
 				if(trim($data['emailid']))
 					  {
-						$userObj	=	new adminUser();
-						$sql		=	"select * from  php_admin_users  where email='".$data['emailid']."'";
+						$userObj	=	new coreAdminUser();
+						$sql		=	"select * from  ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")."  where email='".$data['emailid']."'";
 						$dataArra	=	end($this->getdbcontents_sql($sql,true));
 						if(!$dataArra)
 							{
@@ -55,14 +55,14 @@ class indexModel extends modelclass
 			}	
 		public function Signinform()
 			{
-				$userObj	=	new adminUser();
+				$userObj	=	new coreAdminUser();
 				if($userObj->check_session())	$this->redirectPage($this->getLink("","adminHome.php",false));
 				else return true;
 			}
 		public function Submit()
 			{
 				$data		=	$this->getData("post");				
-				$userObj	=	new adminUser();
+				$userObj	=	new coreAdminUser();
 				$arr		=	$userObj->validateAdminUser($data['username'],$data['password']);
 				if($arr)	
 					{

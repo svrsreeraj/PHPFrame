@@ -1,7 +1,7 @@
 <?php
 /**********************************************************************
 Author - System
-Date - Thursday 13th of October 2011 02:44:09 PM
+Date - Wednesday 12th of October 2011 04:35:21 PM
 Purpose - Main configuration file
 **********************************************************************/
 define('CONST_DB_HOST','localhost');
@@ -16,7 +16,6 @@ define('CONST_TIME_ZONE_MYSQL','5:30');
 define('CONST_LOCAL_OR_ONLINE','local');
 
 
-define('CONST_HOST_ADDRESS','http://192.168.0.8/');
 define('CONST_SITE_ADDRESS_HOST','192.168.0.8');
 define('CONST_SITE_ADMIN_ADDRESS','http://192.168.0.8/PHPFrame/adminpanel/');
 define('CONST_SITE_ADMIN_MODULE_ADDRESS','http://192.168.0.8/PHPFrame/adminpanel/modules/');

@@ -6,13 +6,14 @@
  ******************* *******************************************************************/
 class configModel extends modelclass
 	{
-		public $configPath			=	"../config.inc.php";
-		public $lineBreak			=	"\r\n";
-		public $bcpDirs				=	"../Backup/Config";
-		public $byProductsConst		=	array();
-		public $adminPanel			=	"adminpanel";
-		public $adminPanelModules	=	"modules";
-		public $adminPanelCore		=	"core";
+		public $configPath				=	"../config.inc.php";
+		public $lineBreak				=	"\r\n";
+		public $bcpDirs					=	"../Backup/Config";
+		public $byProductsConst			=	array();
+		public $adminPanel				=	"adminpanel";
+		public $adminPanelModules		=	"modules";
+		public $adminPanelCore			=	"core";
+		public $adminPanelCorePath		=	"../adminpanel/core/conf/coreConfig.php";
 		
 		public function Listing()
 			{
@@ -35,6 +36,7 @@ class configModel extends modelclass
 				fwrite($fp, $this->GetProcessedValues($this->byProductsConst));
 				fwrite($fp, $this->GetFooter());
 				fclose($fp);
+				$this->checkAndInstallCoreDb();//inserting tables and data
 				$this->executeAction(array("action"=>"Listing","navigate"=>true));
 			}
 		public function GetHeader()
@@ -69,12 +71,17 @@ class configModel extends modelclass
 					{
 						case "CONST_SITE_ADDRESS":
 							$userHost	=	trim($value);
+							
+							if(strstr($userHost,"https://"))	$constHostAddress	=	"https://";
+							else 								$constHostAddress	=	"http://";
+							
 							$userHost	=	str_replace("http://","", $userHost);
 							$userHost	=	str_replace("https//","", $userHost);
 							if($pos = strpos($userHost, "/"))	$userHost	=	substr($userHost,0,$pos);
 								
-							$this->byProductsConst["CONST_SITE_ADDRESS_HOST"]		=	$userHost;
-								
+							$this->byProductsConst["CONST_HOST_ADDRESS"]			=	$constHostAddress.$userHost."/";
+							$this->byProductsConst["CONST_SITE_ADDRESS_HOST"]		=	$userHost;	
+							
 							$value	=	strrev(trim($value));
 							if($value{0}	!=	"/")	$value	=	strrev($value)."/";
 							else 						$value	=	strrev($value);
@@ -100,5 +107,16 @@ class configModel extends modelclass
 							break;
 					}
 				return $value;
+			}
+		public function checkAndInstallCoreDb()
+			{
+				require_once $this->adminPanelCorePath;
+				foreach($queries["tables"] as	$key=>$val)
+					{
+						if(!$this->db_query("SELECT count(*) FROM `".$key."` WHERE 1"))
+							{
+								if($this->db_query($val))	$this->db_query($queries["insert"][$key]);
+							}
+					}
 			}
 	}

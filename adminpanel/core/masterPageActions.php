@@ -21,7 +21,7 @@ $tpls["parentpagevar"]			=	"";
 $tpls["parentBtnBack"]			=	"";
 
 //database details
-$def_data["table"]				=	"php_admin_actions";
+$def_data["table"]				=	constant("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS");
 $def_data["primary"]			=	"id";
 $def_data["name"]				=	"action";
 $def_data["prference"]			=	"preference";
