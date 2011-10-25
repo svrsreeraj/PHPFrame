@@ -49,12 +49,15 @@ class moduleclass extends siteclass
 		public function getModulesList()
 			{
 				$dirArray	=	array();
-				$path		=	constant("CONST_SITE_ABSOLUTE_PATH").$this->moduleLocation."/";
+				$path		=	constant("CONST_SITE_ABSOLUTE_PATH").$this->moduleLocation.DIRECTORY_SEPARATOR;
 				if ($handle = opendir($path)) 
 					{
 					    while (false !== ($file = readdir($handle)))	
 						    {
-						    	if(($file != ".")	&&	($file != ".."))	$dirArray[]	=	$file;
+						    	if(($file != ".")	&&	($file != ".."))	
+							    	{
+							    		if(is_dir($path.DIRECTORY_SEPARATOR.$file))	$dirArray[]	=	$file;
+							    	}
 						    }
 					    closedir($handle);
 					}

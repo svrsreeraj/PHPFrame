@@ -402,7 +402,7 @@ class modelclass extends siteclass
 				$classNameToBeCalled	=	end(pathinfo(siteclass::getPageName())).$this->classPostfix;
 				$this->setClassName($classNameToBeCalled);
 				$methodName	=		in_array($this->getMethodName(), get_class_methods($classNameToBeCalled))	? $this->getMethodName($default=false):$this->getMethodName($default=true);
-				$this->actionToBeExecuted($loadData,$methodName,$action,$navigate,$sameParams,$newParams,excludeParams,$page,$ufURL);
+				$this->actionToBeExecuted($loadData,$methodName,$action,$navigate,$sameParams,$newParams,$excludeParams,$page,$ufURL);
 				$this->actionReturn		=	call_user_func(array($this, $methodName));
 				$this->actionExecuted($methodName);
 				return $this->actionReturn;	

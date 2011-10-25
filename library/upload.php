@@ -208,9 +208,9 @@ class upload
 		   		if(strtolower($ftype)	==	'png' )	$source 	= imagecreatefrompng($filename);
 		   		if(strtolower($ftype)	==	'wbmp')	$source 	= imagecreatefromwbmp($filename);
 		   
-				imagecopyresized($thumb, $source, 0, 0, 0, 0, $new_w, $new_h, $width, $height);// Resize
+				imagecopyresampled($thumb, $source, 0, 0, 0, 0, $new_w, $new_h, $width, $height);// Resize
 						
-				if(strtolower($ftype)=='jpg')	imagejpeg($thumb, $dest_file); 
+				if(strtolower($ftype)=='jpg')	imagejpeg($thumb, $dest_file,99); 
 				if(strtolower($ftype)=='gif')	imagegif($thumb, $dest_file); 
 				if(strtolower($ftype)=='png')	imagepng($thumb, $dest_file); 
 				if(strtolower($ftype)=='wbmp')	imagewbmp($thumb, $dest_file); 
