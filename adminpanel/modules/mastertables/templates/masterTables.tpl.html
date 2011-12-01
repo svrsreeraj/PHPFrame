@@ -2,20 +2,80 @@
 {literal}
 <script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
 <script type="text/javascript" src="../libs/ckeditor_3.5.1/ckeditor.js"></script>
+<script type="text/javascript">
+function validate_add()
+	{
+		var flag 	= 0;
+		var arr		=	document.formName.txt_add;
+		for(var i=0;i<arr.length;i++)	if(arr[i].value!="")	flag	=	1;
+		if(flag	==	0)
+			{
+				jAlert("Please Enter Value");
+				return false;
+			}
+		return true;
+	}
+</script>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 {/literal}
 {assign var="actionReturn" value=$obj->actionReturn}
 <form action="" name="formName" method="post" enctype="multipart/form-data" onsubmit="return validatefck()">
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
-{if $obj->getPageError()}
-<tr>
-	<td class="errorMessage">{$obj->popPageError()}</td>
-</tr>
-{/if}
 <tr>
 	<td class="pageHead"><span id="heading"><strong>Master Table Management</strong></span></td>
 </tr>
-{if ($obj->currentAction	==	"Addform")	||	($obj->currentAction	==	"Editform")}
+
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage" align="center">{$obj->popPageError()}</td>
+</tr>
+{else}
+<tr>
+	<td  align="right">&nbsp;</td>
+</tr>
+{/if}
+
+ {if $obj->currentAction	==	"Addform"}
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+		<table width="100%" border="0" cellpadding="3" cellspacing="3" align="center" class="formTable">
+		<tr><th align="left" colspan="3">{if $actionReturn.data.parent_id} <b style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">Add {$obj->GetSection($actionReturn.data.section_id)} Under {$obj->GetParent($actionReturn.data.parent_id)}</b>{else} Add {$obj->GetSection($actionReturn.data.section_id)}{/if}</th></tr>
+		{assign var="count" value=0}
+		{section name=i start=0 loop=5}
+			<tr>
+			{section name=j start=0 loop=3}
+				{assign var="count" value=$count+1}	
+				<td>
+				{if $count <= 15}
+				<input name="txt_add[]" type="text" id="txt_add" size="30" class="textBox" maxlength="40">
+				{else}
+				&nbsp;
+				{/if}				
+				</td>
+			{/section}			
+			</tr>
+		{/section}
+		<tr><td align="center" colspan="3">
+		
+			<input type="submit" class="butsubmit"  name="actionvar" onClick="return validate_add();" value="Save" id="saveDataId"  />
+			&nbsp;
+			<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+		</td></tr>
+		</table>	
+			<script language="javascript" type="text/javascript">
+			document.formName.txt_add[0].focus();
+			</script> 
+	</td>
+  </tr>
+  {/if}
+
+
+
+
+{if $obj->currentAction	==	"Editform"}
 <tr>
 	<td>&nbsp;</td>
 </tr>
@@ -31,12 +91,6 @@
 				<td width="150">Name</td>
 				<td><input type="text" name="name" valtype="emptyCheck-please enter a name"  value="{$actionReturn.data.name}" id="captionId" size="30" class="validateText"/></td>
 			</tr>
-			{if $actionReturn.combo}
-				<tr>
-				<td>Table Name</td>
-				<td>{$actionReturn.combo}</td>
-			</tr>
-			{/if}
 			<tr>
 				<td>Preference</td>
 				<td>
@@ -66,9 +120,6 @@
 	{if $obj->currentAction	==	"Listing"}
 	<td>
 		<table cellpadding="0" cellspacing="0" border="0" width="100%">
-			<tr>
-				<td  align="right">&nbsp;</td>
-			</tr>
 			{if $actionReturn.masters}
 			<tr>
 				<td>
@@ -79,7 +130,7 @@
 									<div  id="floatingbar">
 										 <ul>
 										 {foreach from=$actionReturn.masters item=master name=j}
-										   <li><a title="Click here to view all {$master.ms_table_section}" href="{$obj->getLink('listing','',true,$obj->getConcat('section_id=',$master.id))}"><button class="default">{$master.ms_table_section}</button></a></li>
+										   <li><a title="Click here to view all {$master.ms_table_section}" href="{$obj->getLink('listing','',false,$obj->getConcat('section_id=',$master.id))}"><button class="default">{$master.ms_table_section}</button></a></li>
 										 {/foreach}
 										 </ul>
 									</div>
@@ -91,15 +142,24 @@
 			</tr>
 			{/if}
 			<tr>
-				<td>&nbsp;</td>
+				<td align="center" height="20">{if $actionReturn.msloop.parentId}All <b style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">{$obj->GetSection($actionReturn.msloop.sectionId)}</b> Under <b style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">{$obj->GetParent($actionReturn.msloop.parentId)}</b>{else} {if $actionReturn.msloop.sectionId}<b style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">{$obj->GetSection($actionReturn.msloop.sectionId)} Listing</b>{/if}{/if}</td>
 			</tr>
+			<tr>
+				<td>
+					<table width="100%">
+						<tr><td width="50%" align="left"><b>{$obj->GetFlow($actionReturn.msloop.sectionId)}</b></td>
+						<td width="50%" align="right"><b>{$obj->GetFlow("",$actionReturn.msloop.parentId)}</b></td></tr>
+					</table>
+				</td>
+			</tr>
+			{if $actionReturn.data || $actionReturn.msloop.parentId || $actionReturn.msloop.sectionId}
 			<tr>
 				<td>
 			
 					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
 						<tr>
 						<td> <strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow}  </strong> of <strong>{$actionReturn.spage->totcnt} </strong> </td>							
-						<td>CMS Section:</td>
+						<td>Keyword:</td>
 							<!--<td>
 								{$actionReturn.searchdata.searchCombo}
 							</td>-->
@@ -123,10 +183,11 @@
 					
 				</td>
 			</tr>
+			{/if}
+			{if $actionReturn.data}
 			<tr>
 				<td>&nbsp;</td>
 			</tr>
-			{if $actionReturn.data}
 			<tr>
 				<td align="center" valign="middle">
 				
@@ -134,30 +195,17 @@
 						<tr align="center" valign="middle">							
 							<th>No</th>
 							<th>
-								<a href="{$obj->getLink('Search','',false)}&sortField=vs.title&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								<a href="{$obj->getLink('Search','',true)}&sortField=mst.name&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
 								Name
-								{$obj->getSortImage('vs.title',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								{$obj->getSortImage('mst.name',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
 								</a>
 							</th>
 							
 							<th>
-								<a href="{$obj->getLink('Search','',false)}&sortField=vs.description&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								<a href="{$obj->getLink('Search','',true)}&sortField=mst.preference&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
 								Preference
-								{$obj->getSortImage('vs.description',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								{$obj->getSortImage('mst.preference',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
 								</a>
-							</th>
-								<th>
-								<a href="{$obj->getLink('Search','',false)}&sortField=vod.section&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
-								Section
-								{$obj->getSortImage('vod.section',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
-								</a>
-							</th>
-							<th>
-								<a href="{$obj->getLink('Search','',false)}&sortField=vs.date_added&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
-								Date
-								{$obj->getSortImage('vs.date_added',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
-								</a>
-							</th>
 							
 							<th>Action </th>
 
@@ -167,8 +215,6 @@
 							<td>{$actionReturn.spage->startingRow+$smarty.foreach.i.index}</td>
 							<td>{$data.name}</td>
 							<td >{$data.preference}</td>
-							<td>{$data.ms_table_section}</td>
-							<td>{$obj->displayDate($data.date_added)}</td>
 							<td>
 							{if $obj->permissionCheck("Status")}
 <a href="{$obj->getLink('Stauschange','',true,$obj->getConcat('id=',$data.id,'&status=',$data.status))}" class="Second_link">
@@ -182,7 +228,9 @@
 							{if $obj->permissionCheck("Edit")}
 							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link"> <img src="images/edit.gif" border="0" title="Click here to edit"></a> 
 							{/if}
-							<a href="{$obj->getLink('listing','',true,$obj->getConcat('parent_id=',$data.id))}" class="Second_link"><img src="images/forward.png" width="22" height="22" border="0" title="Click here to edit"></a>
+							{if $actionReturn.msloop.childId}
+							<a href="{$obj->getLink('listing','',false,$obj->getConcat('section_id=',$actionReturn.msloop.childId,'&parent_id=',$data.id))}" class="Second_link"><img src="images/forward.png" width="22" height="22" border="0" title="Click here view all {$actionReturn.msloop.child} under {$data.name}"></a>
+							{/if}
 							</td>
 						</tr>
 					{/foreach}

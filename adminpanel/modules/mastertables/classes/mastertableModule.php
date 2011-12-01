@@ -63,14 +63,14 @@ class masterModule extends siteclass
 		public function insertMasterDetails($dataArray)
 			{
 				$this->dbStartTrans();
-				$this->cmsId			=	$this->db_insert(constant("CONST_MODULE_MASTER_TABLE"),$dataArray);
-				if(!$this->cmsId) 
+				$dataArray["date_added"]	=	"escape now() escape";
+				$this->msId					=	$this->db_insert(constant("CONST_MODULE_MASTER_TABLE"),$dataArray);
+				if(!$this->msId) 
 					{
 						$this->dbRollBack;
-						$this->setPageError($this->getDbErrors());
 						return false;	
 					}
-				else return $this->cmsId;
+				else return $this->msId;
 			}	
 		public function updateMasterDetails($dataArray,$id)
 			{
@@ -90,27 +90,6 @@ class masterModule extends siteclass
 			{
 				$data					=	$this->getdbcontents_cond(constant("CONST_MODULE_MASTER_TABLE"),"id=$id",true);
 				return $data; 	
-			}
-		public function sendMailCMS($id,$to,$from,$subject,$vars,$priority=0)
-			{
-				$cmsArr		=	end($this->getCMS($id));//fetching email template from CMS
-				$message	=	$cmsArr["description"];
-				foreach($vars	as	$key=>$val)	$message	=	str_replace($key,$val,$message);
-				return $this->mailContentToDb($to,$from,$subject,$message,$priority);
-			}
-		public function mailContentToDb($to,$from,$subject,$message,$priority=0)
-			{
-				$dataArray	=	array(
-									"to"=>$to,
-									"from"=>$from,
-									"subject"=>$subject,
-									"message"=>$message,
-									"priority"=>$priority,
-									"date_added"=>"escape now() escape"
-								);
-				$this->db_insert('php_email_pending',$dataArray);
-				return true;
-				
 			}
 	}
 ?>

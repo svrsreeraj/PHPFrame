@@ -1,28 +1,46 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-10-28 17:29:58
-         compiled from "./templates/masterTableSections.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:7438920754eaa993e8e72e4-43495596%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.7, created on 2011-11-18 13:15:09
+         compiled from "./templates/defaultValues.tpl.html" */ ?>
+<?php /*%%SmartyHeaderCode:15320150614ec60d05806790-47213960%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    '29c57e99f8fb6e172bd35c64b2fc1c9f41379f54' => 
+    '82b225f47aa024d99a61183339e1664b16443eaa' => 
     array (
-      0 => './templates/masterTableSections.tpl.html',
-      1 => 1319803170,
+      0 => './templates/defaultValues.tpl.html',
+      1 => 1321602301,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '7438920754eaa993e8e72e4-43495596',
+  'nocache_hash' => '15320150614ec60d05806790-47213960',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
-<?php echo smarty_function_call_module_header(array('title'=>"Master Tables"),$_smarty_tpl);?>
+<?php echo smarty_function_call_module_header(array('title'=>"Content Management"),$_smarty_tpl);?>
 
 
 <script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
 <script type="text/javascript" src="../libs/ckeditor_3.5.1/ckeditor.js"></script>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script type="text/javascript">
+$(document).ready(function(){
+
+$("#heading").tooltip();
+$("[valcheck='true']").click(function()
+	{
+		jsArticleBody	=	CKEDITOR.instances.description.getData();	
+		var len			=	jsArticleBody.length;
+		if(len==0)
+			{
+				$("#errorsub").append("<span class='val_error_alert'>&nbsp;please enter a description</span>");
+				return false;
+			}
+
+	});
+
+});
+</script>
+
 
 <?php $_smarty_tpl->tpl_vars["actionReturn"] = new Smarty_variable($_smarty_tpl->getVariable('obj')->value->actionReturn, null, null);?>
 <form action="" name="formName" method="post" enctype="multipart/form-data" onsubmit="return validatefck()">
@@ -34,7 +52,7 @@ $_smarty_tpl->decodeProperties(array (
 </tr>
 <?php }?>
 <tr>
-	<td class="pageHead"><span id="heading"><strong>Master Table Management</strong></span></td>
+	<td class="pageHead"><span id="heading"><strong>Content Management </strong></span></td>
 </tr>
 <?php if (($_smarty_tpl->getVariable('obj')->value->currentAction=="Addform")||($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform")){?>
 <tr>
@@ -45,30 +63,35 @@ $_smarty_tpl->decodeProperties(array (
 
 		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
 			<tr>
-				<th colspan="2">Manage Master Table Section</th>
+				<th colspan="2">Manage CMS</th>
 			</tr>
 		
 			<tr>
-				<td width="150">Section</td>
-				<td><input type="text" name="ms_table_section" valtype="emptyCheck-please enter section name"  value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['ms_table_section'];?>
-" id="sectionId" size="30" class="validateText"/></td>
+				<td width="150">Caption</td>
+				<td><input size="70"  type="text" valtype="emptyCheck-please enter caption" name="caption" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['caption'];?>
+" id="captionId" class="validateText"/></td>
 			</tr>
+		
 			<?php if ($_smarty_tpl->getVariable('actionReturn')->value['combo']){?>
 				<tr>
-				<td>Parent Section</td>
+				<td>Group</td>
 				<td><?php echo $_smarty_tpl->getVariable('actionReturn')->value['combo'];?>
 </td>
 			</tr>
 			<?php }?>
-			<?php if ($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform"){?>
+			<?php if (($_smarty_tpl->getVariable('obj')->value->currentAction=="Addform")){?>
 			<tr>
-				<td>Preference</td>
-				<td>
-					<input type="text" name="preference" id="preference"  value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['preference'];?>
-" size="10" class="validateText"/>
-				</td>
+				<td>Name</td>
+				<td><input type="text" size="70"  name="name"  valtype="emptyCheck-please enter name" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['name'];?>
+" id="nameId" /></td>
 			</tr>
 			<?php }?>
+			<tr>
+				<td>Value</td>
+				<td>
+				<textarea  name="value" id="valueId" valtype="emptyCheck-Please enter value"  cols="52" rows="5"><?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['value'];?>
+</textarea>
+			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>
@@ -94,9 +117,7 @@ $_smarty_tpl->decodeProperties(array (
 			<tr>
 				<td  align="right">&nbsp;</td>
 			</tr>
-			<tr>
-				<td>&nbsp;</td>
-			</tr>
+			
 			<tr>
 				<td>
 			
@@ -106,12 +127,11 @@ $_smarty_tpl->decodeProperties(array (
  - <?php echo $_smarty_tpl->getVariable('actionReturn')->value['spage']->endingRow;?>
   </strong> of <strong><?php echo $_smarty_tpl->getVariable('actionReturn')->value['spage']->totcnt;?>
  </strong> </td>							
-						<td>Select parent:</td>
+						<td>CMS Section:</td>
 							<td>
-								<?php echo $_smarty_tpl->getVariable('actionReturn')->value['searchdata']['combo'];?>
+								<?php echo $_smarty_tpl->getVariable('actionReturn')->value['searchdata']['searchCombo'];?>
 
 							</td>
-							<td>Keyword:</td>
 							<td>
 							<input type="text" name="keyword" maxlength="25" id="id_keyword" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['searchdata']['keyword'];?>
 " />
@@ -145,23 +165,33 @@ $_smarty_tpl->decodeProperties(array (
 							<th>No</th>
 							<th>
 								<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',false);?>
-&sortField=ms_table_section&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
+&sortField=def.caption&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 ">
-								Section
-								<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('ms_table_section',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
+								Caption
+								<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('def.caption',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 
 								</a>
 							</th>
 							
 							<th>
 								<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',false);?>
-&sortField=preference&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
+&sortField=def.value&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 ">
-								Preference
-								<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('preference',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
+								Value
+								<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('def.value',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 
 								</a>
 							</th>
+								<th>
+								<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',false);?>
+&sortField=def.name&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
+">
+								Name
+								<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('def.name',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
+
+								</a>
+							</th>
+							
 							<th>Action </th>
 
 						</tr>
@@ -175,21 +205,15 @@ if ($_smarty_tpl->_count($_from) > 0){
 						<tr>
 							<td><?php echo $_smarty_tpl->getVariable('actionReturn')->value['spage']->startingRow+$_smarty_tpl->getVariable('smarty')->value['foreach']['i']['index'];?>
 </td>
-							<td><?php echo $_smarty_tpl->tpl_vars['data']->value['ms_table_section'];?>
-</td>
-							<td ><?php echo $_smarty_tpl->tpl_vars['data']->value['preference'];?>
+							<td><span title="<?php echo $_smarty_tpl->tpl_vars['data']->value['caption'];?>
+"><?php echo $_smarty_tpl->tpl_vars['data']->value['caption'];?>
+</span></td>
+							<td ><span title="<?php echo $_smarty_tpl->tpl_vars['data']->value['value'];?>
+">	<?php echo $_smarty_tpl->getVariable('obj')->value->getLimitedText($_smarty_tpl->tpl_vars['data']->value['value'],30);?>
+</span></td>
+							<td><?php echo $_smarty_tpl->getVariable('obj')->value->getLimitedText($_smarty_tpl->tpl_vars['data']->value['name'],100);?>
 </td>
 							<td>
-							<?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("Status")){?>
-<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Stauschange','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id'],'&status=',$_smarty_tpl->tpl_vars['data']->value['status']));?>
-" class="Second_link">
-							<?php if ($_smarty_tpl->tpl_vars['data']->value['status']==1){?> 
-							<img src="images/active.gif" border="0" title="Click here to inactivate">
-							 <?php }else{ ?> 							 
-							 <img src="images/inactive.gif" border="0" title="Click here to activate">
-							 <?php }?>
-							 </a> 
-							<?php }?>
 							<?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("Edit")){?>
 							<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('editform','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
 " class="Second_link"> <img src="images/edit.gif" border="0" title="Click here to edit"></a> 
@@ -213,5 +237,8 @@ if ($_smarty_tpl->_count($_from) > 0){
 <?php }?>
 </table>
 	</form>
+<script type="text/javascript">
+CKEDITOR.replace('description');
+</script>
 <?php echo smarty_function_call_module_footer(array(),$_smarty_tpl);?>
 

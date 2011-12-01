@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-10-21 18:02:50
+<?php /* Smarty version Smarty-3.0.7, created on 2011-10-28 18:34:25
          compiled from "./templates/masterTables.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:7807945454ea16672bd5c16-66447577%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:73047864eaaa8595f55f4-68816854%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'e59d092d07c4d56d46be9ba6c8d3c599f089d83b' => 
     array (
       0 => './templates/masterTables.tpl.html',
-      1 => 1319200231,
+      1 => 1319807061,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '7807945454ea16672bd5c16-66447577',
+  'nocache_hash' => '73047864eaaa8595f55f4-68816854',
   'function' => 
   array (
   ),
@@ -22,21 +22,138 @@ $_smarty_tpl->decodeProperties(array (
 
 <script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
 <script type="text/javascript" src="../libs/ckeditor_3.5.1/ckeditor.js"></script>
+<script type="text/javascript">
+function validate_add()
+	{
+		var flag 	= 0;
+		var arr		=	document.formName.txt_add;
+		for(var i=0;i<arr.length;i++)	if(arr[i].value!="")	flag	=	1;
+		if(flag	==	0)
+			{
+				jAlert("Please Enter Value");
+				return false;
+			}
+		return true;
+	}
+</script>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 
 <?php $_smarty_tpl->tpl_vars["actionReturn"] = new Smarty_variable($_smarty_tpl->getVariable('obj')->value->actionReturn, null, null);?>
 <form action="" name="formName" method="post" enctype="multipart/form-data" onsubmit="return validatefck()">
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
-<?php if ($_smarty_tpl->getVariable('obj')->value->getPageError()){?>
-<tr>
-	<td class="errorMessage"><?php echo $_smarty_tpl->getVariable('obj')->value->popPageError();?>
-</td>
-</tr>
-<?php }?>
 <tr>
 	<td class="pageHead"><span id="heading"><strong>Master Table Management</strong></span></td>
 </tr>
-<?php if (($_smarty_tpl->getVariable('obj')->value->currentAction=="Addform")||($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform")){?>
+
+<?php if ($_smarty_tpl->getVariable('obj')->value->getPageError()){?>
+<tr>
+	<td class="errorMessage" align="center"><?php echo $_smarty_tpl->getVariable('obj')->value->popPageError();?>
+</td>
+</tr>
+<?php }else{ ?>
+<tr>
+	<td  align="right">&nbsp;</td>
+</tr>
+<?php }?>
+
+ <?php if ($_smarty_tpl->getVariable('obj')->value->currentAction=="Addform"){?>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+		<table width="100%" border="0" cellpadding="3" cellspacing="3" align="center" class="formTable">
+		<tr><th align="left" colspan="3"><?php if ($_smarty_tpl->getVariable('actionReturn')->value['data']['parent_id']){?> <b style="font-family:Arial, Helvetica, sans-serif; font-size:14px;">Add <?php echo $_smarty_tpl->getVariable('obj')->value->GetSection($_smarty_tpl->getVariable('actionReturn')->value['data']['section_id']);?>
+ Under <?php echo $_smarty_tpl->getVariable('obj')->value->GetParent($_smarty_tpl->getVariable('actionReturn')->value['data']['parent_id']);?>
+</b><?php }else{ ?> Add <?php echo $_smarty_tpl->getVariable('obj')->value->GetSection($_smarty_tpl->getVariable('actionReturn')->value['data']['section_id']);?>
+<?php }?></th></tr>
+		<?php $_smarty_tpl->tpl_vars["count"] = new Smarty_variable(0, null, null);?>
+		<?php unset($_smarty_tpl->tpl_vars['smarty']->value['section']['i']);
+$_smarty_tpl->tpl_vars['smarty']->value['section']['i']['name'] = 'i';
+$_smarty_tpl->tpl_vars['smarty']->value['section']['i']['start'] = (int)0;
+$_smarty_tpl->tpl_vars['smarty']->value['section']['i']['loop'] = is_array($_loop=5) ? count($_loop) : max(0, (int)$_loop); unset($_loop);
+$_smarty_tpl->tpl_vars['smarty']->value['section']['i']['show'] = true;
+$_smarty_tpl->tpl_vars['smarty']->value['section']['i']['max'] = $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['loop'];
+$_smarty_tpl->tpl_vars['smarty']->value['section']['i']['step'] = 1;
+if ($_smarty_tpl->tpl_vars['smarty']->value['section']['i']['start'] < 0)
+    $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['start'] = max($_smarty_tpl->tpl_vars['smarty']->value['section']['i']['step'] > 0 ? 0 : -1, $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['loop'] + $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['start']);
+else
+    $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['start'] = min($_smarty_tpl->tpl_vars['smarty']->value['section']['i']['start'], $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['step'] > 0 ? $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['loop'] : $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['loop']-1);
+if ($_smarty_tpl->tpl_vars['smarty']->value['section']['i']['show']) {
+    $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['total'] = min(ceil(($_smarty_tpl->tpl_vars['smarty']->value['section']['i']['step'] > 0 ? $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['loop'] - $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['start'] : $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['start']+1)/abs($_smarty_tpl->tpl_vars['smarty']->value['section']['i']['step'])), $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['max']);
+    if ($_smarty_tpl->tpl_vars['smarty']->value['section']['i']['total'] == 0)
+        $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['show'] = false;
+} else
+    $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['total'] = 0;
+if ($_smarty_tpl->tpl_vars['smarty']->value['section']['i']['show']):
+
+            for ($_smarty_tpl->tpl_vars['smarty']->value['section']['i']['index'] = $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['start'], $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['iteration'] = 1;
+                 $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['iteration'] <= $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['total'];
+                 $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['index'] += $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['step'], $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['iteration']++):
+$_smarty_tpl->tpl_vars['smarty']->value['section']['i']['rownum'] = $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['iteration'];
+$_smarty_tpl->tpl_vars['smarty']->value['section']['i']['index_prev'] = $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['index'] - $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['step'];
+$_smarty_tpl->tpl_vars['smarty']->value['section']['i']['index_next'] = $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['index'] + $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['step'];
+$_smarty_tpl->tpl_vars['smarty']->value['section']['i']['first']      = ($_smarty_tpl->tpl_vars['smarty']->value['section']['i']['iteration'] == 1);
+$_smarty_tpl->tpl_vars['smarty']->value['section']['i']['last']       = ($_smarty_tpl->tpl_vars['smarty']->value['section']['i']['iteration'] == $_smarty_tpl->tpl_vars['smarty']->value['section']['i']['total']);
+?>
+			<tr>
+			<?php unset($_smarty_tpl->tpl_vars['smarty']->value['section']['j']);
+$_smarty_tpl->tpl_vars['smarty']->value['section']['j']['name'] = 'j';
+$_smarty_tpl->tpl_vars['smarty']->value['section']['j']['start'] = (int)0;
+$_smarty_tpl->tpl_vars['smarty']->value['section']['j']['loop'] = is_array($_loop=3) ? count($_loop) : max(0, (int)$_loop); unset($_loop);
+$_smarty_tpl->tpl_vars['smarty']->value['section']['j']['show'] = true;
+$_smarty_tpl->tpl_vars['smarty']->value['section']['j']['max'] = $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['loop'];
+$_smarty_tpl->tpl_vars['smarty']->value['section']['j']['step'] = 1;
+if ($_smarty_tpl->tpl_vars['smarty']->value['section']['j']['start'] < 0)
+    $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['start'] = max($_smarty_tpl->tpl_vars['smarty']->value['section']['j']['step'] > 0 ? 0 : -1, $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['loop'] + $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['start']);
+else
+    $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['start'] = min($_smarty_tpl->tpl_vars['smarty']->value['section']['j']['start'], $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['step'] > 0 ? $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['loop'] : $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['loop']-1);
+if ($_smarty_tpl->tpl_vars['smarty']->value['section']['j']['show']) {
+    $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['total'] = min(ceil(($_smarty_tpl->tpl_vars['smarty']->value['section']['j']['step'] > 0 ? $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['loop'] - $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['start'] : $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['start']+1)/abs($_smarty_tpl->tpl_vars['smarty']->value['section']['j']['step'])), $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['max']);
+    if ($_smarty_tpl->tpl_vars['smarty']->value['section']['j']['total'] == 0)
+        $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['show'] = false;
+} else
+    $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['total'] = 0;
+if ($_smarty_tpl->tpl_vars['smarty']->value['section']['j']['show']):
+
+            for ($_smarty_tpl->tpl_vars['smarty']->value['section']['j']['index'] = $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['start'], $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['iteration'] = 1;
+                 $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['iteration'] <= $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['total'];
+                 $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['index'] += $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['step'], $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['iteration']++):
+$_smarty_tpl->tpl_vars['smarty']->value['section']['j']['rownum'] = $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['iteration'];
+$_smarty_tpl->tpl_vars['smarty']->value['section']['j']['index_prev'] = $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['index'] - $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['step'];
+$_smarty_tpl->tpl_vars['smarty']->value['section']['j']['index_next'] = $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['index'] + $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['step'];
+$_smarty_tpl->tpl_vars['smarty']->value['section']['j']['first']      = ($_smarty_tpl->tpl_vars['smarty']->value['section']['j']['iteration'] == 1);
+$_smarty_tpl->tpl_vars['smarty']->value['section']['j']['last']       = ($_smarty_tpl->tpl_vars['smarty']->value['section']['j']['iteration'] == $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['total']);
+?>
+				<?php $_smarty_tpl->tpl_vars["count"] = new Smarty_variable($_smarty_tpl->getVariable('count')->value+1, null, null);?>	
+				<td>
+				<?php if ($_smarty_tpl->getVariable('count')->value<=15){?>
+				<input name="txt_add[]" type="text" id="txt_add" size="30" class="textBox" maxlength="40">
+				<?php }else{ ?>
+				&nbsp;
+				<?php }?>				
+				</td>
+			<?php endfor; endif; ?>			
+			</tr>
+		<?php endfor; endif; ?>
+		<tr><td align="center" colspan="3">
+		
+			<input type="submit" class="butsubmit"  name="actionvar" onClick="return validate_add();" value="Save" id="saveDataId"  />
+			&nbsp;
+			<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+		</td></tr>
+		</table>	
+			<script language="javascript" type="text/javascript">
+			document.formName.txt_add[0].focus();
+			</script> 
+	</td>
+  </tr>
+  <?php }?>
+
+
+
+
+<?php if ($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform"){?>
 <tr>
 	<td>&nbsp;</td>
 </tr>
@@ -53,13 +170,6 @@ $_smarty_tpl->decodeProperties(array (
 				<td><input type="text" name="name" valtype="emptyCheck-please enter a name"  value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['name'];?>
 " id="captionId" size="30" class="validateText"/></td>
 			</tr>
-			<?php if ($_smarty_tpl->getVariable('actionReturn')->value['combo']){?>
-				<tr>
-				<td>Table Name</td>
-				<td><?php echo $_smarty_tpl->getVariable('actionReturn')->value['combo'];?>
-</td>
-			</tr>
-			<?php }?>
 			<tr>
 				<td>Preference</td>
 				<td>
@@ -90,9 +200,6 @@ $_smarty_tpl->decodeProperties(array (
 	<?php if ($_smarty_tpl->getVariable('obj')->value->currentAction=="Listing"){?>
 	<td>
 		<table cellpadding="0" cellspacing="0" border="0" width="100%">
-			<tr>
-				<td  align="right">&nbsp;</td>
-			</tr>
 			<?php if ($_smarty_tpl->getVariable('actionReturn')->value['masters']){?>
 			<tr>
 				<td>
@@ -108,7 +215,7 @@ if ($_smarty_tpl->_count($_from) > 0){
     foreach ($_from as $_smarty_tpl->tpl_vars['master']->key => $_smarty_tpl->tpl_vars['master']->value){
 ?>
 										   <li><a title="Click here to view all <?php echo $_smarty_tpl->tpl_vars['master']->value['ms_table_section'];?>
-" href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('listing','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('section_id=',$_smarty_tpl->tpl_vars['master']->value['id']));?>
+" href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('listing','',false,$_smarty_tpl->getVariable('obj')->value->getConcat('section_id=',$_smarty_tpl->tpl_vars['master']->value['id']));?>
 "><button class="default"><?php echo $_smarty_tpl->tpl_vars['master']->value['ms_table_section'];?>
 </button></a></li>
 										 <?php }} ?>
@@ -122,8 +229,22 @@ if ($_smarty_tpl->_count($_from) > 0){
 			</tr>
 			<?php }?>
 			<tr>
-				<td>&nbsp;</td>
+				<td align="center" height="20"><?php if ($_smarty_tpl->getVariable('actionReturn')->value['msloop']['parentId']){?>All <b style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"><?php echo $_smarty_tpl->getVariable('obj')->value->GetSection($_smarty_tpl->getVariable('actionReturn')->value['msloop']['sectionId']);?>
+</b> Under <b style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"><?php echo $_smarty_tpl->getVariable('obj')->value->GetParent($_smarty_tpl->getVariable('actionReturn')->value['msloop']['parentId']);?>
+</b><?php }else{ ?> <?php if ($_smarty_tpl->getVariable('actionReturn')->value['msloop']['sectionId']){?><b style="font-family:Arial, Helvetica, sans-serif; font-size:14px;"><?php echo $_smarty_tpl->getVariable('obj')->value->GetSection($_smarty_tpl->getVariable('actionReturn')->value['msloop']['sectionId']);?>
+ Listing</b><?php }?><?php }?></td>
 			</tr>
+			<tr>
+				<td>
+					<table width="100%">
+						<tr><td width="50%" align="left"><b><?php echo $_smarty_tpl->getVariable('obj')->value->GetFlow($_smarty_tpl->getVariable('actionReturn')->value['msloop']['sectionId']);?>
+</b></td>
+						<td width="50%" align="right"><b><?php echo $_smarty_tpl->getVariable('obj')->value->GetFlow('',$_smarty_tpl->getVariable('actionReturn')->value['msloop']['parentId']);?>
+</b></td></tr>
+					</table>
+				</td>
+			</tr>
+			<?php if ($_smarty_tpl->getVariable('actionReturn')->value['data']||$_smarty_tpl->getVariable('actionReturn')->value['msloop']['parentId']||$_smarty_tpl->getVariable('actionReturn')->value['msloop']['sectionId']){?>
 			<tr>
 				<td>
 			
@@ -133,7 +254,7 @@ if ($_smarty_tpl->_count($_from) > 0){
  - <?php echo $_smarty_tpl->getVariable('actionReturn')->value['spage']->endingRow;?>
   </strong> of <strong><?php echo $_smarty_tpl->getVariable('actionReturn')->value['spage']->totcnt;?>
  </strong> </td>							
-						<td>CMS Section:</td>
+						<td>Keyword:</td>
 							<!--<td>
 								<?php echo $_smarty_tpl->getVariable('actionReturn')->value['searchdata']['searchCombo'];?>
 
@@ -159,10 +280,11 @@ if ($_smarty_tpl->_count($_from) > 0){
 					
 				</td>
 			</tr>
+			<?php }?>
+			<?php if ($_smarty_tpl->getVariable('actionReturn')->value['data']){?>
 			<tr>
 				<td>&nbsp;</td>
 			</tr>
-			<?php if ($_smarty_tpl->getVariable('actionReturn')->value['data']){?>
 			<tr>
 				<td align="center" valign="middle">
 				
@@ -170,42 +292,23 @@ if ($_smarty_tpl->_count($_from) > 0){
 						<tr align="center" valign="middle">							
 							<th>No</th>
 							<th>
-								<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',false);?>
-&sortField=vs.title&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
+								<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',true);?>
+&sortField=mst.name&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 ">
 								Name
-								<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('vs.title',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
+								<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('mst.name',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 
 								</a>
 							</th>
 							
 							<th>
-								<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',false);?>
-&sortField=vs.description&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
+								<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',true);?>
+&sortField=mst.preference&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 ">
 								Preference
-								<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('vs.description',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
+								<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('mst.preference',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 
 								</a>
-							</th>
-								<th>
-								<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',false);?>
-&sortField=vod.section&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
-">
-								Section
-								<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('vod.section',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
-
-								</a>
-							</th>
-							<th>
-								<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',false);?>
-&sortField=vs.date_added&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
-">
-								Date
-								<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('vs.date_added',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
-
-								</a>
-							</th>
 							
 							<th>Action </th>
 
@@ -224,10 +327,6 @@ if ($_smarty_tpl->_count($_from) > 0){
 </td>
 							<td ><?php echo $_smarty_tpl->tpl_vars['data']->value['preference'];?>
 </td>
-							<td><?php echo $_smarty_tpl->tpl_vars['data']->value['ms_table_section'];?>
-</td>
-							<td><?php echo $_smarty_tpl->getVariable('obj')->value->displayDate($_smarty_tpl->tpl_vars['data']->value['date_added']);?>
-</td>
 							<td>
 							<?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("Status")){?>
 <a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Stauschange','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id'],'&status=',$_smarty_tpl->tpl_vars['data']->value['status']));?>
@@ -243,8 +342,12 @@ if ($_smarty_tpl->_count($_from) > 0){
 							<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('editform','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
 " class="Second_link"> <img src="images/edit.gif" border="0" title="Click here to edit"></a> 
 							<?php }?>
-							<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('listing','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('parent_id=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
-" class="Second_link"><img src="images/forward.png" width="22" height="22" border="0" title="Click here to edit"></a>
+							<?php if ($_smarty_tpl->getVariable('actionReturn')->value['msloop']['childId']){?>
+							<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('listing','',false,$_smarty_tpl->getVariable('obj')->value->getConcat('section_id=',$_smarty_tpl->getVariable('actionReturn')->value['msloop']['childId'],'&parent_id=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
+" class="Second_link"><img src="images/forward.png" width="22" height="22" border="0" title="Click here view all <?php echo $_smarty_tpl->getVariable('actionReturn')->value['msloop']['child'];?>
+ under <?php echo $_smarty_tpl->tpl_vars['data']->value['name'];?>
+"></a>
+							<?php }?>
 							</td>
 						</tr>
 					<?php }} ?>

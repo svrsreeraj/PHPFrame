@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_MASTER_TABLE")."` (
 `name` varchar(500) NOT NULL,
 `parent_id` bigint(11) NOT NULL COMMENT 'refers ".constant("CONST_MODULE_MASTER_TABLE").".id',
 `parent_section_id` bigint(11) NOT NULL COMMENT 'refers ".constant("CONST_MODULE_MASTER_TABLE").".section_id',
-`preference` bigint(11) NOT NULL default '1',
+`preference` bigint(11) NOT NULL,
 `date_added` datetime NOT NULL,
 `status` tinyint(1) NOT NULL default '1' COMMENT '0=inactive,1=active',
 PRIMARY KEY  (`id`)
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_MASTER_TABLE_SECTION")."` (
 `id` int(11) NOT NULL auto_increment,
 `ms_table_section` varchar(300) NOT NULL,
 `parent_id` bigint(11) NOT NULL COMMENT 'refers ".constant("CONST_MODULE_MASTER_TABLE").".id',
-`preference` bigint(11) NOT NULL default '1',
+`preference` bigint(11) NOT NULL,
 `status` tinyint(1) NOT NULL default '1' COMMENT '0=inactive 1=active',
 PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8  COMMENT='Master table- Section' AUTO_INCREMENT=1 ;";
