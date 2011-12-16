@@ -169,7 +169,7 @@ class contentManagementModel extends modelclass
 						{
 							$this->setPageError("Status Changed Successfully");
 							$this->clearData();											
-							return $this->executeAction(false,"Listing",true,true,'','status,id');
+							//return $this->executeAction(false,"Listing",true,true,'','status,id');
 							return $this->executeAction(array("action"=>"Listing","navigate"=>true,"sameParams"=>true,"excludeParams"=>"status,id"));
 						}
 				}

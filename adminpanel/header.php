@@ -30,6 +30,8 @@ $usertype	=	$userObj->getAllUsertypes($sql)	;
 <script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>js/tooltip.js"></script>
 <script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>js/jquery.tooltip/tooltip.jquery.js"></script>
 
+
+
 </head>
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">

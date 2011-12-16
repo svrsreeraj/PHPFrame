@@ -1,7 +1,7 @@
 <?php
 /**************************************************************************************
-Created By 	:	hari krishna
-Created On	:	2010-11-05
+Created By 	:	Maria Lukose
+Created On	:	15-12-2011
 Purpose		:	functions for faq
 **************************************************************************************/
 class faqModule extends siteclass
@@ -11,20 +11,11 @@ class faqModule extends siteclass
 				$data				=	$this->getdbcontents_cond("CONST_MODULE_FAQ_TABLE_FAQ","status = ".$status." ORDER BY preference ASC",true);
 				return $data; 
 			}
-			//ml
 			public function getAllFaqGroup($args="1")
 			{
 				$sql					=	"SELECT * FROM ".constant("CONST_MODULE_FAQ_TABLE_SECTION")." WHERE $args";			
 				$data					=	$this->getdbcontents_sql($sql);	
 				return $data;
-			}
-			//ml
-		public function getAllFaqGroups($stat="") 
-			{
-				if($stat)	$cond	=	" status='1' ";
-				$data				=	$this->getdbcontents_cond("CONST_MODULE_FAQ_TABLE_SECTION ",$cond." ORDER BY preference ASC");
-				//print_r($data);exit;
-				return $data; 
 			}
 		public function getFaqById($Id)
 			{	
@@ -66,9 +57,5 @@ class faqModule extends siteclass
 				$nxtVal					=	$data[0]['pref'];
 				return $nxtVal;
 			}	
-		public function deleteFAQ($id)
-			{
-				$data					=	$this->dbDelete_cond(constant("CONST_MODULE_FAQ_TABLE_FAQ"),"id=$id");
-			}
 	}
 ?>

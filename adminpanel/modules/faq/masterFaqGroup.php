@@ -1,8 +1,8 @@
 <?php
 /**************************************************************************************
-Created by :Maria
-Created on :2011-12-12
-Purpose    :FAQ group listing
+Created by : Maria
+Created on : 2011-12-12
+Purpose    : FAQ group listing
 **************************************************************************************/
 require_once 'init.php';err_status("init.php included");
 header_view("FAQ Group");err_status("header included");

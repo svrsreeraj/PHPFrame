@@ -1,0 +1,297 @@
+{call_module_header title="Content Management Master Table"}
+{literal}
+<script language="javascript" type="text/javascript">
+function checkAll()
+	{
+		if(document.frmlist.checkone)
+			{
+				document.frmlist.checkone.checked=document.frmlist.checkall.checked;
+				for(i=0;i<document.frmlist.checkone.length;i++)
+				document.frmlist.checkone[i].checked=document.frmlist.checkall.checked;
+			}
+		else
+			{
+				alert("Nothing to select");
+				document.frmlist.checkall.checked=false;
+			
+			}
+	}
+function Remove()
+	{
+		flag = 0;
+		if(document.frmlist.checkone.checked)	flag = 1;
+		for(i=0;i<document.frmlist.checkone.length;i++)
+			{
+				if(document.frmlist.checkone[i].checked)
+					{
+						flag = 1;
+						break;
+					}
+			}
+		if(flag == 1)
+			{
+				if(confirm("You are going to delete these records permenantly, Do you want to continue?"))	  return true;
+				else return false;
+			}
+		else
+			{
+				alert("No record(s) selected");
+				return false;
+			}	
+	}
+function validate_add()
+	{
+		var flag 	= 0;
+		var arr		=	document.add_form.txt_add;
+		for(var i=0;i<arr.length;i++)	if(arr[i].value!="")	flag	=	1;
+		if(flag	==	0)
+			{
+				jAlert("Enter Details.");
+				return false;
+			}
+		return true;
+	}
+function validate_edit()
+	{
+		if(document.frm_edit.txt_edit.value=="")
+			{
+				jAlert("Enter Correct Details.");
+				return false;
+			}
+		return true;
+	}
+
+</script>
+{/literal}
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+  <tr>
+    <th class="pageHead">{$tpls.heading}{if $tpls.parentpagevar} :{$tpls.parentcaption}{/if}</th>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  
+  {if $tpls.error}
+  <tr>
+    <td class="errorMessage"><div align="center"><strong>{$tpls.error}</strong></div></td>
+  </tr>
+  {/if}
+  
+  
+  {if $smarty.request.add != ""}
+  {if $cls_site->permissionCheck("Add")}
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+		<form name="add_form" method="post" action="">
+		<table width="100%" border="0" cellpadding="3" cellspacing="3" align="center" class="formTable">
+		<tr><th align="left" colspan="{$tpls.addsplit}">{$tpls.addcaption}</th></tr>
+		{assign var="count" value=0}
+		{section name=i start=0 loop=$tpls.floop}
+			<tr>
+			{section name=j start=0 loop=$tpls.addsplit}
+				{assign var="count" value=$count+1}	
+				<td>
+				{if $count <= $tpls.addcount}
+				<input name="txt_add[]" type="text" id="txt_add" size="30" class="textBox" maxlength="40">
+				{else}
+				&nbsp;
+				{/if}				
+				</td>
+			{/section}			
+			</tr>
+		{/section}
+		<tr><td align="center" colspan="{$tpls.addsplit}">
+			<input name="btn_save" type="submit" id="btn_save" value="{$tpls.savebtnvalue}" class="butsubmit" onClick="return validate_add();">
+			&nbsp;
+			<input name="btn_savecancel" valcheck="true" type="submit" id="btn_savecancel" value="{$tpls.btnsavecancelvalue}" class="butsubmit">
+		</td></tr>
+		</table>	
+		</form>
+			<script language="javascript" type="text/javascript">
+			document.add_form.txt_add[0].focus();
+			</script> 
+	</td>
+  </tr>
+  {/if}
+  {/if}	
+  
+  {if $smarty.request.edit != ""}
+  {if $cls_site->permissionCheck("Edit")}
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  
+ <tr>
+    <td>
+		
+			<form name="frm_edit" method="post" action="">
+			<table width="100%" border="0" align="center" cellpadding="3" cellspacing="0" class="formTable">
+			
+			<tr>
+			<th colspan="2"><div align="left"><strong>{$tpls.edithead} </strong></div></th>
+			</tr>
+			
+			<tr>
+			<td width="104" class="contentLeft"><div>{$tpls.editcaption}</div></td>
+			<td width="199"><div align="left">
+			<input name="txt_edit" type="text" id="txt_edit" size="30" value="{$tpls.updatetxtlvalue}" class="textBox" maxlength="40">
+			</div>			</td>
+			</tr>
+			
+			<tr>
+			<td width="104" class="contentLeft"><div>{$tpls.preference}</div></td>
+			<td width="199"><div align="left">
+			<input name="txt_preference" type="text" id="txt_preference" size="10" value="{$tpls.updateprefervalue}" class="nummberOnly"  maxlength="10">
+			</div>			</td>
+			</tr>
+			
+			<tr>
+			<td>&nbsp;</td>
+			<td><div align="left">
+			<input name="btn_edit" type="submit" valtype="emptyCheck-Please enter a value" id="btn_edit" value="{$tpls.updatebtnvalue}" class="butsubmit" onClick="return validate_edit();">
+			&nbsp;
+			<input name="btn_editcancel"  type="submit" id="btn_editcancel" value="{$tpls.btnupdatecancelvalue}" class="butsubmit">
+			</div>			</td>
+			</tr>
+			</table>
+			</form>	
+			<script language="javascript" type="text/javascript">
+			document.frm_edit.txt_edit.focus();
+			</script> 
+		</td>
+	</tr>
+	{/if}
+	{/if}
+	{if  $smarty.request.add=="" && $smarty.request.edit==""}
+		<tr>
+		<td>&nbsp;</td>	
+		</tr>
+		<tr>
+			<td>
+			<form name="frmlist" method="post" action="">
+				<table cellpadding="0" cellspacing="0" border="0" width="100%">
+					<tr>
+						<td>
+							<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+								<tr>
+									<td><strong> {$tpls.spage->startingRow} - {$tpls.spage->endingRow}  </strong> of <strong>{$tpls.spage->totcnt} </strong></td>
+									
+									
+									<td>{$tpls.listcaption}</td>
+									<td>
+									<input type="text" name="txt_search" value="{$smarty.request.searchq}" id="id_txt_search" />
+									</td>
+									<td>
+									<input name="btnSearch" type="submit" class="butsubmit" value="Search" />
+									</td>
+									<td>
+									<input name="btnSearchReset"  type="submit" class="butsubmit" value="Reset" />
+									</td>
+			
+									<td>
+									
+									
+									 <div align="right">       
+										{if $cls_site->permissionCheck("Add")}
+											<input name="add_btn" type="submit" id="add_btn" value="{$tpls.addbtnvalue}" class="butsubmit" >
+										{/if}
+										{if $tpls.parentpagevar} 
+											&nbsp;
+											<input name="btn_parent" type="submit" class="butsubmit" id="btn_parent" value="{$tpls.parentBtnBack}" onClick="">
+											{/if}
+									 </div>
+									
+					
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+					</tr>
+				{if $tpls.dataarray && $cls_site->permissionCheck("View")}
+					<tr>
+					<td align="center" valign="middle">
+						
+						<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr>
+						<th align="left" width="10"><!--<input name="checkall" type="checkbox" id="checkall" onClick="return checkAll()" value="CHKALL"> --></th>
+						<th align="left"><div align="center">{$tpls.listcaption}</div></th>
+						
+						<th align="left"><div align="center">{$tpls.preference}</div></th>
+						
+						<th align="left"><div align="center">{$tpls.listoptions}</div></th>
+						
+						
+						</tr>
+						{section name=i start=0 loop=$tpls.dataarray}
+						<tr>
+						<td align="left" width="10"><!--<input name="checkone[]" type="checkbox" id="checkone" value="{$tpls.dataarray[i][$tpls.table.primary]}"> --></td>
+						<td width="200" align="left">
+						{if $tpls.childpagename}
+						<a href="{$tpls.childpagename}?{$tpls.childpagevar}={$tpls.dataarray[i][$tpls.table.primary]}">{$tpls.dataarray[i][$tpls.table.name]}</a>
+						{else}
+						{$tpls.dataarray[i][$tpls.table.name]}
+						{/if}			</td>
+						
+						<td>
+							{$tpls.dataarray[i][$tpls.table.prference]}
+						</td>
+						
+						<td width="100" align="left">
+						
+						{if $tpls.childpagename}
+						&nbsp;&nbsp;
+						<a href="{$tpls.childpagename}?{$tpls.childpagevar}={$tpls.dataarray[i][$tpls.table.primary]}" title="Click here to view the details of {$tpls.dataarray[i][$tpls.table.name]}">
+						<img src="images/inner_details.png" border="0"  width="20" height="20">
+						</a>
+						{/if}
+						
+						{if $cls_site->permissionCheck("Edit")}
+						&nbsp;&nbsp;
+						<a href="{$tpls.pagename}?edit={$tpls.dataarray[i][$tpls.table.primary]}{if $tpls.parentpagevar}&{$tpls.parentpagevar}={$tpls.parentpagevarval}{/if}">
+						<img src="images/edit.gif" border="0" title="Click here to edit">	
+						</a>
+						{/if}
+						{if $cls_site->permissionCheck("Status")}
+						{if $tpls.dataarray[i][$tpls.table.status] == "1"}
+						&nbsp;&nbsp;<a href="{$tpls.pagename}?statuschange={$tpls.dataarray[i][$tpls.table.primary]}{if $tpls.parentpagevar}&{$tpls.parentpagevar}={$tpls.parentpagevarval}{/if}">
+						<img src="images/active.gif" border="0" title="Click here inactivate"></a>
+						{else}
+						&nbsp;&nbsp;<a href="{$tpls.pagename}?statuschange={$tpls.dataarray[i][$tpls.table.primary]}{if $tpls.parentpagevar}&{$tpls.parentpagevar}={$tpls.parentpagevarval}{/if}">
+						<img src="images/inactive.gif" border="0" title="Click here to activate"></a>
+						{/if}	
+						{/if}		
+						</td>
+						
+						
+						
+						</tr>
+						{/section}
+						{if $tpls.paging}	
+						<tr><td colspan="4" align="center"><div align="center">{$tpls.paging}</div></td></tr>
+						{/if}
+						</table>
+						
+						</td>
+					</tr>
+					{else}
+					{if $smarty.request.add=="" && $smarty.request.edit==""}
+					<tr>
+					<td class="errorMessage"><div align="center"><strong>{$tpls.norecords}</strong></div></td>
+					</tr>	
+					{/if}
+
+					{/if}
+				</table>
+				</form>
+			</td>
+		</tr>
+	{/if}
+	
+  </table>
+{call_module_footer}

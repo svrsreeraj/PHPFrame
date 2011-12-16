@@ -1,0 +1,335 @@
+{call_module_header title="Content Management"}
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#question").tooltip();
+	$("#link").hide();
+	$("#code").hide();
+	$("#files").hide();
+	
+	var val	=	$("#type").val();
+	if(val==1)
+			{
+				$("#code").hide();
+				$("#link").show();
+				$("#files").show();
+			}
+		if(val==3)
+			{
+				$("#link").hide();
+				$("#files").hide();
+				$("#files").show();
+			}
+		if(val==2)
+			{
+				$("#code").show();
+				$("#files").hide();
+				$("#link").hide();
+			}	
+	
+	$("#type").change(function(){
+		var val	=	$("#type").val();
+			
+		if(val==1)
+			{
+				$("#code").hide();
+				$("#link").show();
+				$("#files").show();
+			}
+		if(val==3)
+			{
+				$("#link").hide();
+				$("#code").hide();
+				$("#files").show();
+			}
+		if(val==2)
+			{
+				$("#code").show();
+				$("#files").hide();
+				$("#link").hide();
+			}	
+	});
+	
+});
+</script>
+<script type="text/javascript" src="http://192.168.0.8/PHPFrame/adminpanel/js/highslide/highslide.js"></script>
+<link rel="stylesheet" type="text/css" href="http://192.168.0.8/PHPFrame/adminpanel/js/highslide/highslide.css" />
+
+{/literal}
+{assign var="actionReturn" value=$obj->actionReturn}
+<form action="" name="fromName" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+<tr>
+	<td class="pageHead"><span id="question"><strong>{if ($obj->currentAction	==	"Editform")}Edit{/if}{if ($obj->currentAction	==	"Addform")}Add{/if} Banner Ads  </strong></span></td>
+</tr>
+<!--{$actionReturn.data.image|@print_r};exit;-->
+{if ($obj->currentAction	==	"Editform")}
+{if $obj->permissionCheck("Edit")}
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+			
+				<th colspan="2">Edit Ads</th>
+			</tr>
+			<tr>
+				<td width="100px">Ad Category</td>
+				<td>{$actionReturn.combo.addsCategory}</td>
+			</tr>
+			<tr>
+				<td width="100px">Ad Type</td>
+				<td>
+					{$actionReturn.combo.type}
+				</td>
+			</tr>
+			<tr>
+				<td>Name </td>
+				<td><input type="text" name="name" valtype="emptyCheck-please enter a name" value="{$actionReturn.data.name}"></td>
+			</tr>
+			
+			<tr id="link">
+				<td >Link </td>
+				<td><input type="text" name="link" value="{$actionReturn.data.link}"></td>
+			</tr>
+			
+			<tr id="code" >
+				<td >Code </td>
+				<td><textarea rows="10" cols="60" name="code">{$actionReturn.data.code}</textarea></td>
+			</tr>
+			
+			<tr id="files" >
+				<td >Image</td>
+					<td><input type="file"  name="fileImage" value="{$actionReturn.data.image}" id="fileImageId" />&nbsp;
+					{if $actionReturn.data.image}
+						<a  href="../banner/images/{$actionReturn.data.image}" class="highslide" onclick="return hs.expand(this)">
+						<img src="../banner/images/thumb/{$actionReturn.data.image}" width="25" height="25" ; />
+						</a>{/if}
+						</td>
+			</tr>
+			<tr>
+				<td>Height </td>
+				<td><input type="text" name="height" value="{$actionReturn.data.height}">&nbsp;px</td>
+			</tr>
+			<tr>
+				<td>Width</td>
+				<td><input type="text" name="width" value="{$actionReturn.data.width}">&nbsp;px</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+				{if $obj->currentAction	==	"Editform"}
+					
+					<input type="submit" valcheck="true"  class="butsubmit"  name="actionvar" value="Update" id="saveDataId" />
+				{/if}
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>	
+{/if}
+{/if}
+
+{if ($obj->currentAction	==	"Addform")}
+{if $obj->permissionCheck("Add")}
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+			
+				<th colspan="2">Add Ads</th>
+			</tr>
+			<tr>
+				<td width="100px">Ad Category</td>
+				<td>{$actionReturn.combo}</td>
+			</tr>
+			<tr>
+				<td width="100px">Ad Type</td>
+				<td>
+					<select name="types" id="type" valtype="emptyCheck-please select a type" >
+					<option value="">select type</option>
+					<option value="1">Image</option>
+					<option value="2">Html</option>
+					<option value="3">Flash</option>
+					</select>
+				</td>
+			<tr>
+				<td>Name </td>
+				<td><input type="text" name="name" valtype="emptyCheck-please enter a name" value="{$actionReturn.data.name}"></td>
+			</tr>
+			<tr id="link" >
+				<td >Link </td>
+				<td><input type="text" name="link"  value="{$actionReturn.data.link}"></td>
+			</tr>
+			<tr id="code">
+				<td>Code </td>
+				<td><textarea rows="10" cols="60" name="code">{$actionReturn.data.code}</textarea></td>
+			</tr>
+			<tr id="files">
+				<td>Files </td>
+				<td><input type="file" name="image"></td>
+			</tr>
+			<tr>
+				<td>Height </td>
+				<td><input type="text" name="height" value="{$actionReturn.data.height}">&nbsp;px</td>
+			</tr>
+			<tr>
+				<td>Width</td>
+				<td><input type="text" name="width" value="{$actionReturn.data.width}">&nbsp;px</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<input type="submit" valcheck="true"  class="butsubmit"  name="actionvar" value="Save" id="saveDataId" />
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>	
+{/if}
+{/if}
+<tr>
+	{if $obj->currentAction	==	"Listing"}
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td  align="right">&nbsp;</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td>Viewing  <strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow} </strong> 
+							of <strong>{$actionReturn.spage->totcnt} </strong>  </td>
+							
+							<td>
+								<input type="text" name="keyword" maxlength="25" id="id_keyword" value="{$actionReturn.searchdata.keyword}" />
+							</td>
+							<td>{$actionReturn.combo}
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Search" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Reset" />
+							</td>
+							<td>
+							{if $obj->permissionCheck("Add")}
+							<input name="actionvar" type="submit" class="butsubmit" value="Add New" />
+							{/if}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							
+							<th>No</th>
+							<th><a href="{$obj->getLink('Search','',false)}&sortField=category_id&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Category{$obj->getSortImage('category_id',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a></th>
+							<th><a href="{$obj->getLink('Search','',false)}&sortField=name&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Name
+							{$obj->getSortImage('name',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>
+							<th>
+								Image/Code
+							</th>
+							<th>
+								Height
+							</th>
+							<th>
+								Width 
+							</th>
+							<!--<th>
+								Impression  
+							</th>-->
+							<th>Action </th>
+						</tr>
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							
+							<td>{$actionReturn.spage->startingRow+$smarty.foreach.i.index}</td>
+							<td>{$data.category}</td>
+							<td>
+								{$data.name}
+							</td>
+							<td>{if $data.types ==1}
+								<a  href="../banner/images/{$data.image}" class="highslide" onclick="return hs.expand(this)">
+									<img src="../banner/images/thumb/{$data.image}"  width="17" height="17" border="0" />
+								</a>{elseif  $data.types ==2}{$obj->getLimitedText($data.code,40)}{elseif  $data.types ==3}FLASH{else}Unknown Type{/if}</td>
+							<td>
+								{$data.height} 
+							</td>
+							<td>
+								{$data.width} 
+							</td>
+						<!--	<td>
+								{$data.impression}
+							</td>-->
+							<td>
+							
+							 {if $obj->permissionCheck("Status")}
+                          				  <a href="{$obj->getLink('Stauschange','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+                            {/if}
+                                    {if $data.status == 1} 
+                                    	<img src="images/active.gif" border="0" title="Click here to inactivate">
+                                     {else} 							 
+                                     	<img src="images/inactive.gif" border="0" title="Click here to activate">
+                                     {/if}
+                            {if $obj->permissionCheck("Status")}
+                             </a> 
+                            {/if}	
+							
+							{if $obj->permissionCheck("Edit")}
+							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/edit.gif" border="0" title="Click here to edit">							
+							</a> 
+								{/if}
+                                
+							{if $obj->permissionCheck("Delete")}
+							<a href="{$obj->getLink('delete','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/delete.gif" border="0" alt="delete"title="Click here to edit">							
+							</a> 
+								{/if}				
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td>
+						</td>
+						<td colspan="7">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			{/if}
+		</table>
+	</td>
+	{/if}
+</tr>
+</table>
+</form>
+{call_module_footer}
