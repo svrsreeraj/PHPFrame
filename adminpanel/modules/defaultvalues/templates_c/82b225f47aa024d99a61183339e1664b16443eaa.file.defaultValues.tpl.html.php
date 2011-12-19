@@ -1,23 +1,23 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-12-14 15:32:48
+<?php /* Smarty version Smarty-3.0.7, created on 2011-12-17 10:20:32
          compiled from "./templates/defaultValues.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:13674760204ee87448ef2719-96534463%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:8992353504eec1f98e57e92-88731758%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '82b225f47aa024d99a61183339e1664b16443eaa' => 
     array (
       0 => './templates/defaultValues.tpl.html',
-      1 => 1323856967,
+      1 => 1324097415,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13674760204ee87448ef2719-96534463',
+  'nocache_hash' => '8992353504eec1f98e57e92-88731758',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
-<?php echo smarty_function_call_module_header(array('title'=>"Content Management"),$_smarty_tpl);?>
+<?php echo smarty_function_call_module_header(array('title'=>"Default Values"),$_smarty_tpl);?>
 
 
 <script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>

@@ -1,0 +1,368 @@
+{call_module_header title="Manage Category"}
+{literal}
+<script type="text/javascript" src="js/highslide/highslide.js"></script>
+<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
+<script type="text/javascript">
+function deleteConfrm(id)
+	{
+		jConfirm('Are you sure you want to delete this details', 'Confirmation Dialog', 
+		function(stat) 
+			{
+				if(stat==true)	
+					{
+						window.location="products.php?actionvar=Deleteform&id="+id;
+					}
+				else
+					{
+						return false;
+					}	
+			});
+	}
+
+</script>
+<link type="text/css" href="js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.widget.js"></script>
+
+{/literal}
+
+{assign var="actionReturn" value=$obj->actionReturn}
+
+<form action="" name="fromName" method="post" enctype="multipart/form-data">
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+<tr>
+	<td class="pageHead"><span id="vendor"><strong>Product {if ($obj->currentAction	==	"Listing")}Listing{/if} {if ($obj->currentAction	==	"Editform")}Edit  : {$actionReturn.data.product}  {/if} </strong>
+</span></td></tr>{if ($obj->currentAction	==	"Editform")}
+{if $obj->permissionCheck("Edit")}                                                     
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+				<td width="150">Product Name<samp class="txt_red">*</samp></td>
+				<td><input type="text" name="product" valtype="emptyCheck-Please enter a product name"  value="{$actionReturn.data.product}" id="nameId" size="50" class="validateText"/></td>
+			</tr>
+			<tr>
+				<td>Category <samp class="txt_red">*</samp></td>
+				<td>{$actionReturn.cat_combo}</td>
+			</tr>
+         
+			    <tr>
+            	<td>Model No</td>
+                <td><input type="text" name="model_no" valtype="emptyCheck-Please enter a model no"  value="{$actionReturn.data.model_no}" id="nameId" size="50" class="validateText"/></td>
+			<tr>
+				<td>Description</samp></td>
+				<td>
+					<textarea name="description" cols="25" rows="10" id="description"  >{$actionReturn.data.description}</textarea>
+				</td>
+			</tr>
+            <tr>
+            	<td>Product Price</td>
+                <td><input type="text" name="price" valtype="emptyCheck-Please enter a price"  value="{$actionReturn.data.price}" id="nameId" size="50" class="validateText"/></td>
+			<tr>
+			<tr>
+            
+				<td>Image </td>
+				<td><input type="file"  name="image" value="{$actionReturn.data.image}"  id="fileImageId" />
+				{if $actionReturn.data.image}
+				<a  href="../category/images/product/{$actionReturn.data.image}" class="highslide" onclick="return hs.expand(this)">
+				 <img src="../category/images//product/thumb/{$actionReturn.data.image}" width="25" height="25"/>
+				</a>
+				{/if}				
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+				{if $obj->currentAction	==	"Editform"}
+					{if $obj->permissionCheck("Edit")}
+					<input type="submit" class="butsubmit" valcheck="true" name="actionvar" value="Update" id="saveDataId" />
+					{/if}
+				{else}
+					{if $obj->permissionCheck("Add")}
+					<input type="submit" class="butsubmit" valcheck="true" name="actionvar" value="Save" id="saveDataId" />
+					{/if}
+				{/if}
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+{/if}	
+{/if}
+{if ($obj->currentAction	==	"Viewform")}
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+		<tr>
+		<td width="50%">
+			<div class="boxList">
+				
+					<div>
+						<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="listTablePopUp">
+						<tr>
+							<th colspan="3" >Products Details</th>
+						</tr>
+							{if $actionReturn.data.product}
+						<tr>
+							<td>Product</td>
+							<td >{$actionReturn.data.product} </td>
+						</tr>
+						{/if}
+                        {if $actionReturn.data.category}
+							<tr>
+								<td>Category</td>
+								<td colspan="2">{$actionReturn.data.category}</td>
+							</tr>
+							{/if}
+							{if $actionReturn.data.price}
+							<tr>
+								<td>Price</td>
+								<td >{$actionReturn.data.price}</td>
+							</tr>							
+							{/if}
+							
+                            {if $actionReturn.data.description}
+								<tr>
+									<td>Description</td>
+									<td>{$actionReturn.data.description}</td>
+								</tr>
+							{/if}
+							<tr>
+								<td>Status</td>
+								<td colspan="2">
+                                
+								{if $actionReturn.data.status == 1}
+									<img src="images/active.gif" border="0" title="Active user" alt="Active user"  />
+								{else}
+									<img src="images/inactive.gif" border="0" title="Inactive User" alt="Inactive User"  />
+								{/if}
+								</td>
+							</tr>
+							{if $actionReturn.data.date_added}
+							<tr>
+								<td>Joined Date</td>
+								<td colspan="2">{$obj->displayDate($actionReturn.data.date_added)}</td>
+							</tr>
+							{/if}
+						</table>
+					</div>
+				</div>
+			</td>
+			<td>
+				
+		</td>
+		</tr>
+		<tr>
+		<td></td>
+			<td >
+				<input type="submit" class="butsubmit"  name="actionvar" value="Back" id="cancelId" />
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+{/if}	
+
+
+{if ($obj->currentAction	==	"Addform")}
+{if $obj->permissionCheck("Add")}                                                     
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+            <tr>
+                <th colspan="2">Add  Products</th>
+             </tr>
+             <tr>
+                 <td>&nbsp;</td>
+             </tr>
+             <tr>
+				<td width="150">Product Name<samp class="txt_red">*</samp></td>
+				<td><input type="text" name="product" valtype="emptyCheck-Please enter a product name"  value="{$actionReturn.data.product}" id="nameId" size="50" class="validateText"/></td>
+			</tr>
+			<tr>
+				<td> Category <samp class="txt_red">*</samp></td>
+				<td>{$actionReturn.cat_combo}
+				</td>
+			</tr>
+            <tr>
+            	<td>Model No</td>
+                <td><input type="text" name="model_no"   value="{$actionReturn.data.model_no}" id="model_Id" size="50" class="validateText"/></td>
+			<tr>
+				<td>Description</td>
+				<td>
+					<textarea name="description" cols="25" rows="10" id="description" >{$actionReturn.data.description}</textarea>
+				</td>
+			</tr>
+            <tr>
+            	<td>Product Price<samp class="txt_red">*</samp></td>
+                <td><input type="text" name="price" valtype="emptyCheck-Please enter a price"  value="{$actionReturn.data.price}" id="nameId" size="50" class="validateText"/></td>
+			<tr>
+            
+			<tr>
+				<td>Image </td>
+				<td><input type="file"  name="image"  value="{$actionReturn.data.image}" id="fileImageId" />
+				{if $actionReturn.data.image}
+				<a  href="../category/images/product/{$actionReturn.data.image}" class="highslide" onclick="return hs.expand(this)">
+				 <img src="../category/images/product/thumb/{$actionReturn.data.image}" width="25" height="25"/>
+				</a>
+				{/if}				
+				</td>
+			</tr>
+            
+		
+			<tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					{if $obj->permissionCheck("Add")}
+					<input type="submit" class="butsubmit" valcheck="true" name="actionvar" value="Save" id="saveDataId" />
+					{/if}
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+{/if}	
+{/if}
+
+
+{if $obj->permissionCheck("View")}
+<tr>
+	{if $obj->currentAction	==	"Listing"}
+
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			
+				  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td>Viewing  <strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow} </strong> 
+							of <strong>{$actionReturn.spage->totcnt} </strong>  </td>
+							
+							<td>
+								<input type="text" name="keyword" maxlength="25" id="id_keyword" value="{$actionReturn.searchdata.keyword}" />
+							</td>
+                            <td>
+						Category</td><td>{$actionReturn.cat_combo}
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Search" />
+							</td>
+							<td>
+							<input name="actionvar" type="submit" class="butsubmit" value="Reset" />
+							</td>
+							<td>
+							{if $obj->permissionCheck("Add")}
+							<input name="actionvar" type="submit" class="butsubmit" value="Add New" />
+							{/if}
+							</td>
+						</tr>
+					</table>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+         
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							<th>No</th>
+								<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=product&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Product
+								{$obj->getSortImage('product',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>	
+								<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=category&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Category
+								{$obj->getSortImage('category',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>	
+							<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=image&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Image
+								{$obj->getSortImage('phone',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>	
+							<th>
+								<a href="{$obj->getLink('Search','',false)}&sortField=date_added&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+								Date Added
+								{$obj->getSortImage('date_added',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>		
+							<th>Action </th>
+						</tr>
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							<td>{$actionReturn.spage->startingRow+$smarty.foreach.i.index}</td>
+							<td><span title="{$data.product}" >{$data.product}</span>
+							</td>
+							<td><span title="{$data.category}" >{$data.category}</span>
+							</td>
+							<td>
+							<a  href="../category/images/product/{$data.image}" class="highslide" onclick="return hs.expand(this)">
+							<img src="../category/images/product/thumb/{$data.image}" width="17" height="17" border="0"/>
+							</a>
+							</td>
+							<td>{$obj->displayDate($data.date_added)}</td>
+							<td>
+								{if $obj->permissionCheck("Edit")}
+								<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+								<img src="images/edit.gif" border="0" title="Click here to edit"></a> 
+								{/if}
+								{if $obj->permissionCheck("Status")}
+									<a href="{$obj->getLink('Stauschange','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+									{/if}
+										{if $data.status == 1} 
+										<img src="images/active.gif" border="0" title="Click here to inactivate">
+										{else} 							 
+										<img src="images/inactive.gif" border="0" title="Click here to activate">
+										{/if}
+									{if $obj->permissionCheck("Status")}
+									</a> 
+								{/if}
+                                {if $obj->permissionCheck("View")}
+									<a href="{$obj->getLink('viewform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+									<img src="images/view.gif" border="0" title="Click here to view"> </a>
+								{/if}
+								{if $obj->permissionCheck("Delete")}
+								<!--	<a href="{$obj->getLink('deleteform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link"> -->
+								<a onclick="deleteConfrm({$data.id})" href="#" class="Second_link">
+									<img src="images/delete.gif" border="0"  title="Click here to delete"> </a>
+								{/if}
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+					<td colspan="6">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		{/if}
+		</table>
+	</td>
+	{/if}
+</tr>
+{/if}
+</table>
+</form>
+
+{call_module_footer}

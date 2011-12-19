@@ -1,23 +1,23 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-12-12 17:21:16
+<?php /* Smarty version Smarty-3.0.7, created on 2011-12-17 10:18:46
          compiled from "./templates/faq.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:6663246824ee5eab47c93a4-76320172%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1754998374eec1f2ebedeb9-26692669%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '448b714033137a8675b5bc8f587b973eba7fc0a3' => 
     array (
       0 => './templates/faq.tpl.html',
-      1 => 1323690673,
+      1 => 1324097086,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '6663246824ee5eab47c93a4-76320172',
+  'nocache_hash' => '1754998374eec1f2ebedeb9-26692669',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
-<?php echo smarty_function_call_module_header(array('title'=>"Content Management"),$_smarty_tpl);?>
+<?php echo smarty_function_call_module_header(array('title'=>"FAQ"),$_smarty_tpl);?>
 
 
 <script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>

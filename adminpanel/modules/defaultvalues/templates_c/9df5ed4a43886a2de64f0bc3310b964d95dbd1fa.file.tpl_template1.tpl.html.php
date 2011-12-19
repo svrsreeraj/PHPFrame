@@ -1,23 +1,23 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-11-18 12:51:25
+<?php /* Smarty version Smarty-3.0.7, created on 2011-12-17 10:20:35
          compiled from "./templates/tpl_template1.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:9941411434ec60775785709-10223590%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:19031594984eec1f9bbfab20-99370089%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '9df5ed4a43886a2de64f0bc3310b964d95dbd1fa' => 
     array (
       0 => './templates/tpl_template1.tpl.html',
-      1 => 1321600648,
+      1 => 1324097429,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '9941411434ec60775785709-10223590',
+  'nocache_hash' => '19031594984eec1f9bbfab20-99370089',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
-<?php echo smarty_function_call_module_header(array('title'=>"Content Management Master Table"),$_smarty_tpl);?>
+<?php echo smarty_function_call_module_header(array('title'=>"Default Group"),$_smarty_tpl);?>
 
 
 <script language="javascript" type="text/javascript">
