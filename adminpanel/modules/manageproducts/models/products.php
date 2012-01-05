@@ -111,8 +111,8 @@ class productsModel extends modelclass
 				if($file['image']['name'])
 					{
 						$upObj			=	$this->create_upload(10,"jpg,png,jpeg,gif,swf");
-						$adimg			=	$upObj->copy("image","../category/images/product",2);
-						if($adimg)			$upObj->img_resize("100","120","../category/images/product/thumb");
+						$adimg			=	$upObj->copy("image","../manageproducts/images/product",2);
+						if($adimg)			$upObj->img_resize("100","120","../manageproducts/images/product/thumb");
 						else 				$this->setPageError($upObj->get_status());
 						$this->addData(array("image"=>$adimg),"request");
 					}
@@ -148,8 +148,8 @@ class productsModel extends modelclass
 				if($file['image']['name'])
 					{
 						$upObj		=	$this->create_upload(10,"jpg,png,jpeg,gif,swf");
-						$adimg		=	$upObj->copy("image","../category/images/product",2);//
-						if($adimg)		$upObj->img_resize("100","120","../category/images/product/thumb");
+						$adimg		=	$upObj->copy("image","../manageproducts/images/product",2);//
+						if($adimg)		$upObj->img_resize("100","120","../manageproducts/images/product/thumb");
 						$this->addData(array("image"=>$adimg),"request");
 					}
 				$data						=	$this->getData("request");print_r($data);

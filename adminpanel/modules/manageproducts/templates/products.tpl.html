@@ -73,8 +73,8 @@ function deleteConfrm(id)
 				<td>Image </td>
 				<td><input type="file"  name="image" value="{$actionReturn.data.image}"  id="fileImageId" />
 				{if $actionReturn.data.image}
-				<a  href="../category/images/product/{$actionReturn.data.image}" class="highslide" onclick="return hs.expand(this)">
-				 <img src="../category/images//product/thumb/{$actionReturn.data.image}" width="25" height="25"/>
+				<a  href="../manageproducts/images/product/{$actionReturn.data.image}" class="highslide" onclick="return hs.expand(this)">
+				 <img src="../manageproducts/images//product/thumb/{$actionReturn.data.image}" width="25" height="25"/>
 				</a>
 				{/if}				
 				</td>
@@ -218,8 +218,8 @@ function deleteConfrm(id)
 				<td>Image </td>
 				<td><input type="file"  name="image"  value="{$actionReturn.data.image}" id="fileImageId" />
 				{if $actionReturn.data.image}
-				<a  href="../category/images/product/{$actionReturn.data.image}" class="highslide" onclick="return hs.expand(this)">
-				 <img src="../category/images/product/thumb/{$actionReturn.data.image}" width="25" height="25"/>
+				<a  href="../manageproducts/images/product/{$actionReturn.data.image}" class="highslide" onclick="return hs.expand(this)">
+				 <img src="../manageproducts/images/product/thumb/{$actionReturn.data.image}" width="25" height="25"/>
 				</a>
 				{/if}				
 				</td>
@@ -317,8 +317,8 @@ function deleteConfrm(id)
 							<td><span title="{$data.category}" >{$data.category}</span>
 							</td>
 							<td>
-							<a  href="../category/images/product/{$data.image}" class="highslide" onclick="return hs.expand(this)">
-							<img src="../category/images/product/thumb/{$data.image}" width="17" height="17" border="0"/>
+							<a  href="../manageproducts/images/product/{$data.image}" class="highslide" onclick="return hs.expand(this)">
+							<img src="../manageproducts/images/product/thumb/{$data.image}" width="17" height="17" border="0"/>
 							</a>
 							</td>
 							<td>{$obj->displayDate($data.date_added)}</td>

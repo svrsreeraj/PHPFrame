@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-12-19 16:29:33
+<?php /* Smarty version Smarty-3.0.7, created on 2011-12-20 17:38:40
          compiled from "./templates/categories.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:751150074eef1915442fa4-09872501%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:13324889714ef07ac8620a62-51602697%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2425c94d1908173ba00e79e7f363b2cb81020d1f' => 
     array (
       0 => './templates/categories.tpl.html',
-      1 => 1324292355,
+      1 => 1324382917,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '751150074eef1915442fa4-09872501',
+  'nocache_hash' => '13324889714ef07ac8620a62-51602697',
   'function' => 
   array (
   ),
@@ -111,9 +111,9 @@ $("[valcheck='true']").click(function()
 				<td><input type="file"  name="image" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " id="imageId" />
 				<?php if ($_smarty_tpl->getVariable('actionReturn')->value['data']['image']){?>
-				<a  href="../category/images/category/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
+				<a  href="../manageproducts/images/category/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " class="highslide" onclick="return hs.expand(this)">
-				 <img src="../category/images/category/thumb/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
+				 <img src="../manageproducts/images/category/thumb/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " width="25" height="25"/>
 				</a>
 				<?php }?>				
@@ -172,9 +172,9 @@ $("[valcheck='true']").click(function()
 				<td><input type="file"  name="image" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " id="imageId" />
 				<?php if ($_smarty_tpl->getVariable('actionReturn')->value['data']['image']){?>
-				<a  href="../category/images/category/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
+				<a  href="../manageproducts/images/category/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " class="highslide" onclick="return hs.expand(this)">
-				 <img src="../category/images/category/thumb/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
+				 <img src="../manageproducts/images/category/thumb/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " width="25" height="25"/>
 				</a>
 				<?php }?>				
@@ -292,9 +292,9 @@ if ($_smarty_tpl->_count($_from) > 0){
 </span></td>
                             <td>
                             <?php if ($_smarty_tpl->tpl_vars['data']->value['image']){?>
-                            <a  href="../category/images/category/<?php echo $_smarty_tpl->tpl_vars['data']->value['image'];?>
+                            <a  href="../manageproducts/images/category/<?php echo $_smarty_tpl->tpl_vars['data']->value['image'];?>
 " class="highslide" onclick="return hs.expand(this)">
-							<img src="../category/images/category/thumb/<?php echo $_smarty_tpl->tpl_vars['data']->value['image'];?>
+							<img src="../manageproducts/images/category/thumb/<?php echo $_smarty_tpl->tpl_vars['data']->value['image'];?>
 " width="17" height="17" border="0"/>
 							</a>
                             <?php }?>
@@ -303,14 +303,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 							<td>
 								<?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("View")){?>							
 									
-										<!--<?php if ($_smarty_tpl->tpl_vars['data']->value['status']==1){?> 
-										<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('listing','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('ids=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
-" class="Second_link">
-										<img src="images/forward.png" width="22" height="22" border="0" title="Click here to edit"></a> 
-										
-									<?php }else{ ?>
-										&nbsp;&nbsp;
-									<?php }?>-->
+								
 									<?php if ($_smarty_tpl->getVariable('actionReturn')->value['prid']>='0'){?>
 									<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('listing','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('ids=',$_smarty_tpl->getVariable('actionReturn')->value['prid']));?>
 " class="Second_link">

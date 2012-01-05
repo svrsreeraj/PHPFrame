@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-12-19 15:18:33
+<?php /* Smarty version Smarty-3.0.7, created on 2011-12-20 17:37:06
          compiled from "./templates/products.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:17264474834eef0871eed6d6-39141452%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:17549185774ef07a6a7a8038-52943985%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2fc51dac6fe4ee508fa17738eb65244df41ac439' => 
     array (
       0 => './templates/products.tpl.html',
-      1 => 1324288085,
+      1 => 1324382808,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '17264474834eef0871eed6d6-39141452',
+  'nocache_hash' => '17549185774ef07a6a7a8038-52943985',
   'function' => 
   array (
   ),
@@ -101,9 +101,9 @@ function deleteConfrm(id)
 				<td><input type="file"  name="image" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 "  id="fileImageId" />
 				<?php if ($_smarty_tpl->getVariable('actionReturn')->value['data']['image']){?>
-				<a  href="../category/images/product/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
+				<a  href="../manageproducts/images/product/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " class="highslide" onclick="return hs.expand(this)">
-				 <img src="../category/images//product/thumb/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
+				 <img src="../manageproducts/images//product/thumb/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " width="25" height="25"/>
 				</a>
 				<?php }?>				
@@ -259,9 +259,9 @@ function deleteConfrm(id)
 				<td><input type="file"  name="image"  value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " id="fileImageId" />
 				<?php if ($_smarty_tpl->getVariable('actionReturn')->value['data']['image']){?>
-				<a  href="../category/images/product/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
+				<a  href="../manageproducts/images/product/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " class="highslide" onclick="return hs.expand(this)">
-				 <img src="../category/images/product/thumb/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
+				 <img src="../manageproducts/images/product/thumb/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " width="25" height="25"/>
 				</a>
 				<?php }?>				
@@ -388,9 +388,9 @@ if ($_smarty_tpl->_count($_from) > 0){
 </span>
 							</td>
 							<td>
-							<a  href="../category/images/product/<?php echo $_smarty_tpl->tpl_vars['data']->value['image'];?>
+							<a  href="../manageproducts/images/product/<?php echo $_smarty_tpl->tpl_vars['data']->value['image'];?>
 " class="highslide" onclick="return hs.expand(this)">
-							<img src="../category/images/product/thumb/<?php echo $_smarty_tpl->tpl_vars['data']->value['image'];?>
+							<img src="../manageproducts/images/product/thumb/<?php echo $_smarty_tpl->tpl_vars['data']->value['image'];?>
 " width="17" height="17" border="0"/>
 							</a>
 							</td>
