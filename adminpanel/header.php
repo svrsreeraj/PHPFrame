@@ -36,11 +36,15 @@ $usertype	=	$userObj->getAllUsertypes($sql)	;
 <body>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td align="left" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <td align="left" valign="top">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr>
-        <td height="84" align="right" valign="middle" bgcolor="#FFFFFF" style="background-image:url(<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>images/admin_03.jpg); background-position:left top; background-repeat:no-repeat; padding-right:15px;"><table width="45%" border="0" cellspacing="5" cellpadding="0">
+        <td align="right" valign="middle" class="header">
+        	<div class="logo"><h1><a href="#">Site Name</a></h1></div>
+        	<table width="45%" border="0" cellspacing="5" cellpadding="0">
             <tr>
-              <td align="right" valign="middle"><table width="20%" border="0" cellspacing="0" cellpadding="0">
+              <td align="right" valign="middle">
+              	<table width="20%" border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td align="center" valign="middle">
 					<?php if(!$objCls->check_session()) 
@@ -59,40 +63,32 @@ $usertype	=	$userObj->getAllUsertypes($sql)	;
 						}
 					?>
 					</td>
-					
 				  </tr>
-              </table></td>
+              	</table>
+              </td>
             </tr>
             <tr>
               <td align="right" valign="middle" class="head">Administrative Area </td>
             </tr>
-        </table></td>
+        </table>
+        </td>
       </tr>
-      <tr>
-        <td align="left" valign="top" bgcolor="#0FA1DA"><img src="<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>images/space.jpg" width="3" height="5" /></td>
-      </tr>
-    </table></td>
+    </table>
+    </td>
   </tr>
   <tr>
-    <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <td>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="wrapper-main">
       <tr>
-        <td width="200" align="left" valign="top" 
-	style="background-image:url(<?php echo constant("CONST_ADMIN_URL");?>images/inner_11.gif); background-position:left top; background-repeat:repeat-y; padding-top:20px;">
-		
-		
-		
+        <td width="200" align="left" valign="top" class="left-aside">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
-			<td width="20%" align="left" valign="top"  style="background-image:url(<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>images/inner_11.gif);
-			 background-position:left top; background-repeat:repeat-y; padding-top:2px;">
+			<td width="20%" align="left" valign="top">
 			
 			
 			<?php echo $objCls->get_leftmenu(); ?>
 			</td>
 			</tr>   
-          
-          <tr>
-            <td align="left" valign="top">&nbsp;</td>
-          </tr>
         </table></td>
         <td class="contentArea">
+
