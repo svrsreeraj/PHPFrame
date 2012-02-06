@@ -125,7 +125,8 @@ class faqModel extends modelclass
 				else
 					{
 						$this->setPageError($defaultObj->getPageError());
-						$this->executeAction(true,"Addform",true);
+						$this->executeAction(array("action"=>"Addform","navigate"=>true));
+						//$this->executeAction(true,"Addform",true);
 					}	
 			}
 		public function Updatedata()
