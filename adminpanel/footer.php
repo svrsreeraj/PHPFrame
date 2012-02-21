@@ -1,9 +1,8 @@
 	<?php
-		
 		$obj		=	$GLOBALS["cls_site"];
 		$smarty		=	$GLOBALS["smarty"];
 		$fileArray	=	pathinfo($obj->getPageName());
-		$file		=	$smarty->template_dir."/help/".$fileArray["filename"].".tpl.html";
+		$file		=	end($smarty->template_dir)."help/".$fileArray["filename"].".tpl.html";
 		if(file_exists($file)) require_once $file;
 	?>
 </td>
