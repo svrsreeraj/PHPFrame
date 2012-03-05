@@ -9,7 +9,7 @@ class modulesModel extends modelclass
 		public function Listing()
 			{
 				$modObj		=	new moduleclass();
-				$modules	=	$modObj->getModulesListWithStatus();
+				$modules	=	$modObj->getModulesListWithStatus();				
 				return array("modules"=>$modules);
 			}
 		public function Install()

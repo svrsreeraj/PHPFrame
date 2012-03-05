@@ -268,10 +268,11 @@ img {
 }
 .butsubmit
 	{
-	background:url(images/button.png) no-repeat;
+	// background:url(images/button.png) no-repeat;
+	background-color:#E7E7E7;
 	width:70px;
 	height:23px;
-	color:#ffffff;
+	color:#000000;
 	cursor:pointer;
 	border:0;
 	padding:0;

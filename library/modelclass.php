@@ -232,7 +232,7 @@ class modelclass extends siteclass
 				if($loadData)		$this->loadData($methodName,$page);
 				if($this->currentAction)	$this->previousAction	=	$this->currentAction;	
 				$this->currentAction	=	$methodName;
-				if($ufURL)					$this->redirectPage($ufURL);
+				if($ufURL)					$this->redirectPage(constant("CONST_SITE_ADDRESS").$ufURL);
 				//navigations
 				if($navigate)	
 					{

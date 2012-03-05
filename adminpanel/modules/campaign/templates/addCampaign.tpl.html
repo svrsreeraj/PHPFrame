@@ -1,0 +1,329 @@
+{call_module_header title="Campaign"}
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#content").tooltip();
+	$("#grp").tooltip();
+	$("#camp").tooltip();	
+	$("#addbtn").tooltip();	
+	$("#srchbtn").tooltip();	
+	$("#rstbtn").tooltip();	
+	$("#tusrs").tooltip();	
+	$("#tzip").tooltip();
+	$("#tdis").tooltip();
+	
+	$("#txt_join_from").datepicker();
+	$("#txt_join_from").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+
+$("#txt_join_to").datepicker();
+	$("#txt_join_to").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+
+});
+</script>
+
+<script type="text/javascript" src="js/highslide/highslide.js"></script>
+<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
+<link type="text/css" href="js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="js/ui/ui/jquery.ui.datepicker.js"></script>
+{/literal}
+{assign var="actionReturn" value=$obj->actionReturn}
+<form action="" name="fromName" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="table_style">
+{if $obj->getPageError()}
+<tr>
+	<td class="errorMessage">{$obj->popPageError()}</td>
+</tr>
+{/if}
+<tr>
+	<td class="pageHead"><span id="content"><strong>{if ($obj->currentAction	==	"Editform")}Edit{/if}{if ($obj->currentAction	==	"Addform")}Add{/if} Campaign </strong></span></td>
+</tr>
+<!--{$actionReturn.data.image|@print_r};exit;-->
+{if ($obj->currentAction	==	"Editform")}
+{if $obj->permissionCheck("Edit")}
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+			
+				<th colspan="2">Edit Campaign</th>
+			</tr>
+			<tr>
+				<td width="100px"><span id ="grp">Group</span></td>
+				<td>{$actionReturn.combo.addsCategory}</td>
+			</tr>
+			<tr>
+				<td><span id ="camp">Name </span> </td>
+				<td><input type="text" name="name" valtype="emptyCheck-please enter a name" value="{$actionReturn.data.name}"></td>
+			</tr>
+			
+			<tr>
+				<td>Description </td>
+				<td><textarea rows="10" cols="60" valtype="emptyCheck-please enter Description"  name="description">{$actionReturn.data.description}</textarea></td>
+			</tr>
+			
+			<tr>			
+				<td>Start Date </td>
+				<td><input type="text" valtype="emptyCheck-please enter start date" value="{$actionReturn.data.start_date}" name="start_date" class="dateTextBox" id="txt_join_from" readonly="" ></td>
+			</tr>
+			
+			<tr>
+				<td>End Date</td>
+				<td><input type="text" valtype="emptyCheck-please enter end date" value="{$actionReturn.data.end_date}" name="end_date" class="dateTextBox"  id="txt_join_to" readonly="" /></td>
+			</tr>
+			
+			<tr>
+				<td><span id ="tusrs">Target User Ids </span></td>
+				<td><textarea name="target_users">{$actionReturn.data.target_users}</textarea> </td>
+			</tr>
+			<tr>
+				<td><span id ="tzip">Target Zip Codes</span></td>
+				<td><textarea name="target_zip" >{$actionReturn.data.target_zip}</textarea></td>
+			</tr>
+			<tr>
+				<td>Target Latitude </td>
+				<td><input type="text" name="target_latitude" size="100" value="{$actionReturn.data.target_latitude}"></td>
+			</tr>
+			<tr>
+				<td>Target Longitude </td>
+				<td><input type="text" name="target_longitude" value="{$actionReturn.data.target_longitude}"></td>
+			</tr>
+			<tr>
+				<td><span id ="tdis">Target Distance </span></td>
+				<td><input type="text" name="target_distance" value="{$actionReturn.data.target_distance}"></td>
+			</tr>
+			
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+				{if $obj->currentAction	==	"Editform"}
+					
+					<input type="submit" valcheck="true"  class="butsubmit"  name="actionvar" value="Update" id="saveDataId" />
+				{/if}
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>	
+{/if}
+{/if}
+
+{if ($obj->currentAction	==	"Addform")}
+{if $obj->permissionCheck("Add")}
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
+			<tr>
+			
+				<th colspan="2">Add Campaign</th>
+			</tr>
+			<tr>
+				<td width="100px"><span id ="grp">Group</span></td>
+				<td>{$actionReturn.combo}</td>
+			</tr>			
+			<tr>
+				<td> <span id ="camp">Name </span></td>
+				<td><input type="text" name="name" valtype="emptyCheck-please enter a name" value="{$actionReturn.data.name}"></td>
+			</tr>
+			<tr>
+				<td>Description </td>
+				<td><textarea rows="10" cols="60" valtype="emptyCheck-please enter description"  name="description">{$actionReturn.data.code}</textarea></td>
+			</tr>
+			<tr>			
+				<td>Start Date </td>
+				<td><input type="text" value="" valtype="emptyCheck-please enter start date"  name="start_date" class="dateTextBox" id="txt_join_from" readonly="" ></td>
+			</tr>
+			<tr>
+				<td>End Date</td>
+				<td><input type="text" valtype="emptyCheck-please enter end date" value="{$actionReturn.searchdata.txt_join_to}" name="end_date" class="dateTextBox"  id="txt_join_to" readonly="" /></td>
+			</tr>
+			<tr>
+				<td> <span id ="tusrs">Target User Ids</span> </td>
+				<td><textarea name="target_users" ></textarea> </td>
+			</tr>
+			<tr>
+				<td><span id ="tzip">Target Zip Codes</span></td>
+				<td><textarea name="target_zip"></textarea></td>
+			</tr>
+			<tr>
+				<td>Target Latitude </td>
+				<td><input type="text" name="target_latitude" size="100" value="{$actionReturn.data.name}"></td>
+			</tr>
+			<tr>
+				<td>Target Longitude </td>
+				<td><input type="text" name="target_longitude" value="{$actionReturn.data.name}"></td>
+			</tr>
+			<tr>
+				<td><span id ="tdis">Target Distance </span></td>
+				<td><input type="text" name="target_distance" value="{$actionReturn.data.name}"></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>
+					<input type="submit" valcheck="true"  class="butsubmit"  name="actionvar" value="Save" id="saveDataId" />
+					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>	
+{/if}
+{/if}
+<tr>
+	{if $obj->currentAction	==	"Listing"}
+	<td>
+		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+			<tr>
+				<td  align="right">&nbsp;</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="searchTable">
+						<tr>
+							<td>Viewing  <strong> {$actionReturn.spage->startingRow} - {$actionReturn.spage->endingRow} </strong> 
+							of <strong>{$actionReturn.spage->totcnt} </strong>  </td>
+							
+							<td>
+								<input type="text" name="keyword" maxlength="25" id="id_keyword" value="{$actionReturn.searchdata.keyword}" />
+							</td>
+							<td>{$actionReturn.combo}
+							</td>
+							<td>
+							<span id="srchbtn"><input name="actionvar" type="submit" class="butsubmit" value="Search" /></span>
+							</td>
+							<td>
+							<span id="rstbtn"><input name="actionvar" type="submit" class="butsubmit" value="Reset" /></span>
+							</td>
+							<td>
+							{if $obj->permissionCheck("Add")}
+							<span id="addbtn"><input name="actionvar" type="submit" class="butsubmit" value="Add New" /></span>
+							{/if}
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			
+			{if $actionReturn.data}
+			<tr>
+				<td align="center" valign="middle">
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+						<tr align="center" valign="middle">							
+							
+							<th>No</th>
+							<th><span id="grp"><a href="{$obj->getLink('Search','',false)}&sortField=category_id&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							Group{$obj->getSortImage('category_id',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a></span></th>
+							<th><a href="{$obj->getLink('Search','',false)}&sortField=name&sortMethod={$obj->getNegativeSort($actionReturn.searchdata.sortData.sortMethod)}">
+							<span id="camp">Name</span>
+							{$obj->getSortImage('name',$actionReturn.searchdata.sortData.sortField,$actionReturn.searchdata.sortData.sortMethod)}
+								</a>
+							</th>
+							<th>
+								Start Date
+							</th>
+							<th>
+								End Date
+							</th>							
+							<!--<th>
+								Impression  
+							</th>-->
+							<th>Action </th>
+						</tr>
+					{foreach from=$actionReturn.data item=data name=i}
+						<tr>
+							
+							<td>{$actionReturn.spage->startingRow+$smarty.foreach.i.index}</td>
+							<td>{$data.category}</td>
+							<td>
+								{$data.name}
+							</td>
+								
+							<td>
+								{$data.start_date}
+							</td>
+							<td>
+								{$data.end_date}
+							</td>							
+						<!--	<td>
+								{$data.impression}
+							</td>-->
+							<td>
+							
+							 {if $obj->permissionCheck("Status")}
+                          				  <a href="{$obj->getLink('Stauschange','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+                            {/if}
+                                    {if $data.status == 1} 
+                                    	<img src="images/active.gif" border="0" title="Click here to inactivate">
+                                     {else} 							 
+                                     	<img src="images/inactive.gif" border="0" title="Click here to activate">
+                                     {/if}
+                            {if $obj->permissionCheck("Status")}
+                             </a> 
+                            {/if}	
+							
+							{if $obj->permissionCheck("Edit")}
+							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/edit.gif" border="0" title="Click here to edit">							
+							</a> 
+								{/if}                                
+							
+								
+								<a href="{$obj->getLink('','addCampaignAdds.php',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/view.gif" border="0" alt="delete"title="Click here to view Adds">							
+							</a> 			
+							</td>
+						</tr>
+					{/foreach}
+					<tr>
+						<td>
+						</td>
+						<td colspan="7">{$actionReturn.spage->s_get_links()}</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			{/if}
+		</table>
+	</td>
+	{/if}
+</tr>
+</table>
+</form>
+{call_module_footer}

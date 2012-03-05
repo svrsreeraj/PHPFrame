@@ -93,6 +93,8 @@ class moduleclass extends siteclass
 			{
 				$newArray	=	array();
 				$modules	=	$this->getModulesList();
+				
+				
 				foreach ($modules	as $key=>$val)
 					{
 						$newArray[]	=	array("module"=>$val,"status"=>$this->getModuleStatus($val));
@@ -101,6 +103,7 @@ class moduleclass extends siteclass
 			}
 		public function installModule($module)
 			{
+				
 				$this->errorArray	=	array();
 				if(!$confFile = $this->getModulePathByName($module))	$this->errorArray[]	=	"Module $module Configuration file not found";
 				require $confFile;
