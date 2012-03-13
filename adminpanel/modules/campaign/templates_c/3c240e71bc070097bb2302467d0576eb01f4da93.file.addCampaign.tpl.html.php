@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2012-02-29 15:45:05
+<?php /* Smarty version Smarty-3.0.7, created on 2012-03-08 14:21:24
          compiled from "./templates/addCampaign.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:20926487194f4dfaa9864165-78805611%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:3464113314f58730c861d26-04782994%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '3c240e71bc070097bb2302467d0576eb01f4da93' => 
     array (
       0 => './templates/addCampaign.tpl.html',
-      1 => 1330510313,
+      1 => 1331196676,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '20926487194f4dfaa9864165-78805611',
+  'nocache_hash' => '3464113314f58730c861d26-04782994',
   'function' => 
   array (
   ),
@@ -86,7 +86,7 @@ $("#txt_join_to").datepicker();
 </tr>
 <!--<?php echo print_r($_smarty_tpl->getVariable('actionReturn')->value['data']['image']);?>
 ;exit;-->
-<?php if (($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform")){?>
+<?php if (($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform"||$_smarty_tpl->getVariable('obj')->value->currentAction=="Copyform")){?>
 <?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("Edit")){?>
 <tr>
 	<td>&nbsp;</td>
@@ -159,6 +159,9 @@ $("#txt_join_to").datepicker();
 				<?php if ($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform"){?>
 					
 					<input type="submit" valcheck="true"  class="butsubmit"  name="actionvar" value="Update" id="saveDataId" />
+				<?php }?>
+				<?php if ($_smarty_tpl->getVariable('obj')->value->currentAction=="Copyform"){?>
+					<input type="submit" valcheck="true"  class="butsubmit"  name="actionvar" value="Copy" id="copyDataId" />
 				<?php }?>
 					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
 				</td>
@@ -366,12 +369,18 @@ if ($_smarty_tpl->_count($_from) > 0){
 " class="Second_link">
 							<img src="images/edit.gif" border="0" title="Click here to edit">							
 							</a> 
-								<?php }?>                                
+								<?php }?>    
+								
+							<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('copyform','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
+" class="Second_link">
+							<img src="images/copy.png" border="0" title="Click here to Copy">							
+							</a> 
+								                   
 							
 								
 								<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('','addCampaignAdds.php',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
 " class="Second_link">
-							<img src="images/view.gif" border="0" alt="delete"title="Click here to view Adds">							
+							<img src="images/fast_forward.png" border="0" alt="view"title="Click here to view Adds">							
 							</a> 			
 							</td>
 						</tr>

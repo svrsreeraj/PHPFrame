@@ -36,6 +36,10 @@ class configModel extends modelclass
 				fwrite($fp, $this->GetProcessedValues($this->byProductsConst));
 				fwrite($fp, $this->GetFooter());
 				fclose($fp);
+				$this->executeAction(array("action"=>"Dodbactions","navigate"=>true));
+			}
+		public function Dodbactions()
+			{
 				$this->checkAndInstallCoreDb();//inserting tables and data
 				$this->executeAction(array("action"=>"Listing","navigate"=>true));
 			}
@@ -110,9 +114,10 @@ class configModel extends modelclass
 			}
 		public function checkAndInstallCoreDb()
 			{
-				require_once $this->adminPanelCorePath;
+				require $this->adminPanelCorePath;
 				foreach($queries["tables"] as	$key=>$val)
 					{
+						
 						if(!$this->db_query("SELECT count(*) FROM `".$key."` WHERE 1"))
 							{
 								if($this->db_query($val))	$this->db_query($queries["insert"][$key]);

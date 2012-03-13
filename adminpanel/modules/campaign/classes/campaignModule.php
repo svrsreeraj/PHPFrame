@@ -39,7 +39,9 @@ class campaignModule extends siteclass
 				else return $default_id;
 			}	
 		public function insertCampaignAdds($dataArray)
-			{				
+			{	
+				
+							
 				$this->dbStartTrans();
 				$default_id			=	$this->db_insert(constant("CONST_MODULE_CAMPAIGN_ADS"),$dataArray);
 				if(!$default_id) 
@@ -55,6 +57,14 @@ class campaignModule extends siteclass
 				if(!$id)
 					return "invalid Id";
 				$sql				=	"select * from ".constant("CONST_MODULE_CAMPAIGN_ADS")."  where id=".$id;
+				$data				=	$this->getdbcontents_sql($sql);
+				return $data; 
+			}
+		public function getcampaignAdsByCampaignId($id)
+			{
+				if(!$id)
+					return "invalid Id";
+				$sql				=	"select * from ".constant("CONST_MODULE_CAMPAIGN_ADS")."  where campaign_id =".$id;
 				$data				=	$this->getdbcontents_sql($sql);
 				return $data; 
 			}

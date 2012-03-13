@@ -106,6 +106,27 @@ class addCampaignModel extends modelclass
 					}
 				return array("data"=>$this->getHtmlData($details),"combo"=>$comb);
 			}
+		public function Copyform()
+			{
+				//if($this->permissionCheck("Edit",1))
+				$data							=	$this->getData("get");
+				$bannerObj						=	new campaignModule();
+				$details						=	end($bannerObj->getcampaignDetailsById($data['id']));				
+				$addtype						=	array(0 =>array('id'=>1,'value'=>'image'),1 =>array('id'=>2,'value'=>'html'),2 =>array('id'=>3,'value'=>'Flash')) ;		
+				$comb							=	array();
+				if($details)
+					{	
+						$comb['addsCategory']		=	$this->get_combo_arr("category_id",$bannerObj->getAllCampaignCategory("status=1"),"id","category",$details["category_id"]," valtype='emptyCheck-please select a category' style='width:100px;' ","Any category");		
+						//$comb['type']				=	$this->get_combo_arr("types",$addtype,"id","value",$details["types"],"id='type' valtype='emptyCheck-please select a category' style='width:100px;' ","Any category");		
+					}
+				else	
+					{
+						$this->setPageError("Invalid Id");
+						$this->clearData();
+						$this->executeAction(array("action"=>"Listing","navigate"=>true,"sameParams"=>true));
+					}
+				return array("data"=>$this->getHtmlData($details),"combo"=>$comb);
+			}
 		public function Addform()
 			{
 				$category			=	new campaignModule();
@@ -156,6 +177,53 @@ class addCampaignModel extends modelclass
 							$this->setPageError($bannerObj->getPageError());
 							$this->executeAction(true,"Addform",true);
 						}	
+			}
+		public function Copydata()
+			{
+				$data					=	$this->getData("request");					
+				$dataIns				=	$this->populateDbArray(constant("CONST_MODULE_CAMPAIGN_TABLE"),$data);
+				$bannerObj				=	new campaignModule();
+				
+				$insertStatus		=	$bannerObj->insertCampaign($dataIns);			
+				
+				if($insertStatus)	
+					{						
+						$details				=	$bannerObj->getcampaignAdsByCampaignId($data['id']);
+						
+						foreach ($details as $level1Key => $level1Val)					
+							{						
+								foreach ($level1Val as $level2Key => $level2Val)
+									{								
+										if($level2Key == "campaign_id")
+											{	
+												$details[$level1Key][$level2Key] = $insertStatus;												
+											}
+									}
+							}  						
+						
+						foreach ($details as $val)
+							{
+									$dataAdds			=	$this->populateDbArray(constant("CONST_MODULE_CAMPAIGN_ADS"),$val);
+									$insertStatus		=	$bannerObj->insertCampaignAdds($dataAdds);	
+									print_r($dataAdds);
+									#echo "<br>";
+							}						
+						
+						$this->setPageError("Inserted Successfully");
+						//$this->clearData("Savedata");
+						//$this->clearData("Addform");						
+					$this->executeAction(array("action"=>"Listing","navigate"=>true));	
+					}
+				else
+					{
+						//$this->setPageError($bannerObj->getPageError());
+						//$this->executeAction(true,"Addform",true);
+					}	
+				
+				
+				
+				
+				
 			}
 		public function Updatedata()
 			{				

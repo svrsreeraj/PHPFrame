@@ -6,12 +6,8 @@ Purpose    :Admin Home Model Page
 ******************* *******************************************************************/
 class developerHomeModel extends modelclass 
 	{
-		public function developerHomeListing()
+		public function Listing()
 			{
 				return array();
-			}
-		public function __destruct()
-			{
-				parent::childKilled($this);
 			}
 	}

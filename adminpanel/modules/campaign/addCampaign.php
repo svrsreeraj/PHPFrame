@@ -10,6 +10,7 @@ $obj	=	loadModelClass(true);
 if($obj->getRealAction()	==	"Add New")		$obj->setAction("Addformbtn");
 if($obj->getRealAction()	==	"Save")			$obj->setAction("Savedata");
 if($obj->getRealAction()	==	"Update")		$obj->setAction("Updatedata");
+if($obj->getRealAction()	==	"Copy")		$obj->setAction("Copydata");
 $obj->executeAction(array("loadData"=>true));
 loadView();
 ?>

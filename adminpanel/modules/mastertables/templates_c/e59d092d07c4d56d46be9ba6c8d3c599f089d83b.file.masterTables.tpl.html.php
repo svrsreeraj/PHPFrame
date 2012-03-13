@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2012-01-28 16:39:49
+<?php /* Smarty version Smarty-3.0.7, created on 2012-03-13 05:25:43
          compiled from "./templates/masterTables.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:15006231014f23d77d89fc04-05118695%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:9352186374f5e8cff096b80-84970314%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'e59d092d07c4d56d46be9ba6c8d3c599f089d83b' => 
     array (
       0 => './templates/masterTables.tpl.html',
-      1 => 1326283011,
+      1 => 1331596540,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '15006231014f23d77d89fc04-05118695',
+  'nocache_hash' => '9352186374f5e8cff096b80-84970314',
   'function' => 
   array (
   ),
@@ -214,11 +214,11 @@ $_smarty_tpl->tpl_vars['smarty']->value['section']['j']['last']       = ($_smart
 if ($_smarty_tpl->_count($_from) > 0){
     foreach ($_from as $_smarty_tpl->tpl_vars['master']->key => $_smarty_tpl->tpl_vars['master']->value){
 ?>
-										   <li><a title="Click here to view all <?php echo $_smarty_tpl->tpl_vars['master']->value['ms_table_section'];?>
+										   <li><a class="butdefault" title="Click here to view all <?php echo $_smarty_tpl->tpl_vars['master']->value['ms_table_section'];?>
 " href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('listing','',false,$_smarty_tpl->getVariable('obj')->value->getConcat('section_id=',$_smarty_tpl->tpl_vars['master']->value['id']));?>
 ">
-										   <button class="default"><?php echo $_smarty_tpl->tpl_vars['master']->value['ms_table_section'];?>
-</button></a></li>
+										   <?php echo $_smarty_tpl->tpl_vars['master']->value['ms_table_section'];?>
+</a></li>
 										 <?php }} ?>
 										 </ul>
 									</div>

@@ -12,7 +12,7 @@ class contentManagementModel extends modelclass
 				$cmsObj				=	new cmsModule();
 				$searchData			=	$this->getData("post","Search");
 				$sortData			=	$this->getData("request","Search");
-				$searchCombo		=	$this->get_combo_arr("sel_search_group",$cmsObj->getCMSSectionData("1"),"id","cms_category",$searchData["sel_search_group"],"","Any Group");
+				$searchCombo		=	$this->get_combo_arr("sel_search_group",$cmsObj->getCMSSectionData("1"),"id","cms_category",$searchData["sel_search_group"],"","Any Section");
 				if(!trim($sortData["sortField"]))
 						{
 							$this->addData(array("sortField"=>"cms.id"),"request","Search");
@@ -33,7 +33,7 @@ class contentManagementModel extends modelclass
 						$sqlCond	.=	" And ". $this->dbSearchCond("=", "cms.section_id", $searchData["sel_search_group"]);
 					}
 				$sqlCond			.=	"order by ".$sortData["sortField"]." ".$sortData["sortMethod"];
-				$sql				=	"SELECT  cms.*,sect.cms_category	FROM  ".constant("CONST_MODULE_CMS_TABLE_SECTION")."  sect,".constant("CONST_MODULE_CMS_TABLE_CMS")."  cms where  cms.section_id  = sect.id $sqlCond";
+				$sql				=	"SELECT  cms.*,sect.cms_category as section	FROM  ".constant("CONST_MODULE_CMS_TABLE_SECTION")."  sect,".constant("CONST_MODULE_CMS_TABLE_CMS")."  cms where  cms.section_id  = sect.id $sqlCond";
 				$spage				=	$this->create_paging("n_page",$sql,GLB_PAGE_CNT);
 				$data				=	$this->getdbcontents_sql($spage->finalSql());
 				
@@ -89,15 +89,7 @@ class contentManagementModel extends modelclass
 		public function Savedata()
 			{
 				$this->permissionCheck("Add",1);
-				$data		=	$this->getData("files");
-					if($data[fileImage] [name])
-					{
-						$upObj		=	$this->create_upload(10,"jpg,png,jpeg,gif");
-						$adimg		=	$upObj->copy("fileImage","../images/subcategory",2);
-						if($adimg)		$upObj->img_resize("100","120","../images/subcategory/thumb");
-						else 			$this->setPageError($upObj->get_status());
-						$this->addData(array("image"=>$adimg),"request");
-					}
+				$data		=	$this->getData("files");					
 				$data				=	$this->getData("request","",false);
 				$dataIns			=	$this->populateDbArray(constant("CONST_MODULE_CMS_TABLE_CMS"),$data);
 				$cmsObj				=	new cmsModule();
@@ -129,22 +121,7 @@ class contentManagementModel extends modelclass
 		public function Updatedata()
 			{
 				$this->permissionCheck("Edit",1);
-				$data		=	$this->getData("files");
-				if($data[fileImage][name])
-					{
-						$data		=	$this->getData("request");
-						$id			=	$data["id"];
-						$cms_obj	=	new cmsModule();
-						$details	=	$cms_obj->getCMSData("id=".$id);
-						$image_path	=	$details[0][image];
-						@unlink("../images/cms/".$image_path);
-						@unlink("../images/cms/thumb/".$image_path);
-						$upObj		=	$this->create_upload(10,"jpg,png,jpeg,gif");
-						$adimg		=	$upObj->copy("fileImage","../images/cms",2);
-						if($adimg)		$upObj->img_resize("100","120","../images/cms/thumb");
-						else 			$this->setPageError($upObj->get_status());
-						$this->addData(array("image"=>$adimg),"request");
-					}
+				$data		=	$this->getData("files");				
 				$data		=	$this->getData("request","",false);
 				$cmsObj		=	new cmsModule();
 				$dataIns	=	$this->populateDbArray(constant("CONST_MODULE_CMS_TABLE_CMS"),$data);

@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-10-19 16:14:55
+<?php /* Smarty version Smarty-3.0.7, created on 2012-03-13 05:40:50
          compiled from "./templates/contentManagement.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:14238495564e9eaa2734fdd3-25935551%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:8223434344f5e908ac28c74-35943978%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '0f93de7fe77d45c5882cedde29051d8a6749643f' => 
     array (
       0 => './templates/contentManagement.tpl.html',
-      1 => 1319019450,
+      1 => 1331597448,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '14238495564e9eaa2734fdd3-25935551',
+  'nocache_hash' => '8223434344f5e908ac28c74-35943978',
   'function' => 
   array (
   ),
@@ -21,7 +21,7 @@ $_smarty_tpl->decodeProperties(array (
 
 
 <script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
-<script type="text/javascript" src="../libs/ckeditor_3.5.1/ckeditor.js"></script>
+<script type="text/javascript" src="../../../libs/ckeditor_3.5.1/ckeditor.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -87,7 +87,7 @@ $("[valcheck='true']").click(function()
 </td>
 			</tr>
 			<?php }?>
-			<tr>
+			 <!-- <tr>
 				<td>Image</td>
 				<td><input type="file"  name="fileImage" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
 " id="fileImageId" />
@@ -98,9 +98,7 @@ $("[valcheck='true']").click(function()
 " border="0" width="25" height="25"/>
 				</a>
 				<?php }?>
-				</td></tr>
-			
-			<tr>
+				</td></tr> -->		
 			
 			<tr>
 				<td>&nbsp;</td>
@@ -233,6 +231,10 @@ if ($_smarty_tpl->_count($_from) > 0){
 							<td><?php echo $_smarty_tpl->getVariable('obj')->value->displayDate($_smarty_tpl->tpl_vars['data']->value['date_added']);?>
 </td>
 							<td>
+							<?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("Edit")){?>
+							<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('editform','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
+" class="Second_link"> <img src="images/edit.gif" border="0" title="Click here to edit"></a> 
+							<?php }?>
 							<?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("Status")){?>
 <a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Stauschange','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id'],'&status=',$_smarty_tpl->tpl_vars['data']->value['status']));?>
 " class="Second_link">
@@ -243,13 +245,7 @@ if ($_smarty_tpl->_count($_from) > 0){
 							 <?php }?>
 							 </a> 
 							<?php }?>
-							<?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("Edit")){?>
-							<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('editform','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
-" class="Second_link"> <img src="images/edit.gif" border="0" title="Click here to edit"></a> 
-							<?php }?>
-							<?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("Delete")){?>
-							<a href="#" class="Second_link"><img src="images/delete.gif" border="0" title="Click here to delete"> </a>
-							<?php }?>
+														
 							</td>
 						</tr>
 					<?php }} ?>

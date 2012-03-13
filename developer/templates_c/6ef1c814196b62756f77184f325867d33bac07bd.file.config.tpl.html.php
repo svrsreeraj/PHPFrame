@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-09-26 12:14:29
+<?php /* Smarty version Smarty-3.0.7, created on 2012-03-13 05:33:38
          compiled from "./templates/config.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:17972681994e801f4d741cf5-33696324%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:7803807834f5e8eda3e45a4-16625559%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '6ef1c814196b62756f77184f325867d33bac07bd' => 
     array (
       0 => './templates/config.tpl.html',
-      1 => 1317017856,
+      1 => 1331596934,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '17972681994e801f4d741cf5-33696324',
+  'nocache_hash' => '7803807834f5e8eda3e45a4-16625559',
   'function' => 
   array (
   ),
@@ -173,6 +173,19 @@ select
     		</tr>
     		
     		
+    	</table>
+    </td>
+  </tr>
+  <tr>
+  	<td align="center">
+    	<table width="90%" border="0" cellspacing="4" cellpadding="4">
+    		<tr><td colspan="2"><strong>Project Details</strong></td></tr>
+    		<tr>
+    			<td width="40%">Project Name</td>
+    			<td><input type="text" name="const_project_name" id="id_txt_project_name" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_project_name','returnVar'=>'tempVal'),$_smarty_tpl);?>
+<?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
+"></td>
+    		</tr>
     	</table>
     </td>
   </tr>

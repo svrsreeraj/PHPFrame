@@ -14,8 +14,11 @@ set_error_handler("customError");//setting error handler
 
 
 //including necessary files
-if(is_file(dirname(__FILE__)."/config.inc.php"))	require_once("config.inc.php"); 			//for adminpanel,developers etc
-else 												exit("Config.inc.php not found :(");
+if(is_file(dirname(__FILE__)."/config.inc.php"))	require_once("config.inc.php");//for adminpanel,developers etc
+else
+	{
+		header("location:developer/");exit;
+	}
 
 require_once	(CONST_SITE_ABSOLUTE_PATH.'config.php');								err_status("Config Included");
 require_once	(CONST_SITE_ABSOLUTE_PATH.'includes/db.php');							err_status("Db connected");

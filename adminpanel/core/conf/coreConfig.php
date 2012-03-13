@@ -2,9 +2,10 @@
 /**************************************************************************************
 Created by :Sreeraj
 Created on :2011-11-10
-Purpose    :Install CMS Module
+Purpose    :Core Queries
 **************************************************************************************/
-require_once	(dirname(__FILE__)."/../init.php");
+
+require	(dirname(__FILE__)."/../init.php");
 
 //tables - admin permission & users
 define("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS",constant("CONST_DB_TABLE_PREFIX")."admin_actions");

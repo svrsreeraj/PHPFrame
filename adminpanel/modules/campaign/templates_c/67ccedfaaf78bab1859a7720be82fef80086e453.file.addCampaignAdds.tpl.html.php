@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2012-02-29 15:43:30
+<?php /* Smarty version Smarty-3.0.7, created on 2012-03-08 14:32:35
          compiled from "./templates/addCampaignAdds.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:9576339604f4dfa4a634375-78961783%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:3557491074f5875ab614751-79644021%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '67ccedfaaf78bab1859a7720be82fef80086e453' => 
     array (
       0 => './templates/addCampaignAdds.tpl.html',
-      1 => 1330510325,
+      1 => 1331197352,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '9576339604f4dfa4a634375-78961783',
+  'nocache_hash' => '3557491074f5875ab614751-79644021',
   'function' => 
   array (
   ),
@@ -220,7 +220,7 @@ $(document).ready(function(){
 			</tr>
 			<tr id="files">
 				<td>Files </td>
-				<td><input type="file" name="image"></td>
+				<td><input type="file" valtype="emptyCheck-please enter a file" name="image"></td>
 			</tr>
 			<tr>
 				<td>Height </td>

@@ -90,6 +90,14 @@ define("CONST_DEVELOPER_URL",constant("CONST_SITE_ADDRESS")."developer/");
 					<a href = "modules.php"  class="letnav">Modules</a>
 
 				</div>
+				
+				<div class="LeftMenuHead LeftMenuHeadCurrent">Admin panel</div>
+				<div class="leftMenuBody">
+					
+					<a target="_blank" href = "<?php echo constant("CONST_SITE_ADMIN_ADDRESS"); ?>"  class="letnav">Admin</a>
+
+				</div>
+				
 				<?php }?>
 			</div>
 			<script type="text/javascript">

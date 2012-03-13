@@ -130,8 +130,8 @@ function validate_add()
 									<div  id="floatingbar">
 										 <ul>
 										 {foreach from=$actionReturn.masters item=master name=j}
-										   <li><a title="Click here to view all {$master.ms_table_section}" href="{$obj->getLink('listing','',false,$obj->getConcat('section_id=',$master.id))}">
-										   <button class="default">{$master.ms_table_section}</button></a></li>
+										   <li><a class="butdefault" title="Click here to view all {$master.ms_table_section}" href="{$obj->getLink('listing','',false,$obj->getConcat('section_id=',$master.id))}">
+										   {$master.ms_table_section}</a></li>
 										 {/foreach}
 										 </ul>
 									</div>

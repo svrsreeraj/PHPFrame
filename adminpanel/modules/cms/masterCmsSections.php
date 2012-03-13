@@ -40,7 +40,7 @@ $def_data["child_foreign"]		=	"";
 $tpls["addcaption"]				=	"Add CMS Sections";
 $tpls["addcount"]				=	15;
 $tpls["addsplit"]				=	3;
-$tpls["addbtnvalue"]			=	"Add CMS Sections";
+$tpls["addbtnvalue"]			=	"Add New";
 $tpls["savebtnvalue"]			=	"Save";
 $tpls["btnsavecancelvalue"]		=	"Cancel";
 

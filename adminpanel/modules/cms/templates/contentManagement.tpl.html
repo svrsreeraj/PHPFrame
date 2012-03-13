@@ -1,7 +1,7 @@
 {call_module_header title="Content Management"}
 {literal}
 <script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
-<script type="text/javascript" src="../libs/ckeditor_3.5.1/ckeditor.js"></script>
+<script type="text/javascript" src="../../../libs/ckeditor_3.5.1/ckeditor.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -63,7 +63,7 @@ $("[valcheck='true']").click(function()
 				<td>{$actionReturn.combo}</td>
 			</tr>
 			{/if}
-			<tr>
+			 <!-- <tr>
 				<td>Image</td>
 				<td><input type="file"  name="fileImage" value="{$actionReturn.data.image}" id="fileImageId" />
 				{if $actionReturn.data.image}
@@ -71,9 +71,7 @@ $("[valcheck='true']").click(function()
 				<img src="../images/cms/thumb/{$actionReturn.data.image}" border="0" width="25" height="25"/>
 				</a>
 				{/if}
-				</td></tr>
-			
-			<tr>
+				</td></tr> -->		
 			
 			<tr>
 				<td>&nbsp;</td>
@@ -178,6 +176,9 @@ $("[valcheck='true']").click(function()
 							<td>{$data.section}</td>
 							<td>{$obj->displayDate($data.date_added)}</td>
 							<td>
+							{if $obj->permissionCheck("Edit")}
+							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link"> <img src="images/edit.gif" border="0" title="Click here to edit"></a> 
+							{/if}
 							{if $obj->permissionCheck("Status")}
 <a href="{$obj->getLink('Stauschange','',true,$obj->getConcat('id=',$data.id,'&status=',$data.status))}" class="Second_link">
 							{if $data.status == 1} 
@@ -187,12 +188,7 @@ $("[valcheck='true']").click(function()
 							 {/if}
 							 </a> 
 							{/if}
-							{if $obj->permissionCheck("Edit")}
-							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link"> <img src="images/edit.gif" border="0" title="Click here to edit"></a> 
-							{/if}
-							{if $obj->permissionCheck("Delete")}
-							<a href="#" class="Second_link"><img src="images/delete.gif" border="0" title="Click here to delete"> </a>
-							{/if}
+														
 							</td>
 						</tr>
 					{/foreach}

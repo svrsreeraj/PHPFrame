@@ -24,7 +24,28 @@
 #minibar { display:none;}
 
 
-
+.butdefault
+	{
+	color: #1c4257;
+	background: #a3cde3;
+	background: -webkit-gradient(linear, left top, left bottom, from(#b9e0f5), to(#85b2cb));
+	background: -moz-linear-gradient(top, #b9e0f5, #85b2cb);
+	border: 1px solid #759bb1;
+	border-top-color: #8ab0c6;
+	border-bottom-color: #587e93;
+	font-size: 14px;
+	font-weight: bold;
+	font-family:Arial;
+	color: #4f4f4f;
+	letter-spacing: -1px;
+	 border-radius: 0.214em 0.214em 0.214em 0.214em;
+	box-shadow: inset 0 1px 0 #fff;
+    		-webkit-box-shadow: inset 0 1px 0 #fff;
+    		-moz-box-shadow: inset 0 1px 0 #fff;
+    		-o-box-shadow: inset 0 1px 0 #fff;
+			display:inline;
+			padding:7px 10px;
+}
 .floater{
 position:fixed;
 top:0px;

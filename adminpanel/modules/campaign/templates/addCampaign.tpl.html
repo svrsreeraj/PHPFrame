@@ -64,7 +64,7 @@ $("#txt_join_to").datepicker();
 	<td class="pageHead"><span id="content"><strong>{if ($obj->currentAction	==	"Editform")}Edit{/if}{if ($obj->currentAction	==	"Addform")}Add{/if} Campaign </strong></span></td>
 </tr>
 <!--{$actionReturn.data.image|@print_r};exit;-->
-{if ($obj->currentAction	==	"Editform")}
+{if ($obj->currentAction	==	"Editform" || $obj->currentAction	==	"Copyform")}
 {if $obj->permissionCheck("Edit")}
 <tr>
 	<td>&nbsp;</td>
@@ -127,6 +127,9 @@ $("#txt_join_to").datepicker();
 				{if $obj->currentAction	==	"Editform"}
 					
 					<input type="submit" valcheck="true"  class="butsubmit"  name="actionvar" value="Update" id="saveDataId" />
+				{/if}
+				{if $obj->currentAction	==	"Copyform"}
+					<input type="submit" valcheck="true"  class="butsubmit"  name="actionvar" value="Copy" id="copyDataId" />
 				{/if}
 					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
 				</td>
@@ -302,11 +305,16 @@ $("#txt_join_to").datepicker();
 							<a href="{$obj->getLink('editform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
 							<img src="images/edit.gif" border="0" title="Click here to edit">							
 							</a> 
-								{/if}                                
+								{/if}    
+								
+							<a href="{$obj->getLink('copyform','',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
+							<img src="images/copy.png" border="0" title="Click here to Copy">							
+							</a> 
+								                   
 							
 								
 								<a href="{$obj->getLink('','addCampaignAdds.php',true,$obj->getConcat('id=',$data.id))}" class="Second_link">
-							<img src="images/view.gif" border="0" alt="delete"title="Click here to view Adds">							
+							<img src="images/fast_forward.png" border="0" alt="view"title="Click here to view Adds">							
 							</a> 			
 							</td>
 						</tr>
