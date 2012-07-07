@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2012-03-13 05:33:38
+<?php /* Smarty version Smarty-3.0.7, created on 2012-07-07 16:57:35
          compiled from "./templates/config.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:7803807834f5e8eda3e45a4-16625559%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:3961015054ff81d277ea522-13527446%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '6ef1c814196b62756f77184f325867d33bac07bd' => 
     array (
       0 => './templates/config.tpl.html',
-      1 => 1331596934,
+      1 => 1341660454,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '7803807834f5e8eda3e45a4-16625559',
+  'nocache_hash' => '3961015054ff81d277ea522-13527446',
   'function' => 
   array (
   ),
@@ -29,6 +29,12 @@ select
 	{
 		width:300px;
 	}
+.grayVal
+	{
+		text-align : left;
+		color : #676767;
+		font-size:12px;
+	}
 </style>
 
 <?php $_smarty_tpl->tpl_vars["actionReturn"] = new Smarty_variable($_smarty_tpl->getVariable('obj')->value->actionReturn, null, null);?>
@@ -38,36 +44,44 @@ select
   <tr>
   	<td align="center">
     	<table width="90%" border="0" cellspacing="4" cellpadding="4">
-    		<tr><td colspan="2"><strong>Database Details</strong></td></tr>
+    		<tr>
+				<td colspan="2"><strong>Database Details</strong></td>
+				<td width="30%" class="">Example</td>
+			</tr>
     		<tr>
     			<td width="40%">Host</td>
     			<td><input type="text" name="const_db_host" id="id_txt_db_host" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_db_host','returnVar'=>'tempVal'),$_smarty_tpl);?>
 <?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
 "></td>
+    			<td width="30%" class="grayVal">localhost</td>
     		</tr>
     		<tr>
     			<td>UserName</td>
     			<td><input type="text" name="const_db_username" id="id_txt_db_username" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_db_username','returnVar'=>'tempVal'),$_smarty_tpl);?>
 <?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
 "></td>
+    			<td width="30%" class="grayVal">root</td>
     		</tr>
     		<tr>
     			<td>Password</td>
     			<td><input type="text" name="const_db_password" id="id_txt_db_password" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_db_password','returnVar'=>'tempVal'),$_smarty_tpl);?>
 <?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
 "></td>
+    			<td width="30%" class="grayVal">123456</td>
     		</tr>
     		<tr>
     			<td>DataBase Name</td>
     			<td><input type="text" name="const_db_name" id="id_txt_db_name" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_db_name','returnVar'=>'tempVal'),$_smarty_tpl);?>
 <?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
 "></td>
+    			<td width="30%" class="grayVal">MyDb</td>
     		</tr>
     		<tr>
     			<td>Table  Prefix</td>
     			<td><input type="text" name="const_db_table_prefix" id="id_txt_db_table_prefix" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_db_table_prefix','returnVar'=>'tempVal'),$_smarty_tpl);?>
 <?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
 "></td>
+    			<td width="30%" class="grayVal">prefex_</td>
     		</tr>
     	</table>
     </td>
@@ -81,12 +95,14 @@ select
     			<td><input type="text" name="const_site_address" id="id_txt_site_address" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_site_address','returnVar'=>'tempVal'),$_smarty_tpl);?>
 <?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
 "></td>
+    			<td width="30%" class="grayVal">http://localhost/phpframe/</td>
     		</tr>
     		<tr>
     			<td>Absolutre site path</td>
     			<td><input type="text" name="const_site_absolute_path" id="id_txt_absolute_path" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_site_absolute_path','returnVar'=>'tempVal'),$_smarty_tpl);?>
 <?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
 "></td>
+    			<td width="30%" class="grayVal">/var/www/phpframe/</td>
     		</tr>
     		
     	</table>
@@ -101,6 +117,7 @@ select
     			<td><input type="text" name="const_time_zone_php" id="id_txt_time_zone_php" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_time_zone_php','returnVar'=>'tempVal'),$_smarty_tpl);?>
 <?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
 "></td>
+    			<td width="30%" class="grayVal">Asia/Culcatta</td>
     		</tr>
     		<tr>
     			<td>Mysql TimeZone (GMT)</td>
@@ -145,6 +162,7 @@ select
     		
     		
     		</td>
+    		<td width="30%" class="grayVal">(GMT +5:30)</td>
     		</tr>
     		
     	</table>
@@ -170,6 +188,7 @@ select
     				
     				
     			</td>
+    			<td width="30%" class="grayVal">local</td>
     		</tr>
     		
     		
@@ -185,6 +204,7 @@ select
     			<td><input type="text" name="const_project_name" id="id_txt_project_name" value="<?php echo smarty_function_get_conf_const(array('const'=>'const_project_name','returnVar'=>'tempVal'),$_smarty_tpl);?>
 <?php echo $_smarty_tpl->getVariable('tempVal')->value;?>
 "></td>
+    			<td width="30%" class="grayVal">My Project</td>
     		</tr>
     	</table>
     </td>
