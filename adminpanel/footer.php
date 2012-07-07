@@ -22,7 +22,7 @@
   </tr>
   
 </table>
-	<script type="text/javascript" src="<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>js/footerScript.js"> </script>
-	<script type="text/javascript" src="<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>js/formValidation.js"></script>
+	<script type="text/javascript" src="<?php echo constant("CONST_SITE_ADDRESS");?>js/footerScript.js"> </script>
+	<script type="text/javascript" src="<?php echo constant("CONST_SITE_ADDRESS");?>js/formValidation.js"></script>
 </body>
 </html>

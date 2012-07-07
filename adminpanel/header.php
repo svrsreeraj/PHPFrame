@@ -25,10 +25,10 @@ $usertype	=	$userObj->getAllUsertypes($sql)	;
 <title><?php echo _HEAD_TITLE;?></title>
 <link href="<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>style.css" rel="stylesheet" type="text/css" />
 <link rel="SHORTCUT ICON" href="<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>images/favicon.ico">
-<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>js/jquery-1.4.3.min.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>js/jquery_facebook.alert.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>js/tooltip.js"></script>
-<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADMIN_ADDRESS");?>js/jquery.tooltip/tooltip.jquery.js"></script>
+<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADDRESS");?>js/jquery-1.4.3.min.js"></script>
+<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADDRESS");?>js/jquery_facebook.alert.js"></script>
+<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADDRESS");?>js/tooltip.js"></script>
+<script type="text/javascript" language="javascript" src="<?php echo constant("CONST_SITE_ADDRESS");?>js/jquery.tooltip/tooltip.jquery.js"></script>
 
 
 

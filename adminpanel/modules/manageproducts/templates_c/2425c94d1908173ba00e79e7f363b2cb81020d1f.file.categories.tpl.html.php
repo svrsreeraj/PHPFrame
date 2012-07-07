@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-12-20 17:38:40
+<?php /* Smarty version Smarty-3.0.7, created on 2012-07-07 16:27:32
          compiled from "./templates/categories.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:13324889714ef07ac8620a62-51602697%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:15610793584ff8161c1850a7-30208295%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2425c94d1908173ba00e79e7f363b2cb81020d1f' => 
     array (
       0 => './templates/categories.tpl.html',
-      1 => 1324382917,
+      1 => 1341657118,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13324889714ef07ac8620a62-51602697',
+  'nocache_hash' => '15610793584ff8161c1850a7-30208295',
   'function' => 
   array (
   ),
@@ -20,11 +20,11 @@ $_smarty_tpl->decodeProperties(array (
 <?php echo smarty_function_call_module_header(array('title'=>"Manage Category"),$_smarty_tpl);?>
 
 
-<link type="text/css" href="js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
-<script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
-<script type="text/javascript" src="js/ui/ui/jquery.ui.widget.js"></script>
-<script type="text/javascript" src="js/highslide/highslide.js"></script>
-<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
+<link type="text/css" href="{$smarty.const.CONST_SITE_ADDRESS}js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="{$smarty.const.CONST_SITE_ADDRESS}js/ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="{$smarty.const.CONST_SITE_ADDRESS}js/ui/ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="{$smarty.const.CONST_SITE_ADDRESS}js/highslide/highslide.js"></script>
+<link rel="stylesheet" type="text/css" href="{$smarty.const.CONST_SITE_ADDRESS}js/highslide/highslide.css" />
 
 <script type="text/javascript">
 function deleteConfrm(id)

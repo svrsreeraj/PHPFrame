@@ -13,8 +13,8 @@ lang : {
 	loadingTitle : 'Click to cancel',
 	focusTitle : 'Click to bring to front',
 	fullExpandTitle : 'Expand to actual size (f)',
-	creditsText : '<i>Voteondeals.com</i>',
-	creditsTitle : 'Go to the Vote on Deals homepage',
+	creditsText : '<i></i>',
+	creditsTitle : '',
 	restoreTitle : 'Click to close image, click and drag to move. Use arrow keys for next and previous.'
 },
 // See http://highslide.com/ref for examples of settings  

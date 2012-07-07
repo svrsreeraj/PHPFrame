@@ -21,10 +21,8 @@ td.rgtalign {
 /* inputs */
 input[type="text"], input[type="password"], select {
 	width:155px;
-	background:#e7e7e7;
-	border-color:#818181;
-	border-width:1px 0 0 1px;
-	border-style:solid none none solid;
+	background: none repeat scroll 0 0 #FFFFFF;
+	border:1px solid #dad7d7;
 	height:22px;
 	font:12px/22px Arial, Helvetica, sans-serif; color:#444444;
 }
@@ -72,7 +70,7 @@ img {
 }
 .head {
 	text-align:right;
-	font:bold 18px Arial, Helvetica, sans-serif; color:#b46704;
+	font:bold 18px Arial, Helvetica, sans-serif; color:#009cff;
 	text-shadow:1px 1px #ffffff;
 }
 .black {
@@ -88,7 +86,7 @@ img {
 	text-align: left;
 }
 .letnav:hover {
-	color: #b46704;
+	color: #009cff;
 	text-align: left;
 }
 .letnavCurrent:visited {
@@ -221,12 +219,13 @@ img {
   }
 
 /****************************Admin side styles*******************************/
-.table_style{
+.table_style,.formTable{
 	border-radius:8px;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
 	background:#ffffff;
 	padding:8px;
+	margin-bottom:10px;
 }
 	
 .pageHead{
@@ -235,7 +234,7 @@ img {
     margin:5px 0;
     overflow: hidden;
     padding-left: 9px;
-	display:block;
+	/*display:block;*/
 }
 .pageHead h3 {
 	background: url("images/main_block.png") no-repeat scroll 100% 0 transparent;
@@ -245,7 +244,7 @@ img {
 .pageHead strong {
 	background: url("images/main_block.png") no-repeat scroll 100% 0 transparent;
     padding-right: 9px;
-	font:bold 12px/31px Arial, Helvetica, sans-serif; color:#444444;
+	font:bold 12px/31px Arial, Helvetica, sans-serif; color:#009cff;
 	display:block;
 }
 
@@ -268,16 +267,48 @@ img {
 }
 .butsubmit
 	{
-	// background:url(images/button.png) no-repeat;
-	background-color:#E7E7E7;
-	width:70px;
+	background:url(images/button.png) no-repeat;
+	width:86px;
 	height:23px;
-	color:#000000;
+	color:#ffffff;
 	cursor:pointer;
 	border:0;
 	padding:0;
 	margin:0;
 	font:bold 11px/23px Arial, Helvetica, sans-serif;
+}
+.view_btn
+	{
+	background:url(images/button.png) no-repeat -1px -1px;
+	padding:0 6px;
+	height:18px;
+	color:#ffffff;
+	cursor:pointer;
+	border:1px solid #005dab;
+	margin:0;
+	font:bold 11px/18px Arial, Helvetica, sans-serif;
+}
+.butdefault
+	{
+	color: #1c4257;
+	background: #a3cde3;
+	background: -webkit-gradient(linear, left top, left bottom, from(#b9e0f5), to(#85b2cb));
+	background: -moz-linear-gradient(top, #b9e0f5, #85b2cb);
+	border: 1px solid #759bb1;
+	border-top-color: #8ab0c6;
+	border-bottom-color: #587e93;
+	font-size: 14px;
+	font-weight: bold;
+	font-family:Arial;
+	color: #4f4f4f;
+	letter-spacing: -1px;
+	 border-radius: 0.214em 0.214em 0.214em 0.214em;
+	box-shadow: inset 0 1px 0 #fff;
+    		-webkit-box-shadow: inset 0 1px 0 #fff;
+    		-moz-box-shadow: inset 0 1px 0 #fff;
+    		-o-box-shadow: inset 0 1px 0 #fff;
+			display:inline;
+			padding:7px 10px;
 }
 .contentArea	{
 	text-align:center;
@@ -306,23 +337,23 @@ ul#paging_ul li a:hover{
 	color:#ffffff;
 }
 .pagingLink{
-	border:1px solid #8ADEF8;
+	border:1px solid #399eea;
 	background:#ffffff;
 }
 
 .pagingLink a{
-	background:#D9F2FF;
+	background:#b1dcfe;
 	padding:0 3px!important;
 	text-decoration:none;
 }
 .pagingLink a:hover{
-	background-color:#8ADEF8;
+	background-color:#0065b1;
 	padding:0 3px!important;
 	color:#fff;
 }
 .pagingStat,.pagingStat a{
-	border:1px solid #8ac7f8;
-	background:#8ADEF8;color:#ffffff!important;
+	border:1px solid #36a9f2;
+	background:#3ba7e0;color:#ffffff!important;
 	padding:0 3px	!important;
 }
 .dateTextBox	{
@@ -340,12 +371,16 @@ optgroup	{
 .boxList div { 
 	list-style-type: none; 
 	margin: 5px; 
-	padding: 0; 
-	 
+	padding: 0; 	 
+}
+.boxList > div { 
+	list-style-type: none; 
+	margin:10px;
+	float:left;
+	width:47%;
 }
 .val_error_alert	{
 		color: #FF0000;
-		
 	}
 
 /*Search Table*/
@@ -405,8 +440,9 @@ table.listTable td	{
 /*list table pop up*/
 
 table.listTablePopUp	{
-	background-color:#D9F2FF;
-	border: solid 1px #000000;
+	/*background-color:#D9F2FF;
+	border: solid 1px #000000;*/
+	width:100% !important;
 }
 table.listTablePopUp tr	{
 	vertical-align:middle;
@@ -422,13 +458,16 @@ table.listTablePopUp th	{
 table.listTablePopUp th a	{
 	text-decoration: none;
 	color: #000000;
-
 }
-
 table.listTablePopUp td	{
-	text-align:center;
 	vertical-align:middle;
-	padding:5px 5px 5px 5px;
+	text-align:left;
+	padding:8px 6px;
+	background:#e8e8e8;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	border:1px solid #ffffff;
 }
 
 .listTableChangeColor	{
@@ -465,19 +504,18 @@ table.listTable2 td	{
 /*Form Table*/
 table.formTable	{
 	background-color:#FFFFFF;
-	
 }
 table.formTable tr	{
 	vertical-align:middle;
 }
 table.formTable th	{
-	background-color: #884a00 !important;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#9f5600), to(#884a00)) !important;
-  background-image: -webkit-linear-gradient(top, #9f5600, #884a00) !important;
-  background-image:    -moz-linear-gradient(top, #9f5600, #884a00) !important;
-  background-image:     -ms-linear-gradient(top, #9f5600, #884a00) !important;
-  background-image:      -o-linear-gradient(top, #9f5600, #884a00) !important;
-  background-image:         linear-gradient(top, #9f5600, #884a00) !important;
+	background-color: #0081ff !important;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#747474), to(#3a3a3a)) !important;
+  background-image: -webkit-linear-gradient(top, #747474, #3a3a3a) !important;
+  background-image:    -moz-linear-gradient(top, #747474, #3a3a3a) !important;
+  background-image:     -ms-linear-gradient(top, #747474, #3a3a3a) !important;
+  background-image:      -o-linear-gradient(top, #747474, #3a3a3a) !important;
+  background-image:         linear-gradient(top, #747474, #3a3a3a) !important;
   -moz-border-radius:3px !important;
 	-webkit-border-radius:3px !important;
 	font:bold 12px/26px Arial, Helvetica, sans-serif; color:#ffffff;
@@ -551,7 +589,7 @@ a.view-more:hover {
 
 /**  **/
 .header {
-	background:url(images/header_bg.jpg) repeat-x #fdfdfd;
+	background:#f6f6f6;
 	position:relative;
 	height:120px;
 }
@@ -566,7 +604,7 @@ a.view-more:hover {
 	display:block;
 	width:609px;
 	height:120px;
-	color:#ecedea;
+	color:#f6f6f6;
 	text-indent:-9999px;
 	background:url(images/header_image.jpg) no-repeat;
 }
@@ -588,13 +626,13 @@ a.view-more:hover {
 	height:31px;
 }
 table.listTable tr:first-child {
-  background-color: #884a00 !important;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#9f5600), to(#884a00)) !important;
-  background-image: -webkit-linear-gradient(top, #9f5600, #884a00) !important;
-  background-image:    -moz-linear-gradient(top, #9f5600, #884a00) !important;
-  background-image:     -ms-linear-gradient(top, #9f5600, #884a00) !important;
-  background-image:      -o-linear-gradient(top, #9f5600, #884a00) !important;
-  background-image:         linear-gradient(top, #9f5600, #884a00) !important;
+  background-color: #0081ff !important;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#00afff), to(#0081ff)) !important;
+  background-image: -webkit-linear-gradient(top, #00afff, #0081ff) !important;
+  background-image:    -moz-linear-gradient(top, #00afff, #0081ff) !important;
+  background-image:     -ms-linear-gradient(top, #00afff, #0081ff) !important;
+  background-image:      -o-linear-gradient(top, #00afff, #0081ff) !important;
+  background-image:         linear-gradient(top, #00afff, #0081ff) !important;
   -moz-border-radius:8px !important;
 	-webkit-border-radius:8px !important;
 }
@@ -628,3 +666,32 @@ table.listTable tr:first-child {
 	font:11px Arial, Helvetica, sans-serif;
 }
 /*   */
+table.imgtable td div {
+	position:relative;
+}
+table.imgtable td div a.remove {
+	position:absolute;
+	left:2px;
+	bottom:2px;
+	background:url(images/delte.png) no-repeat;
+	width:16px;
+	height:12px;
+	display:none;
+	text-indent:-9999px;
+}
+table.imgtable td div:hover a.remove {
+	display:block;
+}
+
+/* Tool tip class */
+.toolTipClass
+	{
+		display:none;
+		position:absolute;
+		margin-left:25px;
+		background-color:black;
+		padding:6px;
+		color:white;
+		text-align:left
+	}
+

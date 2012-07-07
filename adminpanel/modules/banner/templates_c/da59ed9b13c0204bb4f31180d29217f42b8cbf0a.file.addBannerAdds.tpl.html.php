@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-12-17 11:13:06
+<?php /* Smarty version Smarty-3.0.7, created on 2012-07-07 16:27:23
          compiled from "./templates/addBannerAdds.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:17125526134eec2beac33ac8-23424364%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:20056522354ff81613d776a5-89757106%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     'da59ed9b13c0204bb4f31180d29217f42b8cbf0a' => 
     array (
       0 => './templates/addBannerAdds.tpl.html',
-      1 => 1324100584,
+      1 => 1341654755,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '17125526134eec2beac33ac8-23424364',
+  'nocache_hash' => '20056522354ff81613d776a5-89757106',
   'function' => 
   array (
   ),
@@ -73,8 +73,8 @@ $(document).ready(function(){
 });
 </script>
 
-<script type="text/javascript" src="js/highslide/highslide.js"></script>
-<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
+<script type="text/javascript" src="{$smarty.const.CONST_SITE_ADDRESS}js/highslide/highslide.js"></script>
+<link rel="stylesheet" type="text/css" href="{$smarty.const.CONST_SITE_ADDRESS}js/highslide/highslide.css" />
 
 <?php $_smarty_tpl->tpl_vars["actionReturn"] = new Smarty_variable($_smarty_tpl->getVariable('obj')->value->actionReturn, null, null);?>
 <form action="" name="fromName" method="post" enctype="multipart/form-data">
@@ -401,3 +401,4 @@ if ($_smarty_tpl->_count($_from) > 0){
 </table>
 </form>
 <?php echo smarty_function_call_module_footer(array(),$_smarty_tpl);?>
+

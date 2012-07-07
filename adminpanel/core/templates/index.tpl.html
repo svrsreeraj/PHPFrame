@@ -23,17 +23,17 @@
               
 			  
 			  <tr>
-                <td width="48%"><img src="{$smarty.const.CONST_SITE_ADMIN_ADDRESS}images/admin_12.gif" width="237" height="262" /></td>
+                <td width="48%"></td>
                 <td width="52%" align="center" valign="middle" bgcolor="#E1F7FD">
 				
 				<table width="90%" border="0" cellspacing="0" cellpadding="0">
 					{if $obj->getPageError()}
 					<tr>
-					<td class="errorMessage" colspan="2">{$obj->popPageError()}</td>
+					<td class="" colspan="2">{$obj->popPageError()}</td>
 					</tr>
 					{else}
 					<tr>
-						<td class="errorMessage" colspan="2">{$TPL_MSG}</td>
+						<td class="" colspan="2">&nbsp;{$TPL_MSG}</td>
 					</tr>
 					
 					{/if}
@@ -104,9 +104,6 @@
 </form>
 <script language="javascript" type="text/javascript">
 document.formName.username.focus();
-</script> 
-<script language="javascript" type="text/javascript">
-document.formName.emailid.focus();
 </script> 
 </body>
 </html>

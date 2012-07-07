@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2012-03-13 05:05:19
+<?php /* Smarty version Smarty-3.0.7, created on 2012-07-07 16:20:52
          compiled from "./templates/index.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:13191791854f5e8837b14cf4-27113438%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:21450544454ff8148cdbc530-99566585%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '01ecfae32e301db98e9a68ae3b8db3604ec329d7' => 
     array (
       0 => './templates/index.tpl.html',
-      1 => 1318252694,
+      1 => 1341658251,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '13191791854f5e8837b14cf4-27113438',
+  'nocache_hash' => '21450544454ff8148cdbc530-99566585',
   'function' => 
   array (
   ),
@@ -44,19 +44,18 @@ style.css" rel="stylesheet" type="text/css" />
               
 			  
 			  <tr>
-                <td width="48%"><img src="<?php echo @CONST_SITE_ADMIN_ADDRESS;?>
-images/admin_12.gif" width="237" height="262" /></td>
+                <td width="48%"></td>
                 <td width="52%" align="center" valign="middle" bgcolor="#E1F7FD">
 				
 				<table width="90%" border="0" cellspacing="0" cellpadding="0">
 					<?php if ($_smarty_tpl->getVariable('obj')->value->getPageError()){?>
 					<tr>
-					<td class="errorMessage" colspan="2"><?php echo $_smarty_tpl->getVariable('obj')->value->popPageError();?>
+					<td class="" colspan="2"><?php echo $_smarty_tpl->getVariable('obj')->value->popPageError();?>
 </td>
 					</tr>
 					<?php }else{ ?>
 					<tr>
-						<td class="errorMessage" colspan="2"><?php echo $_smarty_tpl->getVariable('TPL_MSG')->value;?>
+						<td class="" colspan="2">&nbsp;<?php echo $_smarty_tpl->getVariable('TPL_MSG')->value;?>
 </td>
 					</tr>
 					
@@ -130,9 +129,6 @@ index.php?actionvar=forgotPassword">Forgot Password ?</a>
 </form>
 <script language="javascript" type="text/javascript">
 document.formName.username.focus();
-</script> 
-<script language="javascript" type="text/javascript">
-document.formName.emailid.focus();
 </script> 
 </body>
 </html>
