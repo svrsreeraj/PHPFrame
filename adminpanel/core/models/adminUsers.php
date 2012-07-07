@@ -118,8 +118,8 @@ class adminUsersModel extends modelclass
 								$from								=	GLB_SITE_EMAIL;
 								$subject							=	"Voteondeals.com - Admin User Activation Mail";
 								
-								$cmsObj								=	new cms();
-								$send								=	$cmsObj->sendMailCMS('11',$to,$from,$subject,$custArr,5); 
+								//$cmsObj								=	new cms();
+								//$send								=	$cmsObj->sendMailCMS('11',$to,$from,$subject,$custArr,5); 
 								
 								if($send)
 									{

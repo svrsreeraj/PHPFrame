@@ -73,7 +73,7 @@ class modelclass extends siteclass
 		public function getClassNameByPageName($page)
 			{
 				$fileArray	=	pathinfo($page);
-				return $className	=	$fileArray["filename"];	
+				return $className	=	$fileArray["filename"]."Model";	
 			}
 		//loading data
 		public function loadData($methodName,$page="")
@@ -99,7 +99,7 @@ class modelclass extends siteclass
 				$calledFunction		=	$traceArray["1"]["function"];
 				if(trim($page))
 					{
-						$calledFunction		=	$this->getClassNameByPageName($page) . ucwords($methodName);
+						$calledFunction		=	ucwords($methodName);
 						$tempObj			=	loadModelClass(true,$page);
 						$addObject			=	&$tempObj;	
 					}
@@ -174,7 +174,7 @@ class modelclass extends siteclass
 				$calledFunction		=	$traceArray["1"]["function"];
 				if(trim($page))
 					{
-						$calledFunction		=	$this->getClassNameByPageName($page).ucwords($methodName);
+						$calledFunction		=	ucwords($methodName);
 						$tempObj			=	loadModelClass(true,$page);
 						$clearObject		=	&$tempObj;	
 					}

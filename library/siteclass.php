@@ -27,8 +27,10 @@ class siteclass extends sdbclass
 		public static function getPageName()
 			{
 				$scriptName		=	$_SERVER["SCRIPT_FILENAME"];
+				$scriptArray	=	explode("/",$scriptName);
+				$scriptName		=	end($scriptArray);
 				$scriptArray	=	explode(DIRECTORY_SEPARATOR,$scriptName);
-				return end($scriptArray);
+				return end($scriptArray);		
 			}
 	   //to get trhe current page's query string
 		public static function getPageQueryString()

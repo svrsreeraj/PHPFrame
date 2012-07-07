@@ -49,6 +49,7 @@ class moduleclass extends siteclass
 		public function getModulesList()
 			{
 				$dirArray	=	array();
+				$excpArr	=	array(".svn");
 				$path		=	constant("CONST_SITE_ABSOLUTE_PATH").$this->moduleLocation.DIRECTORY_SEPARATOR;
 				if ($handle = opendir($path)) 
 					{
@@ -56,7 +57,10 @@ class moduleclass extends siteclass
 						    {
 						    	if(($file != ".")	&&	($file != ".."))	
 							    	{
-							    		if(is_dir($path.DIRECTORY_SEPARATOR.$file))	$dirArray[]	=	$file;
+							    		if(is_dir($path.DIRECTORY_SEPARATOR.$file))	
+											{
+												if(!in_array($file,$excpArr))	$dirArray[]	=	$file;
+											}
 							    	}
 						    }
 					    closedir($handle);
@@ -93,8 +97,6 @@ class moduleclass extends siteclass
 			{
 				$newArray	=	array();
 				$modules	=	$this->getModulesList();
-				
-				
 				foreach ($modules	as $key=>$val)
 					{
 						$newArray[]	=	array("module"=>$val,"status"=>$this->getModuleStatus($val));
@@ -103,7 +105,6 @@ class moduleclass extends siteclass
 			}
 		public function installModule($module)
 			{
-				
 				$this->errorArray	=	array();
 				if(!$confFile = $this->getModulePathByName($module))	$this->errorArray[]	=	"Module $module Configuration file not found";
 				require $confFile;
