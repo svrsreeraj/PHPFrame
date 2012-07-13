@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_DEFAULT_TABLE_DEFAULT")."` 
 `value` longtext NOT NULL,
 `caption` varchar(300) NOT NULL,
 PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='This is for content managing' AUTO_INCREMENT=1 ;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This is for content managing' AUTO_INCREMENT=1 ;";
 				
 
 
@@ -57,6 +57,6 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_DEFAULT_TABLE_GROUP")."` (
 `preference` bigint(11) NOT NULL default '1',
 `status` tinyint(1) NOT NULL default '1' COMMENT '0=inactive 1=active',
 PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8  COMMENT='Master table- DEFAULT Section' AUTO_INCREMENT=1 ;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='Master table- DEFAULT Section' AUTO_INCREMENT=1 ;";
 /***************************SQL Commands ends*************************************************/
 ?>

@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_BANNER_TABLE_BANNER")."` (
 `date_added` datetime NOT NULL,
 `status` tinyint(4) NOT NULL,
 PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='This is for content managing' AUTO_INCREMENT=1 ;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This is for content managing' AUTO_INCREMENT=1 ;";
 
 $queries[constant("CONST_MODULE_BANNER_TABLE_GROUP")]	=	"
 CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_BANNER_TABLE_GROUP")."` (
@@ -65,6 +65,6 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_BANNER_TABLE_GROUP")."` (
 `preference` bigint(11) NOT NULL default '1',
 `status` tinyint(1) NOT NULL default '1' COMMENT '0=inactive 1=active',
 PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8  COMMENT='Master table- DEFAULT Section' AUTO_INCREMENT=1 ;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='Master table- DEFAULT Section' AUTO_INCREMENT=1 ;";
 /***************************SQL Commands ends*************************************************/
 ?>

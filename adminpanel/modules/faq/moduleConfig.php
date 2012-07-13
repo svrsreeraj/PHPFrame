@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_FAQ_TABLE_FAQ")."` (
 `preference` bigint(11) NOT NULL,
 `status` tinyint(1) NOT NULL default '1' COMMENT '0=inactive,1=active',
 PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='This is for content managing' AUTO_INCREMENT=1 ;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This is for content managing' AUTO_INCREMENT=1 ;";
 				
 
 
@@ -60,6 +60,6 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_FAQ_TABLE_SECTION")."` (
 `preference` bigint(11) NOT NULL default '1',
 `status` tinyint(1) NOT NULL default '1' COMMENT '0=inactive 1=active',
 PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8  COMMENT='Master table- FAQ Section' AUTO_INCREMENT=1 ;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='Master table- FAQ Section' AUTO_INCREMENT=1 ;";
 /***************************SQL Commands ends*************************************************/
 ?>

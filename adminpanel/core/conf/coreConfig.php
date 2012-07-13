@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS")."
 `preference` bigint(11) NOT NULL,
 `status` tinyint(1) NOT NULL default '1' COMMENT '0=inactive 1=active',
 PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Admin functionalities';";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Admin functionalities';";
 
 $queries["tables"][constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS")]	=	"
 CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS")."` (
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS")."` 
   `status` tinyint(1) NOT NULL default '1',
   `preference` bigint(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8  COMMENT='listing of leftmenu headings';";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='listing of leftmenu headings';";
 
 $queries["tables"][constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES")]	=	"
 CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES")."` (
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES")."` 
   `penable` tinyint(1) NOT NULL default '0',
   `preference` bigint(11) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='listng of submenus under leftmenu headings';";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='listng of submenus under leftmenu headings';";
 
 $queries["tables"][constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS")]	=	"
 CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS")."` (
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTION
   `pageid` bigint(11) NOT NULL COMMENT 'refers  ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES").".id',
   `actionid` bigint(11) NOT NULL COMMENT 'refers  ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS").".id',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Admin permission pages actions';";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Admin permission pages actions';";
 
 $queries["tables"][constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION")]	=	"
 CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION")."` (
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION"
   `usertypeid` bigint(11) NOT NULL COMMENT 'refers ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERTYPE").".id',
   `pactionid` bigint(11) NOT NULL COMMENT 'refers  ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS").".id',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Admin permission pages';";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Admin permission pages';";
 
 $queries["tables"][constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")]	=	"
 CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")."` (
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")."` 
   `date_added` datetime NOT NULL,
   `status` tinyint(2) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8  COMMENT='Admin side users';";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8  COMMENT='Admin side users';";
 
 
 $queries["tables"][constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERTYPE")]	=	"
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERTYPE").
   `preference` bigint(11) NOT NULL default '1',
   `status` tinyint(1) NOT NULL default '1' COMMENT '1=active,0=inactive',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Admin side user types';";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Admin side user types';";
 
 
 /***************************SQL Commands ends*************************************************/

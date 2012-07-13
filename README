@@ -7,20 +7,4 @@ PHP Version - 5.3+
 
 
 
-//Constants
-
-WHERE_AM_I - to define where the program runs. possible values are local and online
-
-joined all ini.php into a single file
-
-Developer Safe Mode - http://192.168.0.8/PHPFrame/developer/?safemode=true
-
-Model class will be - "class configModel extends modelclass"
-
-execute action function argument changed to array ex: $this->executeAction(array("action"=>"Signinform","navigate"=>true));
-
-siteclass::addHook(array("fromClass"=>"configModel","fromFunction"=>"GetFooter","toClass"=>"siteclass","toFunction"=>"testHook"));
-
-model class methods returns should be "return $this->returnVal($var);"
-
-sitclass.php sliced into many classes - removed unwanted classes
+https://docs.google.com/document/d/1DUEpYSimqnR72AFHmjLQ_ar9eqLLzTi5tuLehE1DALg/edit

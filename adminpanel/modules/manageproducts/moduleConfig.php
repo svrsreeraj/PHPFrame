@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_CATEGORY_TABLE_CATEGORY")."
 `date_added` datetime NOT NULL,
 `status` tinyint(1) NOT NULL default '1' COMMENT '0=inactive 1=active',
 PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='This is for content managing' AUTO_INCREMENT=1 ;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This is for content managing' AUTO_INCREMENT=1 ;";
 
 $queries[constant("CONST_MODULE_PRODUCT_TABLE_PRODUCT")]	=	"
 CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_PRODUCT_TABLE_PRODUCT")."` (
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_MODULE_PRODUCT_TABLE_PRODUCT")."` 
 `date_added` datetime NOT NULL,
 `status` tinyint(1) NOT NULL default '1' COMMENT '0=inactive 1=active',
 PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='This is for content managing' AUTO_INCREMENT=1 ;";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='This is for content managing' AUTO_INCREMENT=1 ;";
 
 /***************************SQL Commands ends*************************************************/
 ?>
