@@ -13,7 +13,6 @@ class defaultModule extends siteclass
 				if($id)	$this->cmsId	=	$id;
 			}
 			
-
 		public function getDefaultGroupData($args="1")
 			{
 				$sql					=	"SELECT * FROM ".constant("CONST_MODULE_DEFAULT_TABLE_GROUP")." WHERE $args";			
