@@ -356,5 +356,24 @@ class sdbclass
 					}
 				
 			}
+		function findDbRandomCode($table,$field,$length=10)
+			{
+				$chars = "abcdefghijkmnpqrstuvwxyz23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+				do
+					{
+						$newRand	=	"";
+						srand((double)microtime()*1000000);
+						$i = 1;
+						while ($i <= $length)
+							{
+								$num = rand() % 33;
+								$tmp = substr($chars, $num, 1);
+								$newRand = $newRand . $tmp;
+								$i++;
+							}	
+					}
+				while($this->getdbcount_sql("select * from `$table` where `$field`='".$newRand."'"));
+				return $newRand;
+			}
 	}
 ?>
