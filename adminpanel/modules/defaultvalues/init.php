@@ -16,4 +16,6 @@ define("CONST_MODULE_DEFAULT_TABLE_GROUP",constant("CONST_DB_TABLE_PREFIX")."mod
 
 //file Includes
 require_once $currentModulePath.'classes/defaultModule.php';
+$defaultsObj	=	new defaultModule();
+$defaultsObj->defineConstants();
 ?>
