@@ -93,26 +93,14 @@ class cmsModule extends siteclass
 				$data					=	$this->getdbcontents_cond(constant("CONST_MODULE_CMS_TABLE_CMS"),"id=$id");
 				return $data; 	
 			}
-		public function sendMailCMS($id,$to,$from,$subject,$vars,$priority=0)
+		public function sendMailCMS($id,$to,$from,$vars,$subject="")
 			{
 				$cmsArr		=	end($this->getCMS($id));//fetching email template from CMS
 				$message	=	$cmsArr["description"];
+				if(!$subject)	$subject	=	$cmsArr["title"];
 				foreach($vars	as	$key=>$val)	$message	=	str_replace($key,$val,$message);
-				return $this->mailContentToDb($to,$from,$subject,$message,$priority);
-			}
-		public function mailContentToDb($to,$from,$subject,$message,$priority=0)
-			{
-				$dataArray	=	array(
-									"to"=>$to,
-									"from"=>$from,
-									"subject"=>$subject,
-									"message"=>$message,
-									"priority"=>$priority,
-									"date_added"=>"escape now() escape"
-								);
-				$this->db_insert('php_email_pending',$dataArray);
-				return true;
-				
+				foreach($vars	as	$key=>$val)	$subject	=	str_replace($key,$val,$subject);
+				return $this->sendmail($to,$from,$subject,$message);
 			}
 	}
 ?>
