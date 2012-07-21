@@ -112,7 +112,14 @@ class coreAdminUser extends siteclass
 				$this->dbDelete_cond(constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS"),$cond);
 				return true;
 			}
-		
+		//**fetching all DB Rules
+		public function getAllDbRules($args="1")
+			{
+				$sql			=	"SELECT * FROM ".constant("CONST_ADMIN_CORE_TABLE_DB_RULES")." WHERE $args";			
+				$data			=	$this->getdbcontents_sql($sql);	
+				return $data;
+			}
+		//***/
 		//*************************************LEFT MENU & PERMISSION********************************BY ANITH********//
 			
 		public function getAllUsertypes($args="")

@@ -1,0 +1,170 @@
+{call_header title="Developer Basic Configurations"}
+{literal}
+<style type="text/css" media="screen">
+input[type=text]
+	{
+		width:150px;
+	}
+select
+	{
+		width:125px;
+	}
+</style type="text/javascript">
+{/literal}
+{assign var="actionReturn" value=$obj->actionReturn}
+
+<form action="" name="formName" method="post" enctype="multipart/form-data">
+<table width="100%" border="0" cellspacing="3" cellpadding="3">
+	<tr>
+		<td class="errorMessage">{$obj->popPageError()}</td>
+	</tr>
+  <tr>
+  	<td align="center">
+    	<table width="100%" border="0" cellspacing="4" cellpadding="4">
+    		<tr><td colspan="5"><strong>Define your Database Rules</strong></td></tr>
+    		<tr>
+    			<td>Table</td>
+    			<td>
+    			<div id="id_table">
+					<select id="id_sel_tables" >
+						
+					</select>
+    			</div>
+    			<td>
+    			
+    			</td>
+    			<td>Field</td>
+    			<td>
+    			<div id="id_fields">
+    			<select id="id_sel_fields" >
+    			
+    			</select>
+    			</div>
+    			</td>
+    			
+    			<td>
+    			Method
+    			</td>
+    			
+    			<td>
+    			<div id="id_methods">
+					<select id="id_sel_methods" >
+						{foreach from=$actionReturn.methods item=data name=i}
+							<option value="{$data}">{$data}</option>
+						{/foreach}
+					</select>
+    			</div>
+    			</td>
+    			
+    			<td>
+    			Message
+    			</td>
+    			
+    			<td>
+					<input type="text" value="" id="id_txt_message" name="message">
+    			</td>
+    			
+    			<td>
+    			Length from
+    			</td>
+    			
+    			<td>
+					<input type="text" maxlength=4 style="width:30px" value="" id="id_txt_length_from" name="min_length">
+    			</td>
+    			
+    			<td>
+    			to
+    			</td>
+    			
+    			<td>
+					<input type="text" maxlength=4 style="width:30px" value="" id="id_txt_length_to" name="max_length">
+    			</td>
+    			
+    			<td align="center"><input type="submit" value="Submit" class='butsubmit' name="actionvar"></td>
+				
+    		</tr>
+    	</table>
+    </td>
+  </tr>
+  
+  
+  
+</table>
+</form>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="listTable">
+	<tr align="center" valign="middle">							
+		<th>Table</th>
+		<th>Field</th>
+		<th>Method</th>
+		<th>Minimum length</th>
+		<th>Maximum length</th>
+		<th>Message</th>
+		<th>Options</th>
+	</tr>
+	{foreach from=$actionReturn.datas item=data name=i}
+	<tr>
+		<td>{$data.table_name}</td>
+		<td>{$data.field_name}</td>
+		<td>{$data.method_name}</td>
+		<td>{$data.min_length}</td>
+		<td>{$data.max_length}</td>
+		<td>{$data.message}</td>
+		<td>
+		<a href="dbRules.php?actionvar=DeleteRule&id={$data.id}" class="Second_link">
+			<img src="images/delete.gif" border="0" title="Click here to delete">
+		</a>
+		</td>
+	</tr>
+	
+	{/foreach}
+</table>
+		
+<script>
+var jObj 		= jQuery.parseJSON('{$actionReturn.tables}');
+var jObjMethods	= jQuery.parseJSON('{$actionReturn.methods}');
+{literal}
+//table dropdown
+function createTables()
+	{
+		$("#id_sel_tables").remove();
+		var selTable = $('<select id="id_sel_tables" name="table_name" onchange="createFields(this.value)" />');
+		$('<option />', {value: "", text: "Select"}).appendTo(selTable);
+		for(var val in jObj) 
+			{
+				$('<option />', {value: val, text: val}).appendTo(selTable);
+			}
+		selTable.appendTo($("#id_table")); // or wherever it should be
+	}
+function createFields(table)
+	{
+		$("#id_sel_fields").remove();
+		var selTable 	=	$('<select name="field_name" id="id_sel_fields" />');
+		if(table)
+			{
+				
+				var fieldObj	=	jObj[table];
+				for(var i=0;i<fieldObj.length;i++) 
+					{
+						$('<option />', {value: fieldObj[i], text: fieldObj[i]}).appendTo(selTable);
+					}
+			}
+		selTable.appendTo($("#id_fields")); // or wherever it should bealert(jObj[table]);
+	}
+function createMethods()
+	{
+		$("#id_sel_methods").remove();
+		var fieldObj	=	jObjMethods;
+		var selTable 	=	$('<select name="method_name" id="id_sel_methods" />');
+		for(var i=0;i<fieldObj.length;i++) 
+			{
+				$('<option />', {value: fieldObj[i], text: fieldObj[i]}).appendTo(selTable);
+			}
+		selTable.appendTo($("#id_methods")); // or wherever it should bealert(jObj[table]);
+	}
+
+createTables();
+createMethods();
+{/literal}
+</script>
+{call_footer}

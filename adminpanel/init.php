@@ -9,6 +9,4 @@ require_once	(CONST_SITE_ABSOLUTE_PATH.'adminpanel/core/conf/coreConfig.php');
 
 //include files
 require_once	(CONST_SITE_ABSOLUTE_PATH.'adminpanel/core/classes/coreAdminUser.php');
-
-
 ?>

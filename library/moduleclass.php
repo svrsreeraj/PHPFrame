@@ -7,13 +7,13 @@
 class moduleclass extends siteclass
 	{
 		//admin user built in module
-		public $tbl_admin_actions		=	"admin_actions";
-		public $tbl_admin_menus			=	"admin_menus";
-		public $tbl_admin_pages			=	"admin_pages";
-		public $tbl_admin_page_actions	=	"admin_page_actions";
-		public $tbl_admin_permission	=	"admin_permission";
-		public $tbl_admin_users			=	"admin_users";
-		public $tbl_admin_usertype		=	"admin_usertype";
+		public $tbl_admin_actions		=	"core_admin_actions";
+		public $tbl_admin_menus			=	"core_admin_menus";
+		public $tbl_admin_pages			=	"core_admin_pages";
+		public $tbl_admin_page_actions	=	"core_admin_page_actions";
+		public $tbl_admin_permission	=	"core_admin_permission";
+		public $tbl_admin_users			=	"core_admin_users";
+		public $tbl_admin_usertype		=	"core_admin_usertype";
 		
 		
 		public $user_type_id			=	1;

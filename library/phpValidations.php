@@ -67,7 +67,10 @@ class phpValidation
 						else					$this->setError($this->getErrorMessage(__FUNCTION__));
 						return false;
 					}
-				else			return true;
+				else
+					{
+						return $this->lengthCheck($str,$min,$max);	
+					}
 			}	
 	 	function lengthCheck($str,$min="0",$max="0")
 			{
@@ -295,7 +298,7 @@ class phpValidation
 							}
 						else return true;						
 					}	
-					//else return flase;			
+				else return flase;			
 			}
 		function numberCheck($str,$min="0",$max="0",$errMessage="")
 			{			

@@ -26,8 +26,6 @@ class configModel extends modelclass
 						copy($this->configPath, $this->bcpDirs."/config.inc.".strtotime("now").".php");
 					}
 				
-				siteclass::addHook(array("fromClass"=>"configModel","fromFunction"=>"GetFooter","toClass"=>"siteclass","toFunction"=>"testHook"));
-				
 				$data	=	$this->getData("post");
 				
 				$fp 	= 	fopen($this->configPath, 'w');

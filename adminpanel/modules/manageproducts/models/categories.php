@@ -191,5 +191,47 @@ class categoriesModel extends modelclass
 			{
 				$this->executeAction(array("action"=>"Listing","navigate"=>true));
 			}
-	
+			//ml
+		function get_category_combo($selected='',$sel_name='category_id',$params="")
+			{
+				$catArry			=	$this->fetchCategoryList();
+				//print_r($catArry);exit;
+				$stringval			=	" <select name='$sel_name' $params>
+                					  <option value=''>Select Category</option>";
+				foreach($catArry as $key=>$value)
+					{
+						if($selected == $catArry[$key]['id']) { $selstring	=	"selected='selected'";} else {$selstring	= "";}
+						$stringval	.= "<option value='".$catArry[$key]['id']."' ".$selstring.">".stripslashes($catArry[$key]['title'])."</option>";
+			  		}
+		  		$stringval.= "</select>";
+				return $stringval;
+			}
+		function fetchCategoryList($parentId = '0', $spacing = '', $exclude = '', $categoryListArray = '', $categoryActive= '')
+			{
+				if (!is_array($categoryListArray)) $categoryListArray = array();
+				if($categoryActive=='')
+					{
+							$categoryQuery  = "	select id, category, parent_id from
+										 		".constant("CONST_MODULE_CATEGORY_TABLE_CATEGORY")." where parent_id = '" . (int)$parentId . "'
+										 		order by category";
+				
+					}
+				else
+					{
+							$categoryQuery  = "	select id, category, parent_id from
+										 		".constant("CONST_MODULE_CATEGORY_TABLE_CATEGORY")." where parent_id = '" . (int)$parentId . "'
+										 		and status=1 order by category";
+					}
+				$categoryInfo     			= $this->getdbcontents_sql($categoryQuery);
+				$categoryInfoSize 			= sizeof($categoryInfo);
+				for($i=0;$i<$categoryInfoSize;$i++)
+				{
+				   $categoryListArray[] 	= array('id' => $categoryInfo[$i]['id'], 'title' => $spacing . $categoryInfo[$i]['category']);
+				   $categoryListArray 		= $this->fetchCategoryList($categoryInfo[$i]['id'], $spacing . '&nbsp;-&nbsp;-', $exclude, $categoryListArray,$categoryActive);
+				}
+				
+				return $categoryListArray;
+				
+			}
+			//ml
 	}

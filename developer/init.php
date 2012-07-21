@@ -5,8 +5,6 @@ Created On	:	25-10-2010
 Purpose		:	Initial functions
 ****************************************************************************************/
 ob_start();
-session_set_cookie_params(10*60*60);
-ini_set('session.gc_maxlifetime', '36000');
 session_start();
 ini_set("magic_quotes_gpc", "Off");
 error_reporting(1); //error handling

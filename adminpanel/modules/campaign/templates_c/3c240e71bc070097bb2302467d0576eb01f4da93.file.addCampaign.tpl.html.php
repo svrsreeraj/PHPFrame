@@ -1,80 +1,76 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2012-07-21 17:07:57
-         compiled from "./templates/addBannerAdds.tpl.html" */ ?>
-<?php /*%%SmartyHeaderCode:20056522354ff81613d776a5-89757106%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /* Smarty version Smarty-3.0.7, created on 2012-07-21 16:52:43
+         compiled from "./templates/addCampaign.tpl.html" */ ?>
+<?php /*%%SmartyHeaderCode:1597305031500a9103976e63-20930661%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
-    'da59ed9b13c0204bb4f31180d29217f42b8cbf0a' => 
+    '3c240e71bc070097bb2302467d0576eb01f4da93' => 
     array (
-      0 => './templates/addBannerAdds.tpl.html',
+      0 => './templates/addCampaign.tpl.html',
       1 => 1342430627,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '20056522354ff81613d776a5-89757106',
+  'nocache_hash' => '1597305031500a9103976e63-20930661',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
-<?php echo smarty_function_call_module_header(array('title'=>"Banner Adds"),$_smarty_tpl);?>
+<?php echo smarty_function_call_module_header(array('title'=>"Campaign"),$_smarty_tpl);?>
 
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#question").tooltip();
-	$("#link").hide();
-	$("#code").hide();
-	$("#files").hide();
+	$("#content").tooltip();
+	$("#grp").tooltip();
+	$("#camp").tooltip();	
+	$("#addbtn").tooltip();	
+	$("#srchbtn").tooltip();	
+	$("#rstbtn").tooltip();	
+	$("#tusrs").tooltip();	
+	$("#tzip").tooltip();
+	$("#tdis").tooltip();
 	
-	var val	=	$("#type").val();
-	if(val==1)
-			{
-				$("#code").hide();
-				$("#link").show();
-				$("#files").show();
-			}
-		if(val==3)
-			{
-				$("#link").hide();
-				$("#files").hide();
-				$("#files").show();
-			}
-		if(val==2)
-			{
-				$("#code").show();
-				$("#files").hide();
-				$("#link").hide();
-			}	
-	
-	$("#type").change(function(){
-		var val	=	$("#type").val();
-			
-		if(val==1)
-			{
-				$("#code").hide();
-				$("#link").show();
-				$("#files").show();
-			}
-		if(val==3)
-			{
-				$("#link").hide();
-				$("#code").hide();
-				$("#files").show();
-			}
-		if(val==2)
-			{
-				$("#code").show();
-				$("#files").hide();
-				$("#link").hide();
-			}	
+	$("#txt_join_from").datepicker();
+	$("#txt_join_from").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		//yearRange:'c-50:c+10',
+		autoSize:false
 	});
-	
+
+$("#txt_join_to").datepicker();
+	$("#txt_join_to").datepicker('option',
+	{
+		showAnim:'show',
+		dateFormat:'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		//minDate: -20, 
+		//maxDate: '+1M +10D',
+		showOtherMonths: true, 
+		selectOtherMonths: true,
+		//yearRange:'c-50:c+10',
+		autoSize:false
+	});
+
 });
 </script>
 
 <script type="text/javascript" src="{$smarty.const.CONST_SITE_ADDRESS}js/highslide/highslide.js"></script>
 <link rel="stylesheet" type="text/css" href="{$smarty.const.CONST_SITE_ADDRESS}js/highslide/highslide.css" />
+<link type="text/css" href="{$smarty.const.CONST_SITE_ADDRESS}js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="{$smarty.const.CONST_SITE_ADDRESS}js/ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="{$smarty.const.CONST_SITE_ADDRESS}js/ui/ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="{$smarty.const.CONST_SITE_ADDRESS}js/ui/ui/jquery.ui.datepicker.js"></script>
 
 <?php $_smarty_tpl->tpl_vars["actionReturn"] = new Smarty_variable($_smarty_tpl->getVariable('obj')->value->actionReturn, null, null);?>
 <form action="" name="fromName" method="post" enctype="multipart/form-data">
@@ -86,11 +82,11 @@ $(document).ready(function(){
 </tr>
 <?php }?>
 <tr>
-	<td class="pageHead"><span id="question"><strong><?php if (($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform")){?>Edit<?php }?><?php if (($_smarty_tpl->getVariable('obj')->value->currentAction=="Addform")){?>Add<?php }?> Banner Ads  </strong></span></td>
+	<td class="pageHead"><span id="content"><strong><?php if (($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform")){?>Edit<?php }?><?php if (($_smarty_tpl->getVariable('obj')->value->currentAction=="Addform")){?>Add<?php }?> Campaign </strong></span></td>
 </tr>
 <!--<?php echo print_r($_smarty_tpl->getVariable('actionReturn')->value['data']['image']);?>
 ;exit;-->
-<?php if (($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform")){?>
+<?php if (($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform"||$_smarty_tpl->getVariable('obj')->value->currentAction=="Copyform")){?>
 <?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("Edit")){?>
 <tr>
 	<td>&nbsp;</td>
@@ -100,66 +96,72 @@ $(document).ready(function(){
 		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
 			<tr>
 			
-				<th colspan="2">Edit Ads</th>
+				<th colspan="2">Edit Campaign</th>
 			</tr>
 			<tr>
-				<td width="100px">Ad Category</td>
+				<td width="100px"><span id ="grp">Group</span></td>
 				<td><?php echo $_smarty_tpl->getVariable('actionReturn')->value['combo']['addsCategory'];?>
 </td>
 			</tr>
 			<tr>
-				<td width="100px">Ad Type</td>
-				<td>
-					<?php echo $_smarty_tpl->getVariable('actionReturn')->value['combo']['type'];?>
-
-				</td>
-			</tr>
-			<tr>
-				<td>Name </td>
+				<td><span id ="camp">Name </span> </td>
 				<td><input type="text" name="name" valtype="emptyCheck-please enter a name" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['name'];?>
 "></td>
 			</tr>
 			
-			<tr id="link">
-				<td >Link </td>
-				<td><input type="text" name="link" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['link'];?>
-"></td>
-			</tr>
-			
-			<tr id="code" >
-				<td >Code </td>
-				<td><textarea rows="10" cols="60" name="code"><?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['code'];?>
+			<tr>
+				<td>Description </td>
+				<td><textarea rows="10" cols="60" valtype="emptyCheck-please enter Description"  name="description"><?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['description'];?>
 </textarea></td>
 			</tr>
 			
-			<tr id="files" >
-				<td >Image</td>
-					<td><input type="file"  name="fileImage" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
-" id="fileImageId" />&nbsp;
-					<?php if ($_smarty_tpl->getVariable('actionReturn')->value['data']['image']){?>
-						<a  href="../banner/images/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
-" class="highslide" onclick="return hs.expand(this)">
-						<img src="../banner/images/thumb/<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['image'];?>
-" width="25" height="25" ; />
-						</a><?php }?>
-						</td>
+			<tr>			
+				<td>Start Date </td>
+				<td><input type="text" valtype="emptyCheck-please enter start date" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['start_date'];?>
+" name="start_date" class="dateTextBox" id="txt_join_from" readonly="" ></td>
+			</tr>
+			
+			<tr>
+				<td>End Date</td>
+				<td><input type="text" valtype="emptyCheck-please enter end date" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['end_date'];?>
+" name="end_date" class="dateTextBox"  id="txt_join_to" readonly="" /></td>
+			</tr>
+			
+			<tr>
+				<td><span id ="tusrs">Target User Ids </span></td>
+				<td><textarea name="target_users"><?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['target_users'];?>
+</textarea> </td>
 			</tr>
 			<tr>
-				<td>Height </td>
-				<td><input type="text" name="height" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['height'];?>
-">&nbsp;px</td>
+				<td><span id ="tzip">Target Zip Codes</span></td>
+				<td><textarea name="target_zip" ><?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['target_zip'];?>
+</textarea></td>
 			</tr>
 			<tr>
-				<td>Width</td>
-				<td><input type="text" name="width" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['width'];?>
-">&nbsp;px</td>
+				<td>Target Latitude </td>
+				<td><input type="text" name="target_latitude" size="100" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['target_latitude'];?>
+"></td>
 			</tr>
+			<tr>
+				<td>Target Longitude </td>
+				<td><input type="text" name="target_longitude" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['target_longitude'];?>
+"></td>
+			</tr>
+			<tr>
+				<td><span id ="tdis">Target Distance </span></td>
+				<td><input type="text" name="target_distance" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['target_distance'];?>
+"></td>
+			</tr>
+			
 			<tr>
 				<td>&nbsp;</td>
 				<td>
 				<?php if ($_smarty_tpl->getVariable('obj')->value->currentAction=="Editform"){?>
 					
 					<input type="submit" valcheck="true"  class="butsubmit"  name="actionvar" value="Update" id="saveDataId" />
+				<?php }?>
+				<?php if ($_smarty_tpl->getVariable('obj')->value->currentAction=="Copyform"){?>
+					<input type="submit" valcheck="true"  class="butsubmit"  name="actionvar" value="Copy" id="copyDataId" />
 				<?php }?>
 					<input type="submit" class="butsubmit"  name="actionvar" value="Cancel" id="cancelId" />
 				</td>
@@ -180,51 +182,54 @@ $(document).ready(function(){
 		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="formTable">
 			<tr>
 			
-				<th colspan="2">Add Ads</th>
+				<th colspan="2">Add Campaign</th>
 			</tr>
 			<tr>
-				<td width="100px">Ad Category</td>
+				<td width="100px"><span id ="grp">Group</span></td>
 				<td><?php echo $_smarty_tpl->getVariable('actionReturn')->value['combo'];?>
 </td>
-			</tr>
+			</tr>			
 			<tr>
-				<td width="100px">Ad Type</td>
-				<td>
-					<select name="types" id="type" valtype="emptyCheck-please select a type" >
-					<option value="">select type</option>
-					<option value="1">Image</option>
-					<option value="2">Html</option>
-					<option value="3">Flash</option>
-					</select>
-				</td>
-			<tr>
-				<td>Name </td>
+				<td> <span id ="camp">Name </span></td>
 				<td><input type="text" name="name" valtype="emptyCheck-please enter a name" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['name'];?>
 "></td>
 			</tr>
-			<tr id="link" >
-				<td >Link </td>
-				<td><input type="text" name="link"  value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['link'];?>
-"></td>
-			</tr>
-			<tr id="code">
-				<td>Code </td>
-				<td><textarea rows="10" cols="60" name="code"><?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['code'];?>
+			<tr>
+				<td>Description </td>
+				<td><textarea rows="10" cols="60" valtype="emptyCheck-please enter description"  name="description"><?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['code'];?>
 </textarea></td>
 			</tr>
-			<tr id="files">
-				<td>Files </td>
-				<td><input type="file" name="image"></td>
+			<tr>			
+				<td>Start Date </td>
+				<td><input type="text" value="" valtype="emptyCheck-please enter start date"  name="start_date" class="dateTextBox" id="txt_join_from" readonly="" ></td>
 			</tr>
 			<tr>
-				<td>Height </td>
-				<td><input type="text" name="height" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['height'];?>
-">&nbsp;px</td>
+				<td>End Date</td>
+				<td><input type="text" valtype="emptyCheck-please enter end date" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['searchdata']['txt_join_to'];?>
+" name="end_date" class="dateTextBox"  id="txt_join_to" readonly="" /></td>
 			</tr>
 			<tr>
-				<td>Width</td>
-				<td><input type="text" name="width" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['width'];?>
-">&nbsp;px</td>
+				<td> <span id ="tusrs">Target User Ids</span> </td>
+				<td><textarea name="target_users" ></textarea> </td>
+			</tr>
+			<tr>
+				<td><span id ="tzip">Target Zip Codes</span></td>
+				<td><textarea name="target_zip"></textarea></td>
+			</tr>
+			<tr>
+				<td>Target Latitude </td>
+				<td><input type="text" name="target_latitude" size="100" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['name'];?>
+"></td>
+			</tr>
+			<tr>
+				<td>Target Longitude </td>
+				<td><input type="text" name="target_longitude" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['name'];?>
+"></td>
+			</tr>
+			<tr>
+				<td><span id ="tdis">Target Distance </span></td>
+				<td><input type="text" name="target_distance" value="<?php echo $_smarty_tpl->getVariable('actionReturn')->value['data']['name'];?>
+"></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -264,14 +269,14 @@ $(document).ready(function(){
 
 							</td>
 							<td>
-							<input name="actionvar" type="submit" class="butsubmit" value="Search" />
+							<span id="srchbtn"><input name="actionvar" type="submit" class="butsubmit" value="Search" /></span>
 							</td>
 							<td>
-							<input name="actionvar" type="submit" class="butsubmit" value="Reset" />
+							<span id="rstbtn"><input name="actionvar" type="submit" class="butsubmit" value="Reset" /></span>
 							</td>
 							<td>
 							<?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("Add")){?>
-							<input name="actionvar" type="submit" class="butsubmit" value="Add New" />
+							<span id="addbtn"><input name="actionvar" type="submit" class="butsubmit" value="Add New" /></span>
 							<?php }?>
 							</td>
 						</tr>
@@ -289,29 +294,26 @@ $(document).ready(function(){
 						<tr align="center" valign="middle">							
 							
 							<th>No</th>
-							<th><a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',false);?>
+							<th><span id="grp"><a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',false);?>
 &sortField=category_id&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 ">
-							Category<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('category_id',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
+							Group<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('category_id',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 
-								</a></th>
+								</a></span></th>
 							<th><a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('Search','',false);?>
 &sortField=name&sortMethod=<?php echo $_smarty_tpl->getVariable('obj')->value->getNegativeSort($_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 ">
-							Name
+							<span id="camp">Name</span>
 							<?php echo $_smarty_tpl->getVariable('obj')->value->getSortImage('name',$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortField'],$_smarty_tpl->getVariable('actionReturn')->value['searchdata']['sortData']['sortMethod']);?>
 
 								</a>
 							</th>
 							<th>
-								Image/Code
+								Start Date
 							</th>
 							<th>
-								Height
-							</th>
-							<th>
-								Width 
-							</th>
+								End Date
+							</th>							
 							<!--<th>
 								Impression  
 							</th>-->
@@ -334,21 +336,15 @@ if ($_smarty_tpl->_count($_from) > 0){
 								<?php echo $_smarty_tpl->tpl_vars['data']->value['name'];?>
 
 							</td>
-							<td><?php if ($_smarty_tpl->tpl_vars['data']->value['types']==1){?>
-								<a  href="../banner/images/<?php echo $_smarty_tpl->tpl_vars['data']->value['image'];?>
-" class="highslide" onclick="return hs.expand(this)">
-									<img src="../banner/images/thumb/<?php echo $_smarty_tpl->tpl_vars['data']->value['image'];?>
-"  width="17" height="17" border="0" />
-								</a><?php }elseif($_smarty_tpl->tpl_vars['data']->value['types']==2){?><?php echo $_smarty_tpl->getVariable('obj')->value->getLimitedText($_smarty_tpl->tpl_vars['data']->value['code'],40);?>
-<?php }elseif($_smarty_tpl->tpl_vars['data']->value['types']==3){?>FLASH<?php }else{ ?>Unknown Type<?php }?></td>
+								
 							<td>
-								<?php echo $_smarty_tpl->tpl_vars['data']->value['height'];?>
- 
+								<?php echo $_smarty_tpl->tpl_vars['data']->value['start_date'];?>
+
 							</td>
 							<td>
-								<?php echo $_smarty_tpl->tpl_vars['data']->value['width'];?>
- 
-							</td>
+								<?php echo $_smarty_tpl->tpl_vars['data']->value['end_date'];?>
+
+							</td>							
 						<!--	<td>
 								<?php echo $_smarty_tpl->tpl_vars['data']->value['impression'];?>
 
@@ -373,14 +369,19 @@ if ($_smarty_tpl->_count($_from) > 0){
 " class="Second_link">
 							<img src="images/edit.gif" border="0" title="Click here to edit">							
 							</a> 
-								<?php }?>
-                                
-							<?php if ($_smarty_tpl->getVariable('obj')->value->permissionCheck("Delete")){?>
-							<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('delete','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
+								<?php }?>    
+								
+							<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('copyform','',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
 " class="Second_link">
-							<img src="images/delete.gif" border="0" alt="delete"title="Click here to edit">							
+							<img src="images/copy.png" border="0" title="Click here to Copy">							
 							</a> 
-								<?php }?>				
+								                   
+							
+								
+								<a href="<?php echo $_smarty_tpl->getVariable('obj')->value->getLink('','addCampaignAdds.php',true,$_smarty_tpl->getVariable('obj')->value->getConcat('id=',$_smarty_tpl->tpl_vars['data']->value['id']));?>
+" class="Second_link">
+							<img src="images/fast_forward.png" border="0" alt="view"title="Click here to view Adds">							
+							</a> 			
 							</td>
 						</tr>
 					<?php }} ?>

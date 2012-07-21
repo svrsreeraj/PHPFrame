@@ -4,5 +4,5 @@ Created by :Anith
 Created on :2010-11-04
 Purpose    :defining database rules
 **************************************************************************************/
-$dBaseRules	=	array();
+//$dBaseRules	=	array();
 ?>

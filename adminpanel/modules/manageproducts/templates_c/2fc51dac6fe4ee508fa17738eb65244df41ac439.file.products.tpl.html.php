@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2011-12-20 17:37:06
+<?php /* Smarty version Smarty-3.0.7, created on 2012-07-21 17:19:04
          compiled from "./templates/products.tpl.html" */ ?>
 <?php /*%%SmartyHeaderCode:17549185774ef07a6a7a8038-52943985%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_smarty_tpl->decodeProperties(array (
     '2fc51dac6fe4ee508fa17738eb65244df41ac439' => 
     array (
       0 => './templates/products.tpl.html',
-      1 => 1324382808,
+      1 => 1342430627,
       2 => 'file',
     ),
   ),
@@ -20,8 +20,8 @@ $_smarty_tpl->decodeProperties(array (
 <?php echo smarty_function_call_module_header(array('title'=>"Manage Category"),$_smarty_tpl);?>
 
 
-<script type="text/javascript" src="js/highslide/highslide.js"></script>
-<link rel="stylesheet" type="text/css" href="js/highslide/highslide.css" />
+<script type="text/javascript" src="{$smarty.const.CONST_SITE_ADDRESS}js/highslide/highslide.js"></script>
+<link rel="stylesheet" type="text/css" href="{$smarty.const.CONST_SITE_ADDRESS}js/highslide/highslide.css" />
 <script type="text/javascript">
 function deleteConfrm(id)
 	{
@@ -40,9 +40,9 @@ function deleteConfrm(id)
 	}
 
 </script>
-<link type="text/css" href="js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
-<script type="text/javascript" src="js/ui/ui/jquery.ui.core.js"></script>
-<script type="text/javascript" src="js/ui/ui/jquery.ui.widget.js"></script>
+<link type="text/css" href="{$smarty.const.CONST_SITE_ADDRESS}js/ui/themes/base/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript" src="{$smarty.const.CONST_SITE_ADDRESS}js/ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="{$smarty.const.CONST_SITE_ADDRESS}js/ui/ui/jquery.ui.widget.js"></script>
 
 
 

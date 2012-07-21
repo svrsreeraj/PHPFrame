@@ -5,8 +5,6 @@ Created On	:	25-10-2010
 Purpose		:	Initial functions
 ****************************************************************************************/
 ob_start();
-session_set_cookie_params(10*60*60);
-ini_set('session.gc_maxlifetime', '36000');
 session_start();
 ini_set("magic_quotes_gpc", "Off");
 error_reporting(~E_NOTICE); //error handling
@@ -35,11 +33,11 @@ require_once 	(CONST_SITE_ABSOLUTE_PATH.'includes/includedfiles.php');				err_st
 require_once 	(CONST_SITE_ABSOLUTE_PATH.'includes/database_rules.php');				err_status("database_rules.php included");
 
 
-require_once	(CONST_SITE_ABSOLUTE_PATH.'libs/googleshortner/urlshortner.php');		err_status("URL Shortner Included");
 require_once	(CONST_SITE_ABSOLUTE_PATH.'libs/smarty-3.0.7/libs/Smarty.class.php');	err_status("Smarty Class Included");
 
 require_once	(CONST_SITE_ABSOLUTE_PATH.'includes/smarty.plugin.php');				err_status("Smarty Plugin Included");
-
+require_once	(CONST_SITE_ABSOLUTE_PATH.'adminpanel/core/classes/coreAdminUser.php');	err_status("Core class Included");
+require_once	(CONST_SITE_ABSOLUTE_PATH.'adminpanel/core/conf/coreGlobalConfig.php');			err_status("Core global Config Included");
 
 
 //disabling magic quotes in run time
