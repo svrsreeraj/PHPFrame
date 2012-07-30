@@ -89,6 +89,7 @@ define("CONST_DEVELOPER_URL",constant("CONST_SITE_ADDRESS")."developer/");
 					
 					<a href = "modules.php"  class="letnav">Modules</a>
 					<a href = "dbRules.php"  class="letnav">DB Rules</a>
+					<a href = "dbMandatory.php"  class="letnav">DB Mandatory</a>
 
 				</div>
 				

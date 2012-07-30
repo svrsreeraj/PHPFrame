@@ -44,6 +44,40 @@ class phpValidation
 				if(!$this->getError())	return true;
 				else 					return false;
 			} 
+		function dbCheckMandatoryFields($table,$dbarray)
+			{
+				global $dBaseMandatory;
+				$this->clearError();
+				$checklFlag	=	true;
+				if(($rules	=	$dBaseMandatory[trim($table)])	&&	$dbarray)
+					{
+						$toBeInsertedArr	=	array_keys($dbarray);
+						$rulesKeysArr		=	array_keys($rules);
+
+						foreach($rulesKeysArr as	$key=>$val)
+							{
+								if(!in_array($val,$toBeInsertedArr))
+									{
+										$checklFlag	=	false;
+										break;
+									}
+								else
+									{
+										if(!$dbarray[$val])
+											{
+												$checklFlag	=	false;
+												break;
+											}
+									}
+							}
+					}
+				if(!$checklFlag)
+					{
+						$this->setError("$val is a mandatory field");
+					}
+				if(!$this->getError())	return true;
+				else 					return false;
+			} 
 			
 		function setError($err)
 			{

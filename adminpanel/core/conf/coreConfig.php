@@ -8,6 +8,7 @@ Purpose    :Core Queries
 require_once	(dirname(__FILE__)."/coreGlobalConfig.php");
 
 /***************************SQL Commands starts TABLE Structure*************************************************/
+
 $queries["tables"][constant("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS")]	=	"
 CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS")."` (
 `id` bigint(11) NOT NULL auto_increment,
@@ -101,7 +102,23 @@ CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_DB_RULES")."` (
   UNIQUE KEY `unique_fields` (`table_name`,`field_name`,`method_name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 " ;
+
+$queries["tables"][constant("CONST_ADMIN_CORE_TABLE_DB_MANDATORY")]	=	"
+CREATE TABLE IF NOT EXISTS `".constant("CONST_ADMIN_CORE_TABLE_DB_MANDATORY")."` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `table_name` varchar(100) NOT NULL,
+  `field_name` varchar(100) NOT NULL,
+  `message` varchar(300) NOT NULL,
+  `min_length` bigint(11) NOT NULL DEFAULT '0',
+  `max_length` bigint(11) NOT NULL DEFAULT '0',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_fields` (`table_name`,`field_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+" ;
+
 /***************************SQL Commands ends*************************************************/
+
 
 /***************************SQL Commands starts Insertng data*************************************************/
 $queries["insert"][constant("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS")]	=	"
@@ -155,23 +172,25 @@ INSERT INTO `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERTYPE")."` (`id`, `type
 $queries["insert"][constant("CONST_ADMIN_CORE_TABLE_DB_RULES")]	=	"
 INSERT INTO `".constant("CONST_ADMIN_CORE_TABLE_DB_RULES")."`  
 (`id`, `table_name`, `field_name`, `method_name`, `message`, `min_length`, `max_length`, `status`) VALUES
-(1, 'frame_core_admin_db_rules', 'table_name', 'emptyCheck', 'Please select any table	', 0, 100, 1),
-(2, 'frame_core_admin_db_rules', 'field_name', 'emptyCheck', 'Please select any field	', 0, 100, 1),
-(3, 'frame_core_admin_db_rules', 'method_name', 'emptyCheck', 'Please select any method	', 0, 200, 1),
-(4, 'frame_core_admin_actions', 'action', 'emptyCheck', 'Please provide a valid action', 2, 100, 1),
-(5, 'frame_core_admin_menus', 'menuname', 'emptyCheck', 'Menu name is invalid', 2, 100, 1),
-(6, 'frame_core_admin_menus', 'menutitle', 'emptyCheck', 'Menu title is invalid', 2, 200, 1),
-(8, 'frame_core_admin_page_actions', 'actionid', 'idCheck', 'Action Id is invalid', 1, 11, 1),
-(10, 'frame_core_admin_page_actions', 'pageid', 'idCheck', 'Page Id is invalid', 1, 100, 1),
-(11, 'frame_core_admin_pages', 'menuid', 'idCheck', 'Menu id is invalid', 1, 100, 1),
-(13, 'frame_core_admin_pages', 'page', 'emptyCheck', 'Page name required', 3, 100, 1),
-(14, 'frame_core_admin_permission', 'pactionid', 'idCheck', 'Action Id is invalid', 1, 11, 1),
-(15, 'frame_core_admin_permission', 'usertypeid', 'idCheck', 'User type id is invalid', 1, 11, 1),
-(16, 'frame_core_admin_users', 'email', 'emptyCheck', 'Email is blank', 4, 200, 1),
-(17, 'frame_core_admin_users', 'email', 'emailCheck', 'Invalid email', 4, 200, 1),
-(18, 'frame_core_admin_users', 'password', 'emptyCheck', 'Please provide a valid password', 1, 100, 1),
-(19, 'frame_core_admin_users', 'usertype', 'idCheck', 'id is not valid', 1, 11, 1),
-(20, 'frame_core_admin_usertype', 'typename', 'emptyCheck', 'Type name is blank', 1, 100, 1);
+(1, ".constant("CONST_ADMIN_CORE_TABLE_DB_RULES").", 'table_name', 'emptyCheck', 'Please select any table	', 0, 100, 1),
+(2, ".constant("CONST_ADMIN_CORE_TABLE_DB_RULES").", 'field_name', 'emptyCheck', 'Please select any field	', 0, 100, 1),
+(3, ".constant("CONST_ADMIN_CORE_TABLE_DB_RULES").", 'method_name', 'emptyCheck', 'Please select any method	', 0, 200, 1),
+(4, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS").", 'action', 'emptyCheck', 'Please provide a valid action', 2, 100, 1),
+(5, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS").", 'menuname', 'emptyCheck', 'Menu name is invalid', 2, 100, 1),
+(6, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS").", 'menutitle', 'emptyCheck', 'Menu title is invalid', 2, 200, 1),
+(8, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS").", 'actionid', 'idCheck', 'Action Id is invalid', 1, 11, 1),
+(10, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS").", 'pageid', 'idCheck', 'Page Id is invalid', 1, 100, 1),
+(11, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES").", 'menuid', 'idCheck', 'Menu id is invalid', 1, 100, 1),
+(13, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES").", 'page', 'emptyCheck', 'Page name required', 3, 100, 1),
+(14, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION").", 'pactionid', 'idCheck', 'Action Id is invalid', 1, 11, 1),
+(15, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION").", 'usertypeid', 'idCheck', 'User type id is invalid', 1, 11, 1),
+(16, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS").", 'email', 'emptyCheck', 'Email is blank', 4, 200, 1),
+(17, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS").", 'email', 'emailCheck', 'Invalid email', 4, 200, 1),
+(18, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS").", 'password', 'emptyCheck', 'Please provide a valid password', 1, 100, 1),
+(19, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS").", 'usertype', 'idCheck', 'id is not valid', 1, 11, 1),
+(20, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERTYPE").", 'typename', 'emptyCheck', 'Type name is blank', 1, 100, 1),
+(21, ".constant("CONST_ADMIN_CORE_TABLE_DB_MANDATORY").", 'table_name', 'emptyCheck', 'Please select any table	', 0, 100, 1),
+(22, ".constant("CONST_ADMIN_CORE_TABLE_DB_MANDATORY").", 'field_name', 'emptyCheck', 'Please select any field	', 0, 100, 1);
 ";
-/***************************SQL Commands ends*************************************************/
+/***************************SQL Commands ends***************************************************************************/
 ?>

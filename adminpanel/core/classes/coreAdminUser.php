@@ -119,6 +119,12 @@ class coreAdminUser extends siteclass
 				$data			=	$this->getdbcontents_sql($sql);	
 				return $data;
 			}
+		public function getAllDbMandatoryRows($args="1")
+			{
+				$sql			=	"SELECT * FROM ".constant("CONST_ADMIN_CORE_TABLE_DB_MANDATORY")." WHERE $args";			
+				$data			=	$this->getdbcontents_sql($sql);	
+				return $data;
+			}
 		//***/
 		//*************************************LEFT MENU & PERMISSION********************************BY ANITH********//
 			

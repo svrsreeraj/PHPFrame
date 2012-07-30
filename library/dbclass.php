@@ -136,42 +136,50 @@ class sdbclass
 				if($data)
 					{						
 						$valObj		=	siteclass::create_php_validation();
-						if($valObj->dbValidateArray($table,$data))
+						if($valObj->dbCheckMandatoryFields($table,$data))
 							{
-								$valuesArr	=	array();
-								foreach($data	as	$key=>$val)	
+								if($valObj->dbValidateArray($table,$data))
 									{
-										
-										if(strtolower(substr($val,-6))	==	"escape" &&	strtolower(substr($val,0,6))	==	"escape")
+										$valuesArr	=	array();
+										foreach($data	as	$key=>$val)	
 											{
-												$val			=	str_replace("escape","",strtolower($val));
-												$valuesArr[] 	=	$val;	
+												
+												if(strtolower(substr($val,-6))	==	"escape" &&	strtolower(substr($val,0,6))	==	"escape")
+													{
+														$val			=	str_replace("escape","",strtolower($val));
+														$valuesArr[] 	=	$val;	
+													}
+												else
+													{
+														$val	=	 mysql_real_escape_string($val);
+														$valuesArr[] 	=	"'".$val."'";
+													}
+											}
+										$keyData	=	array_keys($data);
+										foreach($keyData	as $key=>$val)	$keyData[$key]	=	"`".trim($val)."`";
+										$fields		=	implode(",",$keyData);
+										$values		=	implode(",",$valuesArr);
+										$sql		=	"insert into $table($fields) values($values)";
+										$returnId	= 	($this->db_query($sql,$echo)) ? mysql_insert_id() : false;
+										if($returnId)
+											{
+												$this->dbTrans[]	=	array("table"=>$table,"id"=>$returnId);
+												return $returnId;
 											}
 										else
 											{
-												$val	=	 mysql_real_escape_string($val);
-												$valuesArr[] 	=	"'".$val."'";
-											}
-									}
-								$keyData	=	array_keys($data);
-								foreach($keyData	as $key=>$val)	$keyData[$key]	=	"`".trim($val)."`";
-								$fields		=	implode(",",$keyData);
-								$values		=	implode(",",$valuesArr);
-								$sql		=	"insert into $table($fields) values($values)";
-								$returnId	= 	($this->db_query($sql,$echo)) ? mysql_insert_id() : false;
-								if($returnId)
-									{
-										$this->dbTrans[]	=	array("table"=>$table,"id"=>$returnId);
-										return $returnId;
+												return false;
+										}
 									}
 								else
 									{
+										$this->setDbErrors($valObj->getError());
 										return false;
-								}
+									}
 							}
 						else
 							{
-								$this->setDbErrors($valObj->getError());
+								$this->setDbErrors($valObj->getError());										
 								return false;
 							}
 					}
