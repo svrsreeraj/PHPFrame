@@ -79,14 +79,13 @@ class upload
 								if($filetype	==	"1") $des	.=	"/".$this->name;
 								if($filetype	==	"2")
 									{
-										$tmpfname = tempnam("$opath/","");
-										rename($tmpfname,$tmpfname.".".$ext);
-										$temp	=	explode("/",$tmpfname);
+										$tmpfname 	= 	tempnam("$opath/","");
+										$tmpfnameTo	=	str_replace(".tmp","",$tmpfname);
+										rename($tmpfname,$tmpfnameTo.".".$ext);
+										$temp	=	explode("/",$tmpfnameTo);
 										$temp	=	end($temp);
 										$temp	=	explode("\\",$temp);
 										$temp	=	end($temp);
-										$temp	=	explode(".",$temp);
-										$temp	=	$temp[0];
 										$des	.=	"/".$temp.".".$ext;
 									}
 
@@ -143,13 +142,12 @@ class upload
 								if($filetype	==	"2")
 									{
 										$tmpfname = tempnam("$path/","");
-										rename($tmpfname,$tmpfname.".".$ext);
-										$temp	=	explode("/",$tmpfname);
+										$tmpfnameTo	=	str_replace(".tmp","",$tmpfname);
+										rename($tmpfname,$tmpfnameTo.".".$ext);
+										$temp	=	explode("/",$tmpfnameTo);
 										$temp	=	end($temp);
 										$temp	=	explode("\\",$temp);
 										$temp	=	end($temp);
-										$temp	=	explode(".",$temp);
-										$temp	=	$temp[0];
 										$des	.=	"/".$temp.".".$ext;
 									}
 							}
