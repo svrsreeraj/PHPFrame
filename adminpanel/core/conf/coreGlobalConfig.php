@@ -39,5 +39,4 @@ foreach($dbMandModel	as	$key=>$val)
 	{
 		$dBaseMandatory["{$val['table_name']}"]["{$val['field_name']}"][]	=	array("{$val['min_length']}","{$val['max_length']}","{$val['message']}");
 	}
-print_r($dBaseMandatory);
 ?>

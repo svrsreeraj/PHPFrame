@@ -172,25 +172,25 @@ INSERT INTO `".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERTYPE")."` (`id`, `type
 $queries["insert"][constant("CONST_ADMIN_CORE_TABLE_DB_RULES")]	=	"
 INSERT INTO `".constant("CONST_ADMIN_CORE_TABLE_DB_RULES")."`  
 (`id`, `table_name`, `field_name`, `method_name`, `message`, `min_length`, `max_length`, `status`) VALUES
-(1, ".constant("CONST_ADMIN_CORE_TABLE_DB_RULES").", 'table_name', 'emptyCheck', 'Please select any table	', 0, 100, 1),
-(2, ".constant("CONST_ADMIN_CORE_TABLE_DB_RULES").", 'field_name', 'emptyCheck', 'Please select any field	', 0, 100, 1),
-(3, ".constant("CONST_ADMIN_CORE_TABLE_DB_RULES").", 'method_name', 'emptyCheck', 'Please select any method	', 0, 200, 1),
-(4, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS").", 'action', 'emptyCheck', 'Please provide a valid action', 2, 100, 1),
-(5, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS").", 'menuname', 'emptyCheck', 'Menu name is invalid', 2, 100, 1),
-(6, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS").", 'menutitle', 'emptyCheck', 'Menu title is invalid', 2, 200, 1),
-(8, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS").", 'actionid', 'idCheck', 'Action Id is invalid', 1, 11, 1),
-(10, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS").", 'pageid', 'idCheck', 'Page Id is invalid', 1, 100, 1),
-(11, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES").", 'menuid', 'idCheck', 'Menu id is invalid', 1, 100, 1),
-(13, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES").", 'page', 'emptyCheck', 'Page name required', 3, 100, 1),
-(14, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION").", 'pactionid', 'idCheck', 'Action Id is invalid', 1, 11, 1),
-(15, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION").", 'usertypeid', 'idCheck', 'User type id is invalid', 1, 11, 1),
-(16, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS").", 'email', 'emptyCheck', 'Email is blank', 4, 200, 1),
-(17, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS").", 'email', 'emailCheck', 'Invalid email', 4, 200, 1),
-(18, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS").", 'password', 'emptyCheck', 'Please provide a valid password', 1, 100, 1),
-(19, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS").", 'usertype', 'idCheck', 'id is not valid', 1, 11, 1),
-(20, ".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERTYPE").", 'typename', 'emptyCheck', 'Type name is blank', 1, 100, 1),
-(21, ".constant("CONST_ADMIN_CORE_TABLE_DB_MANDATORY").", 'table_name', 'emptyCheck', 'Please select any table	', 0, 100, 1),
-(22, ".constant("CONST_ADMIN_CORE_TABLE_DB_MANDATORY").", 'field_name', 'emptyCheck', 'Please select any field	', 0, 100, 1);
+(1, '".constant("CONST_ADMIN_CORE_TABLE_DB_RULES")."', 'table_name', 'emptyCheck', 'Please select any table	', 0, 100, 1),
+(2, '".constant("CONST_ADMIN_CORE_TABLE_DB_RULES")."', 'field_name', 'emptyCheck', 'Please select any field	', 0, 100, 1),
+(3, '".constant("CONST_ADMIN_CORE_TABLE_DB_RULES")."', 'method_name', 'emptyCheck', 'Please select any method	', 0, 200, 1),
+(4, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_ACTIONS")."', 'action', 'emptyCheck', 'Please provide a valid action', 2, 100, 1),
+(5, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS")."', 'menuname', 'emptyCheck', 'Menu name is invalid', 2, 100, 1),
+(6, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_MENUS")."', 'menutitle', 'emptyCheck', 'Menu title is invalid', 2, 200, 1),
+(8, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS")."', 'actionid', 'idCheck', 'Action Id is invalid', 1, 11, 1),
+(10, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGE_ACTIONS")."', 'pageid', 'idCheck', 'Page Id is invalid', 1, 100, 1),
+(11, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES")."', 'menuid', 'idCheck', 'Menu id is invalid', 1, 100, 1),
+(13, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PAGES")."', 'page', 'emptyCheck', 'Page name required', 3, 100, 1),
+(14, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION")."', 'pactionid', 'idCheck', 'Action Id is invalid', 1, 11, 1),
+(15, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_PERMISSION")."', 'usertypeid', 'idCheck', 'User type id is invalid', 1, 11, 1),
+(16, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")."', 'email', 'emptyCheck', 'Email is blank', 4, 200, 1),
+(17, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")."', 'email', 'emailCheck', 'Invalid email', 4, 200, 1),
+(18, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")."', 'password', 'emptyCheck', 'Please provide a valid password', 1, 100, 1),
+(19, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERS")."', 'usertype', 'idCheck', 'id is not valid', 1, 11, 1),
+(20, '".constant("CONST_ADMIN_CORE_TABLE_ADMIN_USERTYPE")."', 'typename', 'emptyCheck', 'Type name is blank', 1, 100, 1),
+(21, '".constant("CONST_ADMIN_CORE_TABLE_DB_MANDATORY")."', 'table_name', 'emptyCheck', 'Please select any table	', 0, 100, 1),
+(22, '".constant("CONST_ADMIN_CORE_TABLE_DB_MANDATORY")."', 'field_name', 'emptyCheck', 'Please select any field	', 0, 100, 1);
 ";
 /***************************SQL Commands ends***************************************************************************/
 ?>
