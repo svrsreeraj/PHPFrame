@@ -83,8 +83,13 @@ class upload
 										rename($tmpfname,$tmpfname.".".$ext);
 										$temp	=	explode("/",$tmpfname);
 										$temp	=	end($temp);
+										$temp	=	explode("\\",$temp);
+										$temp	=	end($temp);
+										$temp	=	explode(".",$temp);
+										$temp	=	$temp[0];
 										$des	.=	"/".$temp.".".$ext;
 									}
+
 							}
 						if(copy($this->tmp_name,$des))
 							{
@@ -141,6 +146,10 @@ class upload
 										rename($tmpfname,$tmpfname.".".$ext);
 										$temp	=	explode("/",$tmpfname);
 										$temp	=	end($temp);
+										$temp	=	explode("\\",$temp);
+										$temp	=	end($temp);
+										$temp	=	explode(".",$temp);
+										$temp	=	$temp[0];
 										$des	.=	"/".$temp.".".$ext;
 									}
 							}
