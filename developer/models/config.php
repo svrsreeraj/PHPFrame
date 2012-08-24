@@ -97,7 +97,7 @@ class configModel extends modelclass
 						case "CONST_SITE_ABSOLUTE_PATH":
 							$userAbs	=	trim($value);
 							$userAbsFromUser	=	strrev($userAbs);
-							if($userAbsFromUser{0}	!=	DIRECTORY_SEPARATOR)	$userAbsFromUser	=	strrev($userAbsFromUser).DIRECTORY_SEPARATOR;
+							if($userAbsFromUser{0}	!=	"/")	$userAbsFromUser	=	strrev($userAbsFromUser)."/";
 							else 												$userAbsFromUser	=	strrev($userAbsFromUser);
 							return $userAbsFromUser;
 							break;
