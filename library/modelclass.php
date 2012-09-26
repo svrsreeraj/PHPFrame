@@ -91,6 +91,10 @@ class modelclass extends siteclass
 						if(!(count($_REQUEST)	==	1 &&	$_REQUEST[$loadObject->actionVar]	!=""))	if($_REQUEST)	$loadObject->_data[$methodName]["request"]	=	$_REQUEST;
 						if($_FILES)	$loadObject->_data[$methodName]["files"]	=	$_FILES;
 					}
+				if(trim($page))
+					{
+							if(trim($page))	$this->setSessionObj($this->getClassNameByPageName($page),$loadObject);
+					}
 			}
 		//add data
 		public function addData($dataArr=array(),$actionData="all",$methodName="",$escapeData=false,$page="")
@@ -134,7 +138,7 @@ class modelclass extends siteclass
 				
 				if(trim($page))
 					{
-						$calledFunction		=	$this->getClassNameByPageName($page).ucwords($methodName);
+						$calledFunction		=	ucwords($methodName);
 						$tempObj			=	loadModelClass(true,$page);
 						$getObject			=	&$tempObj;	
 					}
